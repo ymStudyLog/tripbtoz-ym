@@ -7,14 +7,13 @@ import {
   ReservedHotelsType,
 } from "../types/localStorageType";
 import { HotelDatabaseType } from "../types/hotelDatabaseType";
-import { hotelService } from "../api/api";
 
 type Props = {};
 
 const Reservation = (props: Props) => {
   const [hotelData, setHotelData] = React.useState<HotelDatabaseType[]>([]);
 
-  //TODO 로컬스토리지 관련 코드 hooks로 리팩토링
+  //TODO 로컬스토리지 관련 코드 hooks로 리팩토링 => 그 전에 state 하나로 합치기 
   const [stayPeriod, setStayPeriod] = React.useState<StayPeriodType>({
     checkIn: "",
     checkOut: "",
@@ -50,29 +49,18 @@ const Reservation = (props: Props) => {
 
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <button
-          onClick={() => {
-            localStorage.removeItem("reservedHotels");
-          }}
-        >
-          로컬스토리지 초기화
-        </button>
-        <button
-          onClick={async () => {
-            await hotelService.patch("/1", { "reservationDetail" : {
-              checkIn : stayPeriod.checkIn,
-              checkOut : stayPeriod.checkOut
-            } }); //TODO react-query로 해보고 똑같으면 모든 db에 id 추가
-          }}
-        >
-          에코랜드 호텔에 reservationDetail 추가하는 버튼
-        </button>
-      </div>
+      <button
+        onClick={() => {
+          localStorage.removeItem("reservedHotels");
+        }}
+      >
+        로컬스토리지 초기화
+      </button>
       {hotelData.map((eachHotelData, index) => {
         return (
           <TempContainer key={index}>
             <TempHotelItem>
+              <p>id: {eachHotelData.id}</p>
               <p>호텔명 : {eachHotelData.hotel_name}</p>
               <p>
                 투숙인원 : {eachHotelData.occupancy.base}~
@@ -85,7 +73,7 @@ const Reservation = (props: Props) => {
                 const prevState = localStorage.getItem("reservedHotels");
                 const newState = [
                   {
-                    _id: index,
+                    _id: eachHotelData.id,
                     hotel_name: eachHotelData.hotel_name,
                     headCount: headCount,
                     reservationDetail: {
@@ -107,7 +95,7 @@ const Reservation = (props: Props) => {
                     JSON.stringify(newState)
                   );
                 }
-                //patch 함수 완성되면 넣기
+                patchReservationDetail(eachHotelData.id, stayPeriod);
               }}
             >
               예약

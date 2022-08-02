@@ -1,5 +1,5 @@
 export type HotelDatabaseType = {
-  id?: number, //TODO id 추가 후 ?삭제
+  id: number;
   hotel_name: string;
   occupancy: {
     base: number;
@@ -9,4 +9,4 @@ export type HotelDatabaseType = {
     checkIn: string;
     checkOut: string;
   };
-}
+};
