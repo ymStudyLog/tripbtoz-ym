@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import Navbar from '../layout/Navbar';
 
 type Props = {};
@@ -23,9 +24,26 @@ const Landing = (props: Props) => {
 
   return (
     <>
+      <BackgroundImageContainer>
+        <BackgroundImage src='./images/bg-10.svg' />
+      </BackgroundImageContainer>
       <Navbar />
     </>
   );
 };
 
 export default Landing;
+
+const BackgroundImageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BackgroundImage = styled.img`
+  height: 100%;
+  width: 95%;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+`;
