@@ -1,9 +1,14 @@
 import React from 'react';
+import Navbar from '../layout/Navbar';
 
 type Props = {};
 
 const Landing = (props: Props) => {
-  return <div>Landing</div>;
+  return (
+    <>
+      <Navbar />
+    </>
+  );
 };
 
 export default Landing;
