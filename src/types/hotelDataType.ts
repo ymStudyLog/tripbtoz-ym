@@ -1,4 +1,4 @@
-export type HotelDatabaseType = {
+export type BasicHotelDataType = {
   id: number;
   hotel_name: string;
   occupancy: {
@@ -10,3 +10,5 @@ export type HotelDatabaseType = {
     checkOut: string;
   };
 };
+
+export type GetDataResultType = BasicHotelDataType[] | undefined;
