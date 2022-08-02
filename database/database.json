@@ -1,6 +1,7 @@
 {
   "hotels": [
     {
+      "id": 1,
       "hotel_name": "에코랜드 호텔",
       "occupancy": {
         "base": 2,
