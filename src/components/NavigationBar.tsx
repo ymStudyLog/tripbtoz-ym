@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 type Props = {};
 
-const Navbar = (props: Props) => {
+const NavigationBar = (props: Props) => {
   const navigate = useNavigate();
 
   const handleLogo = () => {
@@ -16,30 +16,30 @@ const Navbar = (props: Props) => {
   };
 
   return (
-    <NavbarWrapper>
-      <NavbarContainer>
+    <NavigationBarWrapper>
+      <NavigationBarContainer>
         <LogoContainer>
           <LogoImage src='./images/logo-black-tripbtoz.png' onClick={handleLogo} />
         </LogoContainer>
-        <NavbarMenuItems>
+        <NavigationBarMenuItems>
           <CustomerService>고객센터</CustomerService>
           <ReservationList onClick={handleToReservation}>예약확인</ReservationList>
-        </NavbarMenuItems>
-      </NavbarContainer>
-    </NavbarWrapper>
+        </NavigationBarMenuItems>
+      </NavigationBarContainer>
+    </NavigationBarWrapper>
   );
 };
 
-export default Navbar;
+export default NavigationBar;
 
-const NavbarWrapper = styled.nav`
+const NavigationBarWrapper = styled.nav`
   height: 5rem;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const NavbarContainer = styled.div`
+const NavigationBarContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -61,7 +61,7 @@ const LogoImage = styled.img`
   cursor: pointer;
 `;
 
-const NavbarMenuItems = styled.div`
+const NavigationBarMenuItems = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;

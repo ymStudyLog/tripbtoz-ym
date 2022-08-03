@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Navbar from '../layout/Navbar';
+import NavigationBar from '../components/NavigationBar';
+import SearchBar from '../components/SearchBar';
 
 type Props = {};
 
@@ -24,17 +25,25 @@ const Landing = (props: Props) => {
 
   return (
     <>
-      <BackgroundImageContainer>
+      <NavigationBar />
+      <BackgroundImageWrapper>
         <BackgroundImage src='./images/bg-10.svg' />
-      </BackgroundImageContainer>
-      <Navbar />
+      </BackgroundImageWrapper>
+      <LandingContentsContainer>
+        <CatchphraseWrapper>
+          <Catchphrase>Play Share Stay, 트립비토즈</Catchphrase>
+        </CatchphraseWrapper>
+        <SearchBarWrapper>
+          <SearchBar />
+        </SearchBarWrapper>
+      </LandingContentsContainer>
     </>
   );
 };
 
 export default Landing;
 
-const BackgroundImageContainer = styled.div`
+const BackgroundImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,4 +55,28 @@ const BackgroundImage = styled.img`
   position: absolute;
   z-index: -1;
   top: 0;
+`;
+
+const LandingContentsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 40%;
+`;
+
+const CatchphraseWrapper = styled.div`
+  width: 70%;
+  //padding-left: 0.7rem;
+`;
+
+const Catchphrase = styled.div`
+  font-weight: 700;
+  font-size: 2.1rem;
+`;
+
+const SearchBarWrapper = styled.div`
+  height: 3.1rem;
+  width: 70%;
+  margin-top: 1rem;
 `;
