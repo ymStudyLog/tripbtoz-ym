@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import NavigationBar from '../components/NavigationBar';
 import SearchBar from '../components/SearchBar';
 
-type Props = {};
-
-const Landing = (props: Props) => {
+const Landing = () => {
   // 임의의 날짜, 투숙객수 로컬스토리지 저장
   React.useEffect(() => {
     localStorage.setItem(
@@ -66,8 +64,7 @@ const LandingContentsContainer = styled.div`
 `;
 
 const CatchphraseWrapper = styled.div`
-  width: 70%;
-  //padding-left: 0.7rem;
+  width: 50%;
 `;
 
 const Catchphrase = styled.div`
@@ -76,7 +73,7 @@ const Catchphrase = styled.div`
 `;
 
 const SearchBarWrapper = styled.div`
-  height: 3.1rem;
-  width: 70%;
-  margin-top: 1rem;
+  height: 3.5rem;
+  width: 50%;
+  margin-top: 2rem;
 `;

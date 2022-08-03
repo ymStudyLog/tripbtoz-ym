@@ -44,7 +44,7 @@ const NavigationBarContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  width: 70%;
+  width: 50%;
 `;
 
 const LogoContainer = styled.div`
@@ -65,7 +65,7 @@ const NavigationBarMenuItems = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 11rem;
+  width: 10rem;
   height: 3rem;
   font-size: 1.1rem;
 `;
