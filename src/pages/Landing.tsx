@@ -49,7 +49,7 @@ const BackgroundImageWrapper = styled.div`
 
 const BackgroundImage = styled.img`
   height: 100%;
-  width: 95%;
+  width: 100%;
   position: absolute;
   z-index: -1;
   top: 0;
@@ -64,7 +64,7 @@ const LandingContentsContainer = styled.div`
 `;
 
 const CatchphraseWrapper = styled.div`
-  width: 50%;
+  width: 50rem;
 `;
 
 const Catchphrase = styled.div`
@@ -74,6 +74,6 @@ const Catchphrase = styled.div`
 
 const SearchBarWrapper = styled.div`
   height: 3.5rem;
-  width: 50%;
+  width: 50rem;
   margin-top: 2rem;
 `;

@@ -7,7 +7,7 @@ import { IoSearch } from 'react-icons/io5';
 const SearchBar = () => {
   return (
     <SearchBarContainer>
-      <MenuContainer>
+      <CheckInOutContainer>
         <IconWrapper>
           <VscCalendar />
         </IconWrapper>
@@ -20,8 +20,8 @@ const SearchBar = () => {
           <SubMenuTitle>체크아웃</SubMenuTitle>
           <SubMenuContents>8월 15일</SubMenuContents>
         </CheckOutWrapper>
-      </MenuContainer>
-      <MenuContainer>
+      </CheckInOutContainer>
+      <GuestInfoContainer>
         <IconWrapper>
           <IoPersonOutline />
         </IconWrapper>
@@ -29,7 +29,7 @@ const SearchBar = () => {
           <SubMenuTitle>객실 / 인원</SubMenuTitle>
           <SubMenuContents>객실 1, 인원 3</SubMenuContents>
         </CheckInGuestInfoWrapper>
-      </MenuContainer>
+      </GuestInfoContainer>
       <SearchIconWrapper>
         <IoSearch />
       </SearchIconWrapper>
@@ -41,6 +41,7 @@ export default SearchBar;
 
 const SearchBarContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   width: 100%;
   height: 100%;
   background-color: var(--color-white);
@@ -48,9 +49,10 @@ const SearchBarContainer = styled.div`
   cursor: pointer;
 `;
 
-const MenuContainer = styled.div`
+const CheckInOutContainer = styled.div`
   display: flex;
-  width: 70%;
+  width: 50%;
+  margin-left: 0 1.5rem;
 
   &:hover {
     background-color: var(--color-hover);
@@ -70,7 +72,7 @@ const CheckInGuestInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 8rem;
+  width: 40%;
   padding-left: 1rem;
 `;
 
@@ -99,16 +101,26 @@ const CheckOutWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  width: 8rem;
+  width: 40%;
   padding-right: 1rem;
   border-right: 1.5px solid var(--color-border);
+`;
+
+const GuestInfoContainer = styled.div`
+  display: flex;
+  width: 50%;
+  margin-left: 0 1.5rem;
+
+  &:hover {
+    background-color: var(--color-hover);
+  }
 `;
 
 const SearchIconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 8rem;
+  width: 10%;
   font-size: 2rem;
   border-left: 1.5px solid var(--color-border);
   background-color: var(--color-main);

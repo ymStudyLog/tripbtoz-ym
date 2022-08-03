@@ -44,7 +44,7 @@ const NavigationBarContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  width: 50%;
+  width: 50rem;
 `;
 
 const LogoContainer = styled.div`
