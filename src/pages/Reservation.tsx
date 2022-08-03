@@ -26,8 +26,7 @@ const Reservation = () => {
   //TODO 맨 처음 마운트시 1페이지만 렌더링 되어야하는데 2페이지까지 한번에 렌더링됨
   //TODO hook으로 빼기
   const getPage = async (pageParam: number) => {
-    console.log("페이지", pageParam);
-    const hotelDatas = await getHotelInformation<GetDataResultType>(
+    const hotelDatas : GetDataResultType = await getHotelInformation<BasicHotelDataType[]>(
       `?_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`
     );
     const nextPage =
