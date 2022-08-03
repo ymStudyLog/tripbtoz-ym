@@ -25,7 +25,7 @@ const Landing = () => {
     <>
       <NavigationBar />
       <BackgroundImageWrapper>
-        <BackgroundImage src='./images/bg-10.svg' />
+        <BackgroundImage src='./images/bg-air-balloon.svg' />
       </BackgroundImageWrapper>
       <LandingContentsContainer>
         <CatchphraseWrapper>

@@ -19,7 +19,7 @@ const NavigationBar = (props: Props) => {
     <NavigationBarWrapper>
       <NavigationBarContainer>
         <LogoContainer>
-          <LogoImage src='./images/logo-black-tripbtoz.png' onClick={handleLogo} />
+          <LogoImage src='./images/logo-tripbtoz.png' onClick={handleLogo} />
         </LogoContainer>
         <NavigationBarMenuItems>
           <CustomerService>고객센터</CustomerService>
