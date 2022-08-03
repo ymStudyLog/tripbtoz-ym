@@ -68,25 +68,32 @@ const Body = ({
   return (
     <Container>
       <BodyContentContainer>
+        <HeadTextContainer>
+          <HeadText>
+            {year}년 {month}월
+          </HeadText>
+        </HeadTextContainer>
+
         <Days>
           {DAY.map((elm, idx) => {
             return <div key={idx}>{elm}</div>;
           })}
         </Days>
-
-        {totalDate.map((date, index) => (
-          <Dates
-            key={index}
-            index={index}
-            currentMonthFirstDate={currentMonthFirstDate}
-            nextMonthFirstDate={nextMonthFirstDate}
-            findToday={findToday === index && month === currentMonth}
-            year={year}
-            month={month}
-            date={date}
-            handleClickDate={handleClickDate}
-          ></Dates>
-        ))}
+        <DatesContainer>
+          {totalDate.map((date, index) => (
+            <Dates
+              key={index}
+              index={index}
+              currentMonthFirstDate={currentMonthFirstDate}
+              nextMonthFirstDate={nextMonthFirstDate}
+              findToday={findToday === index && month === currentMonth}
+              year={year}
+              month={month}
+              date={date}
+              handleClickDate={handleClickDate}
+            ></Dates>
+          ))}
+        </DatesContainer>
       </BodyContentContainer>
     </Container>
   );
@@ -100,12 +107,24 @@ const Container = styled.div`
   position: relative;
 `;
 
-const BodyContentContainer = styled.div`
+const HeadTextContainer = styled.div`
   display: flex;
-  flex-flow: row wrap;
-  border: 1px solid black;
+  width: 100%;
+  height: 5vh;
+  margin: 1rem 0;
+  position: relative;
+`;
+
+const HeadText = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+`;
+
+const BodyContentContainer = styled.div`
+
   margin: 30px;
-  /* box-sizing: border-box; */
   height: 100vh;
 `;
 
@@ -114,6 +133,14 @@ const Days = styled.div`
   color: #969696;
   width: 100%;
   height: 2rem;
-  justify-content: space-between;
-  margin: 10px 20px;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+const DatesContainer = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  /* row-gap: 100px; */
+  width: 100%;
+  /* box-sizing: border-box; */
 `;

@@ -22,8 +22,6 @@ const Dates = ({
   month,
   year,
 }: Props) => {
-  const DAY = ["일", "월", "화", "수", "목", "금", "토"];
-
   return (
     <DatesContainer
       onClick={() => handleClickDate(new Date(`${year}-${month}-${date}`))}
@@ -45,13 +43,14 @@ const DatesContainer = styled.li`
   display: flex;
   position: relative;
   width: calc(100% / 7);
-  padding: 0 0.6vw;
-  height: 9vw;
-  text-align: right;
-  border-bottom: 1px solid #e4e3e6;
-  border-left: 1px solid #e4e3e6;
+  padding: 3rem 0;
+  /* height: 9vw; */
+  text-align: center;
   list-style: none;
   box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 `;
 
 const DateNum = styled.div<{
@@ -59,8 +58,8 @@ const DateNum = styled.div<{
   currentMonthFirstDate: number;
   nextMonthFirstDate: number;
 }>`
-  padding: 1vw 0.9vw 0 0;
-  ${(props) => props.index < props.currentMonthFirstDate && `display:none`};
+  /* padding: 1vw 0.9vw 0 0; */
+  ${(props) => props.index < props.currentMonthFirstDate && `display:none`}
 
   ${(props) =>
     props.nextMonthFirstDate > 0 &&
@@ -68,9 +67,4 @@ const DateNum = styled.div<{
     `
     display:none
   `};
-`;
-
-const Days = styled.div`
-  display: flex;
-  color: #969696;
 `;
