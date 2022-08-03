@@ -1,5 +1,5 @@
-export type HotelDatabaseType = {
-  id?: number, //TODO id 추가 후 ?삭제
+export type BasicHotelDataType = {
+  id: number;
   hotel_name: string;
   occupancy: {
     base: number;
@@ -9,4 +9,6 @@ export type HotelDatabaseType = {
     checkIn: string;
     checkOut: string;
   };
-}
+};
+
+export type GetDataResultType = BasicHotelDataType[] | undefined;

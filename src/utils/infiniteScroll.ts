@@ -1,0 +1,1 @@
+export const HOTELDATA_PER_PAGE = 10;
