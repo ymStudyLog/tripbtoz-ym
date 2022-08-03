@@ -39,6 +39,9 @@ button {
 :root {
     --color-white: #fff;
     --color-border: #000;
+    --color-hover: #e8e8e8;
+    --color-subTitle: #9fa1a7;
+    --color-main: #ff375c;
   }
 
 `;
