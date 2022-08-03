@@ -50,7 +50,6 @@ const DatesContainer = styled.li`
   box-sizing: border-box;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 `;
 
 const DateNum = styled.div<{
@@ -67,4 +66,20 @@ const DateNum = styled.div<{
     `
     display:none
   `};
+
+  &:hover {
+    ::after {
+      content: "";
+      display: block;
+      border: 3px solid #ff375c;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  cursor: pointer;
 `;

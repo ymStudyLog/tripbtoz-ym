@@ -36,6 +36,7 @@ const ButtonContainer = styled.div`
   position: absolute;
   top: 42px;
   width: 100%;
+  z-index: 10;
 `;
 
 const Button = styled.button`
