@@ -13,6 +13,7 @@ ${reset}
   }
 
 html {
+  font-family: 'Noto Sans KR', sans-serif;
   word-break: keep-all;
 
   * {
@@ -36,11 +37,9 @@ button {
 }
 
 :root {
-    
-    --color-white: #ffffff;
-  
+    --color-white: #fff;
+    --color-border: #000;
   }
-
 
 `;
 
