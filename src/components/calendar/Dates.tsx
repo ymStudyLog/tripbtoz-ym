@@ -5,17 +5,19 @@ type Props = {
   index: number;
   currentMonthFirstDate: number;
   nextMonthFirstDate: number;
-  elm: number;
+  date: number;
   findToday: boolean;
   month: number;
   year: number;
+  handleClickDate: (date: Date) => void;
 };
 
 const Dates = ({
   index,
   currentMonthFirstDate,
   nextMonthFirstDate,
-  elm,
+  date,
+  handleClickDate,
   findToday,
   month,
   year,
@@ -23,14 +25,15 @@ const Dates = ({
   const DAY = ["일", "월", "화", "수", "목", "금", "토"];
 
   return (
-    <DatesContainer>
+    <DatesContainer
+      onClick={() => handleClickDate(new Date(`${year}-${month}-${date}`))}
+    >
       <DateNum
         index={index}
         currentMonthFirstDate={currentMonthFirstDate}
         nextMonthFirstDate={nextMonthFirstDate}
-        findToday={findToday}
       >
-        <TodayCSS findToday={findToday}>{elm}</TodayCSS>
+        {date}
       </DateNum>
     </DatesContainer>
   );
@@ -55,7 +58,6 @@ const DateNum = styled.div<{
   index: number;
   currentMonthFirstDate: number;
   nextMonthFirstDate: number;
-  findToday: boolean;
 }>`
   padding: 1vw 0.9vw 0 0;
   ${(props) => props.index < props.currentMonthFirstDate && `display:none`};
@@ -66,19 +68,6 @@ const DateNum = styled.div<{
     `
     display:none
   `};
-`;
-
-const TodayCSS = styled.span<{ findToday: boolean }>`
-  ${(props) =>
-    props.findToday &&
-    `position: relative;
-    padding: .4vw;
-    border-radius: 50%;
-    font-size: 1.2vw;
-    font-weight: 700;
-    color: #FFFFFF;
-    background-color:red
- `}
 `;
 
 const Days = styled.div`

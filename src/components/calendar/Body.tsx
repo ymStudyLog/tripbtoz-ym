@@ -3,17 +3,27 @@ import styled from "styled-components";
 import Dates from "./Dates";
 
 type Props = {
-  today: number;
+  today: Date;
   month: number;
   year: number;
+  handleClickDate: (date: Date) => void;
+  checkInDate?: Date;
+  checkOutDate?: Date;
 };
 
-const Body = ({ today, month, year }: Props) => {
+const Body = ({
+  today,
+  month,
+  year,
+  handleClickDate,
+  checkInDate,
+  checkOutDate,
+}: Props) => {
   const [totalDate, setTotalDate] = React.useState<number[]>([]);
   const currentMonthFirstDate = totalDate.indexOf(1);
 
   const nextMonthFirstDate = totalDate.indexOf(1, 7);
-  const findToday = totalDate.indexOf(today);
+  const findToday = totalDate.indexOf(today.getDate());
   const currentMonth = new Date().getMonth() + 1;
 
   const changeDate = (month: number): number[] => {
@@ -70,10 +80,11 @@ const Body = ({ today, month, year }: Props) => {
             index={index}
             currentMonthFirstDate={currentMonthFirstDate}
             nextMonthFirstDate={nextMonthFirstDate}
-            elm={date}
             findToday={findToday === index && month === currentMonth}
-            month={month}
             year={year}
+            month={month}
+            date={date}
+            handleClickDate={handleClickDate}
           ></Dates>
         ))}
       </BodyContentContainer>
