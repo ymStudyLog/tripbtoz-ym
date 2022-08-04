@@ -77,7 +77,7 @@ const DatesContainer = styled.li`
   display: flex;
   position: relative;
   width: calc(100% / 7);
-  padding: 3rem 0;
+  padding: 1rem 0;
   /* height: 9vw; */
   text-align: center;
   list-style: none;
@@ -130,5 +130,6 @@ const MiddleHighlighting = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 50%;
   background-color: pink;
 `;

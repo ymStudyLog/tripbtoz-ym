@@ -117,7 +117,7 @@ export default Body;
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: auto;
   position: relative;
 `;
 
@@ -138,7 +138,7 @@ const HeadText = styled.div`
 
 const BodyContentContainer = styled.div`
   margin: 30px;
-  height: 100vh;
+  height: auto;
 `;
 
 const Days = styled.div`
