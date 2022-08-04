@@ -60,7 +60,7 @@ const Body = ({
     for (let i = 1; i < 7 - NextDay; i++) {
       TLD.push(
         new Date(
-          `${nextMonthDate.getFullYear()}-${nextMonthDate.getMonth()+1}-${i}`
+          `${nextMonthDate.getFullYear()}-${nextMonthDate.getMonth() + 1}-${i}`
         )
       );
     }
@@ -96,12 +96,10 @@ const Body = ({
           {totalDate.map((date, index) => (
             <Dates
               key={index}
-              index={index}
-              currentMonthFirstDate={currentMonthFirstDate}
-              nextMonthFirstDate={nextMonthFirstDate}
               year={date.getFullYear()}
               month={date.getMonth() + 1}
               date={date.getDate()}
+              isOtherDay={date.getMonth() + 1 !== month}
               handleClickDate={handleClickDate}
               checkInDate={checkInDate}
               checkOutDate={checkOutDate}
