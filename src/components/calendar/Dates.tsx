@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { convertDateToString } from "../../utils/dateUtils";
 
 type Props = {
   index: number;
@@ -10,6 +11,8 @@ type Props = {
   month: number;
   year: number;
   handleClickDate: (date: Date) => void;
+  checkInDate?: Date;
+  checkOutDate?: Date;
 };
 
 const Dates = ({
@@ -21,15 +24,48 @@ const Dates = ({
   findToday,
   month,
   year,
+  checkInDate,
+  checkOutDate,
 }: Props) => {
+  let isHighlighting = false;
+  let isMiddleHighlighting = false;
+  const thisDate = convertDateToString(new Date(`${year}-${month}-${date}`));
+  const thisCheckInDate = checkInDate
+    ? convertDateToString(checkInDate)
+    : undefined;
+  const thisCheckOutDate = checkOutDate
+    ? convertDateToString(checkOutDate)
+    : undefined;
+
+  if (thisCheckInDate === thisDate || thisCheckOutDate === thisDate) {
+    isHighlighting = true;
+  }
+  // thisCheckInDate <thisDate < thisCheckOutDate -> isMiddleHighlighting=true
+
+  if (
+    thisCheckInDate &&
+    thisCheckOutDate &&
+    thisCheckInDate < thisDate &&
+    thisDate < thisCheckOutDate
+  ) {
+    isMiddleHighlighting = true;
+  }
+
   return (
     <DatesContainer
-      onClick={() => handleClickDate(new Date(`${year}-${month}-${date}`))}
+      onClick={() => {
+        handleClickDate(new Date(`${year}-${month}-${date}`));
+      }}
     >
+      {isHighlighting ? <Highlighting /> : ""}
+      {isMiddleHighlighting ? <MiddleHighlighting /> : ""}
       <DateNum
         index={index}
         currentMonthFirstDate={currentMonthFirstDate}
         nextMonthFirstDate={nextMonthFirstDate}
+        checkInDate={checkInDate}
+        checkOutDate={checkOutDate}
+        isHighlighting={isHighlighting}
       >
         {date}
       </DateNum>
@@ -56,6 +92,9 @@ const DateNum = styled.div<{
   index: number;
   currentMonthFirstDate: number;
   nextMonthFirstDate: number;
+  checkInDate?: Date;
+  checkOutDate?: Date;
+  isHighlighting?: boolean;
 }>`
   /* padding: 1vw 0.9vw 0 0; */
   ${(props) => props.index < props.currentMonthFirstDate && `display:none`}
@@ -67,11 +106,12 @@ const DateNum = styled.div<{
     display:none
   `};
 
+  ${(props) => props.isHighlighting && `color: "red"`}
   &:hover {
     ::after {
       content: "";
       display: block;
-      border: 3px solid #ff375c;
+      border: 3px solid var(--color-main);
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -82,4 +122,15 @@ const DateNum = styled.div<{
     }
   }
   cursor: pointer;
+`;
+
+const Highlighting = styled.div`
+  width: 10px;
+  height: 10px;
+  background-color: red;
+`;
+const MiddleHighlighting = styled.div`
+  width: 10px;
+  height: 10px;
+  background-color: pink;
 `;

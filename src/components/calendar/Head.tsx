@@ -1,14 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 type Props = {
-  year: number;
-  month: number;
   handleChangePrevButton: () => void;
   handleChangeNextButton: () => void;
 };
 
 const Head = (props: Props) => {
-  const { year, month, handleChangePrevButton, handleChangeNextButton } = props;
+  const {handleChangePrevButton, handleChangeNextButton } = props;
 
   return (
     <HeadContainer>

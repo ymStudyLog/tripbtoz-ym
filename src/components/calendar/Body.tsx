@@ -65,6 +65,7 @@ const Body = ({
   }, [month]);
   const DAY = ["일", "월", "화", "수", "목", "금", "토"];
 
+  
   return (
     <Container>
       <BodyContentContainer>
@@ -91,7 +92,10 @@ const Body = ({
               month={month}
               date={date}
               handleClickDate={handleClickDate}
+              checkInDate={checkInDate}
+              checkOutDate={checkOutDate}
             ></Dates>
+            //checkIn checkOut인 경우에 하이라이팅 해보기
           ))}
         </DatesContainer>
       </BodyContentContainer>
@@ -123,7 +127,6 @@ const HeadText = styled.div`
 `;
 
 const BodyContentContainer = styled.div`
-
   margin: 30px;
   height: 100vh;
 `;
