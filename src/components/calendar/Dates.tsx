@@ -53,6 +53,7 @@ const Dates = ({
   return (
     <DatesContainer
       onClick={() => {
+        console.log(new Date(`${year}-${month}-${date}`));
         handleClickDate(new Date(`${year}-${month}-${date}`));
       }}
     >
@@ -92,7 +93,7 @@ const DateNum = styled.div<{
   isOtherDay: boolean;
 }>`
   display: ${(props) => (props.isOtherDay ? "none" : "block")};
-
+  color: ${(props) => (props.isHighlighting ? "#fff" : "black")};
   &:hover {
     ::after {
       content: "";
@@ -108,15 +109,26 @@ const DateNum = styled.div<{
     }
   }
   cursor: pointer;
+  z-index: 10;
 `;
 
 const Highlighting = styled.div`
-  width: 10px;
-  height: 10px;
-  background-color: red;
+  border: 3px solid var(--color-main);
+  background-color: var(--color-main);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 const MiddleHighlighting = styled.div`
-  width: 10px;
-  height: 10px;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: pink;
 `;

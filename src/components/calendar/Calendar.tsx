@@ -10,7 +10,11 @@ import Head from "./Head";
 
 type Props = {
   today: Date;
+  initialCheckIn: Date | undefined;
+  initialCheckOut: Date | undefined;
+  initialMonthDate: Date;
   handleChangeCheckInOut?: (checkIn?: Date, checkOut?: Date) => void;
+  handleChangeMonthDate?: (date: Date) => void;
 };
 
 type CheckInOutType = {
@@ -18,21 +22,29 @@ type CheckInOutType = {
   checkOut?: Date;
 };
 
-const Calendar = ({ today, handleChangeCheckInOut }: Props) => {
+const Calendar = ({
+  today,
+  initialCheckIn,
+  initialCheckOut,
+  initialMonthDate,
+  handleChangeCheckInOut,
+  handleChangeMonthDate,
+}: Props) => {
   const [todayDate, setTodayDate] = React.useState(today);
+  const [showMonthDate, setShowMonthDate] = React.useState(initialMonthDate);
 
   const [checkInOut, setCheckInOut] = React.useState<CheckInOutType>({
-    checkIn: addDate(today, 7),
-    checkOut: addDate(today, 8),
+    checkIn: initialCheckIn,
+    checkOut: initialCheckOut,
   });
 
   const handleChangePrevButton = () => {
-    const currentDate = addMonthDate(new Date(todayDate), -1);
-    setTodayDate(currentDate);
+    const currentDate = addMonthDate(new Date(showMonthDate), -1);
+    setShowMonthDate(currentDate);
   };
   const handleChangeNextButton = () => {
-    const currentDate = addMonthDate(new Date(todayDate), +1);
-    setTodayDate(currentDate);
+    const currentDate = addMonthDate(new Date(showMonthDate), +1);
+    setShowMonthDate(currentDate);
   };
 
   const handleClickDate = (date: Date) => {
@@ -69,7 +81,11 @@ const Calendar = ({ today, handleChangeCheckInOut }: Props) => {
     }
   }, [checkInOut]);
 
-  //상태가 바뀔때마다 함수를 호출해서 알려주는 함수
+  useEffect(() => {
+    if (handleChangeMonthDate) {
+      handleChangeMonthDate(showMonthDate);
+    }
+  }, [showMonthDate]);
 
   return (
     <>
@@ -83,16 +99,16 @@ const Calendar = ({ today, handleChangeCheckInOut }: Props) => {
           checkInDate={checkInOut.checkIn}
           checkOutDate={checkInOut.checkOut}
           today={today}
-          month={todayDate.getMonth() + 1}
-          year={todayDate.getFullYear()}
+          month={showMonthDate.getMonth() + 1}
+          year={showMonthDate.getFullYear()}
         />
         <Body
           handleClickDate={handleClickDate}
           checkInDate={checkInOut.checkIn}
           checkOutDate={checkInOut.checkOut}
           today={today}
-          month={addMonthDate(todayDate, 1).getMonth() + 1}
-          year={addMonthDate(todayDate, 1).getFullYear()}
+          month={addMonthDate(showMonthDate, 1).getMonth() + 1}
+          year={addMonthDate(showMonthDate, 1).getFullYear()}
         />
       </BodyContainer>
     </>

@@ -14,7 +14,8 @@ type EachInfinitePageType = {
 
 const HotelList = () => {
   const { stayPeriod, headCount, setReservationInStorage } = useLocalStorage();
-  const { isLoading, hasNextPage, data, isFetchingNextPage, ObservationBox } = useInfiniteScroll();
+  const { isLoading, hasNextPage, data, isFetchingNextPage, ObservationBox } =
+    useInfiniteScroll();
 
   if (isLoading) return <Loading />; //TODO isLoading일때랑 아닐때 랑 구분해서 return하기 지금 전혀 구분 안되는중
 

@@ -1,8 +1,36 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import Calendar from "../calendar/Calendar";
 
-const CalendarModal = ({ setShowCalendarModal }: any) => {
-  return <CalendarModalContainer onClick={(event) => event.stopPropagation()}>캘린더 들어올 자리</CalendarModalContainer>;
+type Props = {
+  today: Date;
+  initialCheckIn: Date | undefined;
+  initialCheckOut: Date | undefined;
+  initialMonthDate: Date;
+  handleChangeCheckInOut?: (checkIn?: Date, checkOut?: Date) => void;
+  handleChangeMonthDate?: (date: Date) => void;
+};
+
+const CalendarModal = ({
+  today,
+  initialCheckIn,
+  initialCheckOut,
+  initialMonthDate,
+  handleChangeCheckInOut,
+  handleChangeMonthDate,
+}: Props) => {
+  return (
+    <CalendarModalContainer onClick={(e) => e.stopPropagation()}>
+      <Calendar
+        today={today}
+        initialCheckIn={initialCheckIn}
+        initialCheckOut={initialCheckOut}
+        initialMonthDate={initialMonthDate}
+        handleChangeCheckInOut={handleChangeCheckInOut}
+        handleChangeMonthDate={handleChangeMonthDate}
+      />
+    </CalendarModalContainer>
+  );
 };
 
 export default CalendarModal;
