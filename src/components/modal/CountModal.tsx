@@ -43,7 +43,7 @@ const CountModal = ({ setShowCountModal }: any) => {
   };
 
   return (
-    <CountModalContainer>
+    <CountModalContainer onClick={(event) => event.stopPropagation()}>
       <CountGuestWrapper>
         <GuestTitle>성인</GuestTitle>
         <GuestNumberContainer>
@@ -75,22 +75,24 @@ const CountModal = ({ setShowCountModal }: any) => {
 export default CountModal;
 
 const CountModalContainer = styled.div`
-  width: 22rem;
-  min-height: 10rem;
+  position: absolute;
+  top: 63px;
+  left: -65px;
+  width: 335px;
+  min-height: 100px;
   background-color: var(--color-white);
   display: flex;
   flex-direction: column;
 `;
 
 const CountGuestWrapper = styled.div`
-  width: 100%;
-  height: 50%;
+  height: 50px;
   display: flex;
   justify-content: space-around;
 `;
 
 const GuestTitle = styled.div`
-  width: 3rem;
+  width: 48px;
   font-weight: 600;
   display: flex;
   justify-content: center;
@@ -98,15 +100,15 @@ const GuestTitle = styled.div`
 `;
 
 const GuestNumberContainer = styled.div`
-  width: 10rem;
+  width: 160px;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
 const IconWrapper = styled.div`
-  width: 2rem;
-  font-size: 1.3rem;
+  width: 32px;
+  font-size: 22px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,8 +116,8 @@ const IconWrapper = styled.div`
 `;
 
 const GuestNumber = styled.div`
-  width: 2rem;
-  font-size: 1.3rem;
+  width: 32px;
+  font-size: 22px;
   display: flex;
   justify-content: center;
   align-items: center;
