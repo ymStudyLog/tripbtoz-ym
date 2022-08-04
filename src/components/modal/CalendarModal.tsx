@@ -36,8 +36,11 @@ const CalendarModal = ({
 export default CalendarModal;
 
 const CalendarModalContainer = styled.div`
-  width: 800px;
-  min-height: 400px;
+  position: absolute;
+  top: 63px;
+  left: -65px;
+  width: 50rem;
+  min-height: 22rem;
   border: 1px solid var(--color-border);
   background-color: var(--color-white);
 `;

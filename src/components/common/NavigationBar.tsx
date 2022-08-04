@@ -33,7 +33,7 @@ const NavigationBar = (props: Props) => {
 export default NavigationBar;
 
 const NavigationBarWrapper = styled.nav`
-  height: 5rem;
+  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,12 +44,12 @@ const NavigationBarContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  width: 50rem;
+  width: 800px;
 `;
 
 const LogoContainer = styled.div`
-  width: 10rem;
-  height: 3rem;
+  width: 160px;
+  height: 48px;
   display: flex:
   justify-content: center;
   align-items: center;
@@ -58,8 +58,6 @@ const LogoContainer = styled.div`
 const LogoImage = styled.img`
   width: 100%;
   height: 100%;
-  margin: 0px;
-  padding: 0px;
   cursor: pointer;
 `;
 
@@ -67,9 +65,9 @@ const NavigationBarMenuItems = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 10rem;
-  height: 3rem;
-  font-size: 1.1rem;
+  width: 160px;
+  height: 48px;
+  font-size: 17px;
 `;
 
 const CustomerService = styled.div`
