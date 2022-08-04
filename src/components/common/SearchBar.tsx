@@ -92,7 +92,7 @@ const SearchBar = () => {
         {showCountModal && <CountModal setShowCountModal={setShowCountModal} />}
         <GuestInfoWrapper>
           <SubMenuTitle>객실 / 인원</SubMenuTitle>
-          <SubMenuContents>객실 1, 인원 3</SubMenuContents>
+          <SubMenuContents>객실 1, 인원 {77}</SubMenuContents>
         </GuestInfoWrapper>
       </GuestInfoContainer>
       <SearchIconWrapper>
