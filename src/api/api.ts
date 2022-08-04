@@ -1,28 +1,41 @@
 import axios, { AxiosResponse } from "axios";
-import { StayPeriodType } from "../types/localStorageType";
+import { ReservationDataType } from "../types/hotelDataType";
 
-const BASE_URL = "http://localhost:8000/hotels";
+const BASE_URL = "http://localhost:8000";
 
 export const hotelService = axios.create({ baseURL: `${BASE_URL}` });
 
-export const getHotelInformation = async <T>(url : string = ""): Promise<T | undefined> => {
+export const getHotelInformation = async <T>(
+  endpoint: string = ""
+): Promise<T | undefined> => {
   try {
-    const response: AxiosResponse<T> = await hotelService.get(url);
+    const response: AxiosResponse<T> = await hotelService.get(
+      `/hotels`.concat(endpoint)
+    );
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const patchReservationDetail = async (
-  _id: number,
-  _stayPeriod: StayPeriodType
-): Promise<number | undefined> => {
+export const addReservationData = async (
+  reservationDetail: ReservationDataType
+) => {
   try {
-    const response = await hotelService.patch(`/${_id}`, {
-      reservationDetail: _stayPeriod },
+    await hotelService.post(`/reservations`, reservationDetail);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getReservationData = async <T>(
+  endpoint: string = ""
+): Promise<T | undefined> => {
+  try {
+    const response: AxiosResponse<T> = await hotelService.get(
+      `/reservations`.concat(endpoint)
     );
-    return response.status; //성공 = 2xx 상태 코드
+    return response.data;
   } catch (error) {
     console.log(error);
   }

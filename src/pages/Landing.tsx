@@ -4,7 +4,7 @@ import NavigationBar from '../components/common/NavigationBar';
 import SearchBar from '../components/common/SearchBar';
 
 const Landing = () => {
-  // 임의의 날짜, 투숙객수 로컬스토리지 저장
+  // TODO landing 페이지에서 로컬스토리지 저장 성공하면 삭제 예정
   React.useEffect(() => {
     localStorage.setItem(
       'stayPeriod',
@@ -14,11 +14,6 @@ const Landing = () => {
       })
     );
     localStorage.setItem('headCount', '4');
-    // return () => { //final시 주석만 제거해서 사용하기
-    //   localStorage.removeItem("stayPeriod");
-    //   localStorage.removeItem("headCount");
-    //   localStorage.removeItem("reservedHotels");
-    // }
   }, []);
 
   return (

@@ -4,10 +4,3 @@ export type StayPeriodType = {
 };
 
 export type HeadCountType = number;
-
-export type ReservedHotelsType = {
-  _id: number;
-  hotel_name: string;
-  headCount: HeadCountType;
-  reservationDetail: StayPeriodType;
-};
