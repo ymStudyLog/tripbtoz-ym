@@ -4,13 +4,31 @@ import Calendar from "../calendar/Calendar";
 
 type Props = {
   today: Date;
+  initialCheckIn: Date | undefined;
+  initialCheckOut: Date | undefined;
+  initialMonthDate: Date;
   handleChangeCheckInOut?: (checkIn?: Date, checkOut?: Date) => void;
+  handleChangeMonthDate?: (date: Date) => void;
 };
 
-const CalendarModal = ({ today, handleChangeCheckInOut }: Props) => {
+const CalendarModal = ({
+  today,
+  initialCheckIn,
+  initialCheckOut,
+  initialMonthDate,
+  handleChangeCheckInOut,
+  handleChangeMonthDate,
+}: Props) => {
   return (
     <CalendarModalContainer onClick={(e) => e.stopPropagation()}>
-      <Calendar today={today} handleChangeCheckInOut={handleChangeCheckInOut} />
+      <Calendar
+        today={today}
+        initialCheckIn={initialCheckIn}
+        initialCheckOut={initialCheckOut}
+        initialMonthDate={initialMonthDate}
+        handleChangeCheckInOut={handleChangeCheckInOut}
+        handleChangeMonthDate={handleChangeMonthDate}
+      />
     </CalendarModalContainer>
   );
 };

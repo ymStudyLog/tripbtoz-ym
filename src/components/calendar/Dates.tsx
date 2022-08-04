@@ -53,6 +53,7 @@ const Dates = ({
   return (
     <DatesContainer
       onClick={() => {
+        console.log(new Date(`${year}-${month}-${date}`));
         handleClickDate(new Date(`${year}-${month}-${date}`));
       }}
     >
