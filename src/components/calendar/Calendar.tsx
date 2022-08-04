@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { convertDateToString } from "../../utils/dateUtils";
+import {
+  addMonthDate,
+  convertDateToString,
+  addDate,
+} from "../../utils/dateUtils";
 import Body from "./Body";
 import Head from "./Head";
 
@@ -14,19 +18,8 @@ type CheckInOutType = {
   checkOut?: Date;
 };
 
-const addDate = (date: Date, day: number): Date => {
-  const newDate = new Date(date);
-  newDate.setDate(newDate.getDate() + day);
-  return newDate;
-};
-
 const Calendar = ({ today, handleChangeCheckInOut }: Props) => {
-  let DATE = new Date();
-  const YEAR = DATE.getFullYear();
-  const MONTH = DATE.getMonth() + 1;
-
-  const [month, setMonth] = React.useState(MONTH);
-  const [year, setYear] = React.useState(YEAR);
+  const [todayDate, setTodayDate] = React.useState(today);
 
   const [checkInOut, setCheckInOut] = React.useState<CheckInOutType>({
     checkIn: addDate(today, 7),
@@ -34,16 +27,12 @@ const Calendar = ({ today, handleChangeCheckInOut }: Props) => {
   });
 
   const handleChangePrevButton = () => {
-    const currentDate = new Date(`${year}-${month}`);
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    setYear(currentDate.getFullYear());
-    setMonth(currentDate.getMonth() + 1);
+    const currentDate = addMonthDate(new Date(todayDate), -1);
+    setTodayDate(currentDate);
   };
   const handleChangeNextButton = () => {
-    const currentDate = new Date(`${year}-${month}`);
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    setYear(currentDate.getFullYear());
-    setMonth(currentDate.getMonth() + 1);
+    const currentDate = addMonthDate(new Date(todayDate), +1);
+    setTodayDate(currentDate);
   };
 
   const handleClickDate = (date: Date) => {
@@ -94,16 +83,16 @@ const Calendar = ({ today, handleChangeCheckInOut }: Props) => {
           checkInDate={checkInOut.checkIn}
           checkOutDate={checkInOut.checkOut}
           today={today}
-          month={month}
-          year={year}
+          month={todayDate.getMonth() + 1}
+          year={todayDate.getFullYear()}
         />
         <Body
           handleClickDate={handleClickDate}
           checkInDate={checkInOut.checkIn}
           checkOutDate={checkInOut.checkOut}
           today={today}
-          month={month + 1}
-          year={year}
+          month={addMonthDate(todayDate, 1).getMonth() + 1}
+          year={addMonthDate(todayDate, 1).getFullYear()}
         />
       </BodyContainer>
     </>

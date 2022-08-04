@@ -7,7 +7,7 @@ type Props = {
   currentMonthFirstDate: number;
   nextMonthFirstDate: number;
   date: number;
-  findToday: boolean;
+  today: Date;
   month: number;
   year: number;
   handleClickDate: (date: Date) => void;
@@ -21,7 +21,7 @@ const Dates = ({
   nextMonthFirstDate,
   date,
   handleClickDate,
-  findToday,
+  today,
   month,
   year,
   checkInDate,

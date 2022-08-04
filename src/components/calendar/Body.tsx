@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
+import { addMonthDate } from "../../utils/dateUtils";
 import Dates from "./Dates";
 
 type Props = {
@@ -19,14 +20,15 @@ const Body = ({
   checkInDate,
   checkOutDate,
 }: Props) => {
-  const [totalDate, setTotalDate] = React.useState<number[]>([]);
-  const currentMonthFirstDate = totalDate.indexOf(1);
+  const [totalDate, setTotalDate] = React.useState<Date[]>([]);
+  const currentMonthFirstDate = totalDate.indexOf(
+    new Date(`${year}-${month}-1`)
+  );
 
-  const nextMonthFirstDate = totalDate.indexOf(1, 7);
-  const findToday = totalDate.indexOf(today.getDate());
-  const currentMonth = new Date().getMonth() + 1;
+  const nextMonthDate = addMonthDate(new Date(`${year}-${month}`), 1);
+  const nextMonthFirstDate = totalDate.indexOf(nextMonthDate);
 
-  const changeDate = (month: number): number[] => {
+  const changeDate = (month: number): Date[] => {
     // 이전날짜
     let PreviousLastDate = new Date(year, month - 1, 0).getDate();
     let PreviousLastDay = new Date(year, month - 1, 0).getDay();
@@ -35,26 +37,37 @@ const Body = ({
     const NextDay = new Date(year, month, 0).getDay();
 
     //이전날짜 생성
-    let PVLD = [];
+    let PVLD: Date[] = [];
     //6==토요일 즉, 토요일이 아니면,
     //이전달의 마지막 요일
     // console.log(PreviousLastDay + 1);
+    const prevMonthDate = addMonthDate(new Date(`${year}-${month}`), -1);
     if (PreviousLastDay !== 6) {
       for (let i = 0; i < PreviousLastDay + 1; i++) {
         //unshift() 메서드는 새로운 요소를 배열의 맨 앞쪽에 추가하고, 새로운 길이를 반환합니다.
-        PVLD.unshift(PreviousLastDate - i);
+        PVLD.unshift(
+          new Date(
+            `${prevMonthDate.getFullYear()}-${prevMonthDate.getMonth()}-${
+              PreviousLastDate - i
+            }`
+          )
+        );
       }
     }
     //다음 요일 생성
-    let TLD = [];
+    let TLD: Date[] = [];
+    const nextMonthDate = addMonthDate(new Date(`${year}-${month}`), 1);
     for (let i = 1; i < 7 - NextDay; i++) {
-      if (i === 0) {
-        return TLD;
-      }
-      TLD.push(i);
+      TLD.push(
+        new Date(
+          `${nextMonthDate.getFullYear()}-${nextMonthDate.getMonth()+1}-${i}`
+        )
+      );
     }
     //현재 날짜
-    let TD = Array.from(Array.from(Array(NextDate + 1)).keys()).slice(1);
+    let TD: Date[] = Array.from(Array.from(Array(NextDate + 1)).keys())
+      .slice(1)
+      .map((date) => new Date(`${year}-${month}-${date}`));
     // console.log(PVLD.concat(TD, TLD));
     //PVLD = 이전달의 남은날짜 + 이번달의 날짜 + 다음달의 올 날짜
     return PVLD.concat(TD, TLD);
@@ -65,7 +78,6 @@ const Body = ({
   }, [month]);
   const DAY = ["일", "월", "화", "수", "목", "금", "토"];
 
-  
   return (
     <Container>
       <BodyContentContainer>
@@ -87,13 +99,13 @@ const Body = ({
               index={index}
               currentMonthFirstDate={currentMonthFirstDate}
               nextMonthFirstDate={nextMonthFirstDate}
-              findToday={findToday === index && month === currentMonth}
-              year={year}
-              month={month}
-              date={date}
+              year={date.getFullYear()}
+              month={date.getMonth() + 1}
+              date={date.getDate()}
               handleClickDate={handleClickDate}
               checkInDate={checkInDate}
               checkOutDate={checkOutDate}
+              today={today}
             ></Dates>
             //checkIn checkOut인 경우에 하이라이팅 해보기
           ))}
