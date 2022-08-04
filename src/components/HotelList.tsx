@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { addReservationData } from "../api/api";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { BasicHotelDataType, GetDataResultType } from "../types/hotelDataType";
-import Loading from "./Loading";
+import Loading from "./common/Loading";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
 
 type EachInfinitePageType = {
@@ -14,7 +14,8 @@ type EachInfinitePageType = {
 
 const HotelList = () => {
   const { stayPeriod, headCount, setReservationInStorage } = useLocalStorage();
-  const { isLoading, hasNextPage, data, isFetchingNextPage, ObservationBox } = useInfiniteScroll();
+  const { isLoading, hasNextPage, data, isFetchingNextPage, ObservationBox } =
+    useInfiniteScroll();
 
   if (isLoading) return <Loading />; //TODO isLoading일때랑 아닐때 랑 구분해서 return하기 지금 전혀 구분 안되는중
 

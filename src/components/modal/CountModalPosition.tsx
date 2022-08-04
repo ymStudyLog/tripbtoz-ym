@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import ModalPortal from './ModalPortal';
-import { ModalProps } from '../../types/modalType';
+import React from "react";
+import styled from "styled-components";
+import ModalPortal from "./ModalPortal";
+import { ModalProps } from "../../types/modalType";
 
 const CountModalPosition = ({ children }: ModalProps) => {
   return (
@@ -14,7 +14,7 @@ const CountModalPosition = ({ children }: ModalProps) => {
 export default CountModalPosition;
 
 const Position = styled.div`
-  transform: translateY(-280%);
+  transform: translateY(-425px);
   display: flex;
   justify-content: flex-end;
   margin-right: 20rem;

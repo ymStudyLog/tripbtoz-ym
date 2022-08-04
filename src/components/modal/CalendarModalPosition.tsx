@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import ModalPortal from './ModalPortal';
-import { ModalProps } from '../../types/modalType';
+import React from "react";
+import styled from "styled-components";
+import ModalPortal from "./ModalPortal";
+import { ModalProps } from "../../types/modalType";
 
 const CalendarModalPosition = ({ children }: ModalProps) => {
   return (
@@ -14,7 +14,7 @@ const CalendarModalPosition = ({ children }: ModalProps) => {
 export default CalendarModalPosition;
 
 const Position = styled.div`
-  transform: translateY(-127%);
+  transform: translateY(-425px);
   display: flex;
   justify-content: center;
 `;

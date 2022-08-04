@@ -1,18 +1,22 @@
-import React from 'react';
-import styled from 'styled-components';
-import { VscCalendar } from 'react-icons/vsc';
-import { IoPersonOutline } from 'react-icons/io5';
-import { IoSearch } from 'react-icons/io5';
-import CalendarModalPosition from '../modal/CalendarModalPosition';
-import CalendarModal from '../modal/CalendarModal';
-import CountModalPosition from '../modal/CountModalPosition';
-import CountModal from '../modal/CountModal';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { VscCalendar } from "react-icons/vsc";
+import { IoPersonOutline } from "react-icons/io5";
+import { IoSearch } from "react-icons/io5";
+import CalendarModalPosition from "../modal/CalendarModalPosition";
+import CalendarModal from "../modal/CalendarModal";
+import CountModalPosition from "../modal/CountModalPosition";
+import CountModal from "../modal/CountModal";
 
 const SearchBar = () => {
-  const [showCalendarModal, setShowCalendarModal] = React.useState<boolean>(false);
+  const [showCalendarModal, setShowCalendarModal] =
+    React.useState<boolean>(false);
 
   const [showCountModal, setShowCountModal] = React.useState<boolean>(false);
 
+  useEffect(() => {
+    console.log(showCalendarModal);
+  }, [showCalendarModal]);
   return (
     <SearchBarContainer>
       <IconWrapper>
@@ -25,7 +29,12 @@ const SearchBar = () => {
       >
         {showCalendarModal && (
           <CalendarModalPosition>
-            <CalendarModal setShowCalendarModal={setShowCalendarModal} />
+            <CalendarModal
+              today={new Date()}
+              handleChangeCheckInOut={(checkIn?: Date, checkOut?: Date) => {
+                console.log(checkIn, checkOut);
+              }}
+            />
           </CalendarModalPosition>
         )}
         <CheckInWrapper>
