@@ -22,19 +22,14 @@ const CountModal = ({ setShowCountModal }: any) => {
     child: 0,
   };
 
-  const increaseAdult = () => {
-    if (isMoreThan(numberOfPeople.adult + 1, MAXIMUM.adult)) return;
-    setNumberOfPeople((prevState) => ({ ...prevState, adult: prevState.adult + 1 }));
-  };
-
-  const increaseChild = () => {
-    if (isMoreThan(numberOfPeople.child + 1, MAXIMUM.child)) return;
-    setNumberOfPeople((prevState) => ({ ...prevState, child: prevState.child + 1 }));
-  };
-
   const decreaseAdult = () => {
     if (isLessThan(numberOfPeople.adult - 1, MINIMUM.adult)) return;
     setNumberOfPeople((prevState) => ({ ...prevState, adult: prevState.adult - 1 }));
+  };
+
+  const increaseAdult = () => {
+    if (isMoreThan(numberOfPeople.adult + 1, MAXIMUM.adult)) return;
+    setNumberOfPeople((prevState) => ({ ...prevState, adult: prevState.adult + 1 }));
   };
 
   const decreaseChild = () => {
@@ -42,16 +37,21 @@ const CountModal = ({ setShowCountModal }: any) => {
     setNumberOfPeople((prevState) => ({ ...prevState, child: prevState.child - 1 }));
   };
 
+  const increaseChild = () => {
+    if (isMoreThan(numberOfPeople.child + 1, MAXIMUM.child)) return;
+    setNumberOfPeople((prevState) => ({ ...prevState, child: prevState.child + 1 }));
+  };
+
   return (
     <CountModalContainer onClick={(event) => event.stopPropagation()}>
       <CountGuestWrapper>
         <GuestTitle>성인</GuestTitle>
         <GuestNumberContainer>
-          <IconWrapper>
+          <IconWrapper onClick={() => decreaseAdult()}>
             <FiMinusSquare />
           </IconWrapper>
-          <GuestNumber>2</GuestNumber>
-          <IconWrapper>
+          <GuestNumber>{numberOfPeople.adult}</GuestNumber>
+          <IconWrapper onClick={() => increaseAdult()}>
             <FiPlusSquare />
           </IconWrapper>
         </GuestNumberContainer>
@@ -59,11 +59,11 @@ const CountModal = ({ setShowCountModal }: any) => {
       <CountGuestWrapper>
         <GuestTitle>아이</GuestTitle>
         <GuestNumberContainer>
-          <IconWrapper>
+          <IconWrapper onClick={() => decreaseChild()}>
             <FiMinusSquare />
           </IconWrapper>
-          <GuestNumber>0</GuestNumber>
-          <IconWrapper>
+          <GuestNumber>{numberOfPeople.child}</GuestNumber>
+          <IconWrapper onClick={() => increaseChild()}>
             <FiPlusSquare />
           </IconWrapper>
         </GuestNumberContainer>
