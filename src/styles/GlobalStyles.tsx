@@ -38,9 +38,10 @@ button {
 
 :root {
     --color-white: #fff;
-    --color-border: #000;
+    --color-border: #cdcdcd;
     --color-hover: #e8e8e8;
     --color-subTitle: #9fa1a7;
+    --color-catchphrase: #11482d;
     --color-main: #ff375c;
   }
 

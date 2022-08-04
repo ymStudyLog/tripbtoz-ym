@@ -1,4 +1,4 @@
-import HotelList from "../components/HotelList";
+import HotelList from '../components/HotelList';
 
 const Reservation = () => {
   return (

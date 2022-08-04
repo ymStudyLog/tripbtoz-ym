@@ -1,26 +1,26 @@
-import React from "react";
-import styled from "styled-components";
-import NavigationBar from "../components/NavigationBar";
-import SearchBar from "../components/SearchBar";
+import React from 'react';
+import styled from 'styled-components';
+import NavigationBar from '../components/common/NavigationBar';
+import SearchBar from '../components/common/SearchBar';
 
 const Landing = () => {
   // TODO landing 페이지에서 로컬스토리지 저장 성공하면 삭제 예정
   React.useEffect(() => {
     localStorage.setItem(
-      "stayPeriod",
+      'stayPeriod',
       JSON.stringify({
-        checkIn: "2022. 8. 10.",
-        checkOut: "2022. 8. 13.",
+        checkIn: '2022. 8. 10.',
+        checkOut: '2022. 8. 13.',
       })
     );
-    localStorage.setItem("headCount", "4");
+    localStorage.setItem('headCount', '4');
   }, []);
 
   return (
     <>
       <NavigationBar />
       <BackgroundImageWrapper>
-        <BackgroundImage src="./images/bg-air-balloon.svg" />
+        <BackgroundImage src='./images/background.jpg' />
       </BackgroundImageWrapper>
       <LandingContentsContainer>
         <CatchphraseWrapper>
@@ -55,7 +55,7 @@ const LandingContentsContainer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  height: 40%;
+  height: 30%;
 `;
 
 const CatchphraseWrapper = styled.div`
@@ -65,10 +65,11 @@ const CatchphraseWrapper = styled.div`
 const Catchphrase = styled.div`
   font-weight: 700;
   font-size: 2.1rem;
+  color: var(--color-catchphrase);
 `;
 
 const SearchBarWrapper = styled.div`
-  height: 3.5rem;
+  height: 3.8rem;
   width: 50rem;
   margin-top: 2rem;
 `;
