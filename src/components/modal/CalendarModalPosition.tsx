@@ -3,19 +3,18 @@ import styled from 'styled-components';
 import ModalPortal from './ModalPortal';
 import { ModalProps } from '../../types/modalType';
 
-const ModalContainer = ({ children }: ModalProps) => {
+const CalendarModalPosition = ({ children }: ModalProps) => {
   return (
     <ModalPortal>
-      <ModalPosition>{children}</ModalPosition>
+      <Position>{children}</Position>
     </ModalPortal>
   );
 };
 
-export default ModalContainer;
+export default CalendarModalPosition;
 
-const ModalPosition = styled.div`
+const Position = styled.div`
   transform: translateY(-127%);
   display: flex;
   justify-content: center;
-  background-color: transparent;
 `;

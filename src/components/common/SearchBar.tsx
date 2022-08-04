@@ -3,11 +3,15 @@ import styled from 'styled-components';
 import { VscCalendar } from 'react-icons/vsc';
 import { IoPersonOutline } from 'react-icons/io5';
 import { IoSearch } from 'react-icons/io5';
+import CalendarModalPosition from '../modal/CalendarModalPosition';
 import CalendarModal from '../modal/CalendarModal';
-import ModalContainer from '../modal/ModalContainer';
+import CountModalPosition from '../modal/CountModalPosition';
+import CountModal from '../modal/CountModal';
 
 const SearchBar = () => {
   const [showCalendarModal, setShowCalendarModal] = React.useState<boolean>(false);
+
+  const [showCountModal, setShowCountModal] = React.useState<boolean>(false);
 
   return (
     <SearchBarContainer>
@@ -20,9 +24,9 @@ const SearchBar = () => {
         }}
       >
         {showCalendarModal && (
-          <ModalContainer>
+          <CalendarModalPosition>
             <CalendarModal setShowCalendarModal={setShowCalendarModal} />
-          </ModalContainer>
+          </CalendarModalPosition>
         )}
         <CheckInWrapper>
           <SubMenuTitle>체크인</SubMenuTitle>
@@ -37,7 +41,16 @@ const SearchBar = () => {
       <IconWrapper>
         <IoPersonOutline />
       </IconWrapper>
-      <GuestInfoContainer>
+      <GuestInfoContainer
+        onClick={() => {
+          setShowCountModal(!showCountModal);
+        }}
+      >
+        {showCountModal && (
+          <CountModalPosition>
+            <CountModal setShowCountModal={setShowCountModal} />
+          </CountModalPosition>
+        )}
         <GuestInfoWrapper>
           <SubMenuTitle>객실 / 인원</SubMenuTitle>
           <SubMenuContents>객실 1, 인원 3</SubMenuContents>
