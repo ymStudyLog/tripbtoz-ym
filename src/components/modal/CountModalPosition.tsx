@@ -14,7 +14,7 @@ const CountModalPosition = ({ children }: ModalProps) => {
 export default CountModalPosition;
 
 const Position = styled.div`
-  transform: translateY(-165%);
+  transform: translateY(-280%);
   display: flex;
   justify-content: flex-end;
   margin-right: 20rem;
