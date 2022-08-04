@@ -6,7 +6,7 @@ type Props = {
 };
 
 const Head = (props: Props) => {
-  const {handleChangePrevButton, handleChangeNextButton } = props;
+  const { handleChangePrevButton, handleChangeNextButton } = props;
 
   return (
     <HeadContainer>
@@ -24,6 +24,7 @@ const HeadContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 const ButtonContainer = styled.div`

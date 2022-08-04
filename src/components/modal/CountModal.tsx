@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { FiMinusSquare } from 'react-icons/fi';
-import { FiPlusSquare } from 'react-icons/fi';
+import React from "react";
+import styled from "styled-components";
+import { FiMinusSquare } from "react-icons/fi";
+import { FiPlusSquare } from "react-icons/fi";
 
 const CountModal = ({ setShowCountModal }: any) => {
   const [numberOfPeople, setNumberOfPeople] = React.useState({
@@ -22,9 +22,13 @@ const CountModal = ({ setShowCountModal }: any) => {
     child: 0,
   };
 
+
   const decreaseAdult = () => {
     if (isLessThan(numberOfPeople.adult - 1, MINIMUM.adult)) return;
-    setNumberOfPeople((prevState) => ({ ...prevState, adult: prevState.adult - 1 }));
+    setNumberOfPeople((prevState) => ({
+      ...prevState,
+      adult: prevState.adult - 1,
+    }));
   };
 
   const increaseAdult = () => {
@@ -34,7 +38,10 @@ const CountModal = ({ setShowCountModal }: any) => {
 
   const decreaseChild = () => {
     if (isLessThan(numberOfPeople.child - 1, MINIMUM.child)) return;
-    setNumberOfPeople((prevState) => ({ ...prevState, child: prevState.child - 1 }));
+    setNumberOfPeople((prevState) => ({
+      ...prevState,
+      child: prevState.child - 1,
+    }));
   };
 
   const increaseChild = () => {
