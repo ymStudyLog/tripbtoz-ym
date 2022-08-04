@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { addReservationData } from "../api/api";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { BasicHotelDataType, GetDataResultType } from "../types/hotelDataType";
-import Loading from "./Loading";
+import Loading from "./common/Loading";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
 
 type EachInfinitePageType = {
