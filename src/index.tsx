@@ -14,8 +14,8 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={myQueryClient}>
       <GlobalStyles />
-      {/* devTools는 필요없으면 삭제 */}
-      <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"}/> 
+      {/* TODO devTools는 필요없으면 삭제 */}
+      <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
       <App />
     </QueryClientProvider>
   </React.StrictMode>

@@ -1,18 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { useInView } from "react-intersection-observer";
-import {
-  useInfiniteQuery,
-  useQuery,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
-import { getHotelInformation } from "../api/api";
+import { addReservationData } from "../api/api";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { BasicHotelDataType, GetDataResultType } from "../types/hotelDataType";
-import { StayPeriodType } from "../types/localStorageType";
-import { HOTELDATA_PER_PAGE } from "../utils/infiniteScroll";
 import Loading from "./Loading";
+import useInfiniteScroll from "../hooks/useInfiniteScroll";
 
 type EachInfinitePageType = {
   result: GetDataResultType;
@@ -21,54 +13,11 @@ type EachInfinitePageType = {
 };
 
 const HotelList = () => {
-  const [ref, inView] = useInView();
   const { stayPeriod, headCount, setReservationInStorage } = useLocalStorage();
+  const { isLoading, hasNextPage, data, isFetchingNextPage, ObservationBox } = useInfiniteScroll();
 
-  //TODO 예약된 호텔 데이터는 어디에 저장? 로컬로 끝? 필터링은 어떻게? database를 따로 파서 저장?
-  //TODO 맨 처음 마운트시 1페이지만 렌더링 되어야하는데 2페이지까지 한번에 렌더링됨
-  //TODO hook으로 빼기
-  const urlEndpoint = (pageNumber: number) =>
-    `?occupancy.base_lte=${headCount}&occupancy.max_gte=${headCount}&_page=${pageNumber}&_limit=${HOTELDATA_PER_PAGE}`;
+  if (isLoading) return <Loading />; //TODO isLoading일때랑 아닐때 랑 구분해서 return하기 지금 전혀 구분 안되는중
 
-  const getPage = async (pageParam: number) => {
-    const hotelDatas: GetDataResultType = await getHotelInformation<
-      BasicHotelDataType[]
-    >(urlEndpoint(pageParam));
-    const nextPage =
-      hotelDatas !== undefined && hotelDatas.length >= HOTELDATA_PER_PAGE
-        ? pageParam + 1
-        : undefined; //data가 10개보다 작아지면 마지막 페이지
-    return {
-      result: hotelDatas,
-      nextPage,
-      isLast: !nextPage, //마지막 페이지면 true, 아니면 false
-    };
-  };
-
-  const { fetchNextPage, isLoading, isFetchingNextPage, hasNextPage, data } =
-    useInfiniteQuery(
-      [`getTenHotelData`],
-      ({ pageParam = 1 }) => getPage(pageParam),
-      {
-        getNextPageParam: (lastPage) => lastPage.nextPage,
-      }
-    );
-
-  React.useEffect(() => {
-    if (!data) return;
-    const lastPageIndex = data?.pages.length - 1;
-    const isLastPage = data?.pages[lastPageIndex].isLast;
-
-    if (!isLastPage && inView) setTimeout(fetchNextPage, 500);
-  }, [inView, fetchNextPage, data]);
-
-  // const myQueryClient = useQueryClient();
-  // const addReservationDetail = useMutation((id : number, period: StayPeriodType)=>patchReservationDetail(id, period), {
-  //   onSuccess: () => {
-  //     myQueryClient.invalidateQueries(`getTenHotelData`);
-  //   },
-  // });
-  if (isLoading) return <Loading />;
   return (
     <>
       {data?.pages.map((page: EachInfinitePageType, index: number) => (
@@ -92,7 +41,12 @@ const HotelList = () => {
                         eachHotelData.id,
                         eachHotelData.hotel_name
                       );
-                      //patchReservationDetail(eachHotelData.id, stayPeriod); //TODO 어떻게 예약데이터를 저장할건지
+                      addReservationData({
+                        hotel_id: eachHotelData.id,
+                        hotel_name: eachHotelData.hotel_name,
+                        headCount: headCount,
+                        reservationDetail: stayPeriod,
+                      });
                     }}
                   >
                     예약
@@ -104,14 +58,13 @@ const HotelList = () => {
         </TempHotelItemContainer>
       ))}
       {hasNextPage ? <Loading /> : null}
-      {!isFetchingNextPage && <div ref={ref}></div>}
+      {!isFetchingNextPage && <ObservationBox />}
     </>
   );
 };
 
 export default HotelList;
 
-//TODO 구조 변경
 const TempHotelItemContainer = styled.div`
   border: 1px solid red;
 `;

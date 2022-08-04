@@ -1,9 +1,6 @@
 import React from "react";
-import {
-  StayPeriodType,
-  HeadCountType,
-  ReservedHotelsType,
-} from "../types/localStorageType";
+import { StayPeriodType, HeadCountType } from "../types/localStorageType";
+import { ReservationDataType } from "../types/hotelDataType";
 
 const useLocalStorage = () => {
   const [stayPeriod, setStayPeriod] = React.useState<StayPeriodType>({
@@ -30,10 +27,10 @@ const useLocalStorage = () => {
   }, []);
 
   const setReservationInStorage = (id: number, hotelName: string) => {
-    const prevStorageState = localStorage.getItem("reservedHotels");
+    const prevStorageState = localStorage.getItem("reservationData");
     const newStorageState = [
       {
-        _id: id,
+        hotel_id: id,
         hotel_name: hotelName,
         headCount: headCount,
         reservationDetail: {
@@ -43,14 +40,14 @@ const useLocalStorage = () => {
       },
     ];
     if (prevStorageState !== null) {
-      const parsedPrevState: ReservedHotelsType[] =
+      const parsedPrevState: ReservationDataType[] =
         JSON.parse(prevStorageState);
       localStorage.setItem(
-        "reservedHotels",
+        "reservationData",
         JSON.stringify(parsedPrevState.concat(newStorageState))
       );
     } else {
-      localStorage.setItem("reservedHotels", JSON.stringify(newStorageState));
+      localStorage.setItem("reservationData", JSON.stringify(newStorageState));
     }
   };
 

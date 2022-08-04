@@ -1,31 +1,26 @@
-import React from 'react';
-import styled from 'styled-components';
-import NavigationBar from '../components/NavigationBar';
-import SearchBar from '../components/SearchBar';
+import React from "react";
+import styled from "styled-components";
+import NavigationBar from "../components/NavigationBar";
+import SearchBar from "../components/SearchBar";
 
 const Landing = () => {
-  // 임의의 날짜, 투숙객수 로컬스토리지 저장
+  // TODO landing 페이지에서 로컬스토리지 저장 성공하면 삭제 예정
   React.useEffect(() => {
     localStorage.setItem(
-      'stayPeriod',
+      "stayPeriod",
       JSON.stringify({
-        checkIn: '2022. 8. 10.',
-        checkOut: '2022. 8. 13.',
+        checkIn: "2022. 8. 10.",
+        checkOut: "2022. 8. 13.",
       })
     );
-    localStorage.setItem('headCount', '4');
-    // return () => { //final시 주석만 제거해서 사용하기
-    //   localStorage.removeItem("stayPeriod");
-    //   localStorage.removeItem("headCount");
-    //   localStorage.removeItem("reservedHotels");
-    // }
+    localStorage.setItem("headCount", "4");
   }, []);
 
   return (
     <>
       <NavigationBar />
       <BackgroundImageWrapper>
-        <BackgroundImage src='./images/bg-air-balloon.svg' />
+        <BackgroundImage src="./images/bg-air-balloon.svg" />
       </BackgroundImageWrapper>
       <LandingContentsContainer>
         <CatchphraseWrapper>
