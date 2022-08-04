@@ -25,7 +25,7 @@ const Landing = () => {
     <>
       <NavigationBar />
       <BackgroundImageWrapper>
-        <BackgroundImage src='./images/bg-air-balloon.svg' />
+        <BackgroundImage src='./images/background.jpg' />
       </BackgroundImageWrapper>
       <LandingContentsContainer>
         <CatchphraseWrapper>
@@ -70,6 +70,7 @@ const CatchphraseWrapper = styled.div`
 const Catchphrase = styled.div`
   font-weight: 700;
   font-size: 2.1rem;
+  color: var(--color-catchphrase);
 `;
 
 const SearchBarWrapper = styled.div`

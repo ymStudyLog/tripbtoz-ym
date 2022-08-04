@@ -7,28 +7,28 @@ import { IoSearch } from 'react-icons/io5';
 const SearchBar = () => {
   return (
     <SearchBarContainer>
+      <IconWrapper>
+        <VscCalendar />
+      </IconWrapper>
       <CheckInOutContainer>
-        <IconWrapper>
-          <VscCalendar />
-        </IconWrapper>
-        <CheckInGuestInfoWrapper>
+        <CheckInWrapper>
           <SubMenuTitle>체크인</SubMenuTitle>
           <SubMenuContents>8월 13일</SubMenuContents>
-        </CheckInGuestInfoWrapper>
+        </CheckInWrapper>
         <StayPeriodText>2박</StayPeriodText>
         <CheckOutWrapper>
           <SubMenuTitle>체크아웃</SubMenuTitle>
           <SubMenuContents>8월 15일</SubMenuContents>
         </CheckOutWrapper>
       </CheckInOutContainer>
+      <IconWrapper>
+        <IoPersonOutline />
+      </IconWrapper>
       <GuestInfoContainer>
-        <IconWrapper>
-          <IoPersonOutline />
-        </IconWrapper>
-        <CheckInGuestInfoWrapper>
+        <GuestInfoWrapper>
           <SubMenuTitle>객실 / 인원</SubMenuTitle>
           <SubMenuContents>객실 1, 인원 3</SubMenuContents>
-        </CheckInGuestInfoWrapper>
+        </GuestInfoWrapper>
       </GuestInfoContainer>
       <SearchIconWrapper>
         <IoSearch />
@@ -51,8 +51,9 @@ const SearchBarContainer = styled.div`
 
 const CheckInOutContainer = styled.div`
   display: flex;
-  width: 50%;
+  width: 20rem;
   margin-left: 0 1.5rem;
+  border-right: 1.5px solid var(--color-border);
 
   &:hover {
     background-color: var(--color-hover);
@@ -63,16 +64,16 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 3rem;
+  width: 4rem;
   font-size: 1.8rem;
 `;
 
-const CheckInGuestInfoWrapper = styled.div`
+const CheckInWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 40%;
+  width: 9rem;
   padding-left: 1rem;
 `;
 
@@ -92,7 +93,7 @@ const StayPeriodText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 3rem;
+  width: 2rem;
   color: var(--color-subTitle);
 `;
 
@@ -101,14 +102,13 @@ const CheckOutWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  width: 40%;
+  width: 9rem;
   padding-right: 1rem;
-  border-right: 1.5px solid var(--color-border);
 `;
 
 const GuestInfoContainer = styled.div`
   display: flex;
-  width: 50%;
+  width: 17rem;
   margin-left: 0 1.5rem;
 
   &:hover {
@@ -116,13 +116,21 @@ const GuestInfoContainer = styled.div`
   }
 `;
 
+const GuestInfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 20rem;
+  padding-left: 1rem;
+`;
+
 const SearchIconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 10%;
-  font-size: 2rem;
-  border-left: 1.5px solid var(--color-border);
+  width: 5rem;
+  font-size: 1.8rem;
   background-color: var(--color-main);
   color: var(--color-white);
 `;
