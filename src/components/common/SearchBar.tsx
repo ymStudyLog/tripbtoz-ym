@@ -3,9 +3,7 @@ import styled from "styled-components";
 import { VscCalendar } from "react-icons/vsc";
 import { IoPersonOutline } from "react-icons/io5";
 import { IoSearch } from "react-icons/io5";
-import CalendarModalPosition from "../modal/CalendarModalPosition";
 import CalendarModal from "../modal/CalendarModal";
-import CountModalPosition from "../modal/CountModalPosition";
 import CountModal from "../modal/CountModal";
 import {
   addDate,
@@ -41,31 +39,26 @@ const SearchBar = () => {
         }}
       >
         {showCalendarModal && (
-          <CalendarModalPosition>
-            <CalendarModal
-              initialCheckIn={checkIn}
-              initialCheckOut={checkOut}
-              today={new Date(convertDateToString(new Date()))}
-              initialMonthDate={initialMonthDate}
-              handleChangeMonthDate={(date: Date) => {
-                setInitialMonthDate(date);
-              }}
-              handleChangeCheckInOut={(
-                srcCheckIn?: Date,
-                srcCheckOut?: Date
-              ) => {
-                let changed = false;
-                if (srcCheckIn !== checkIn || srcCheckOut !== checkOut) {
-                  changed = true;
-                }
-                setCheckIn(srcCheckIn);
-                setCheckOut(srcCheckOut);
-                if (changed && srcCheckIn && srcCheckOut) {
-                  setShowCalendarModal(false);
-                }
-              }}
-            />
-          </CalendarModalPosition>
+          <CalendarModal
+            initialCheckIn={checkIn}
+            initialCheckOut={checkOut}
+            today={new Date(convertDateToString(new Date()))}
+            initialMonthDate={initialMonthDate}
+            handleChangeMonthDate={(date: Date) => {
+              setInitialMonthDate(date);
+            }}
+            handleChangeCheckInOut={(srcCheckIn?: Date, srcCheckOut?: Date) => {
+              let changed = false;
+              if (srcCheckIn !== checkIn || srcCheckOut !== checkOut) {
+                changed = true;
+              }
+              setCheckIn(srcCheckIn);
+              setCheckOut(srcCheckOut);
+              if (changed && srcCheckIn && srcCheckOut) {
+                setShowCalendarModal(false);
+              }
+            }}
+          />
         )}
         <CheckInWrapper>
           <SubMenuTitle>체크인</SubMenuTitle>
