@@ -1,36 +1,70 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { convertDateToString } from "../../utils/dateUtils";
 
 type Props = {
-  index: number;
-  currentMonthFirstDate: number;
-  nextMonthFirstDate: number;
-  elm: number;
-  findToday: boolean;
+  date: number;
+  today: Date;
   month: number;
   year: number;
+  handleClickDate: (date: Date) => void;
+  checkInDate?: Date;
+  checkOutDate?: Date;
+  isOtherDay: boolean;
 };
 
 const Dates = ({
-  index,
-  currentMonthFirstDate,
-  nextMonthFirstDate,
-  elm,
-  findToday,
+  date,
+  handleClickDate,
+  today,
   month,
   year,
+  checkInDate,
+  checkOutDate,
+  isOtherDay,
 }: Props) => {
-  const DAY = ["일", "월", "화", "수", "목", "금", "토"];
+  let isHighlighting = false;
+  let isMiddleHighlighting = false;
+  const thisDate = convertDateToString(new Date(`${year}-${month}-${date}`));
+  const thisCheckInDate = checkInDate
+    ? convertDateToString(checkInDate)
+    : undefined;
+  const thisCheckOutDate = checkOutDate
+    ? convertDateToString(checkOutDate)
+    : undefined;
 
+  if (
+    !isOtherDay &&
+    (thisCheckInDate === thisDate || thisCheckOutDate === thisDate)
+  ) {
+    isHighlighting = true;
+  }
+  // thisCheckInDate <thisDate < thisCheckOutDate -> isMiddleHighlighting=true
+
+  if (
+    !isOtherDay &&
+    thisCheckInDate &&
+    thisCheckOutDate &&
+    thisCheckInDate < thisDate &&
+    thisDate < thisCheckOutDate
+  ) {
+    isMiddleHighlighting = true;
+  }
   return (
-    <DatesContainer>
+    <DatesContainer
+      onClick={() => {
+        handleClickDate(new Date(`${year}-${month}-${date}`));
+      }}
+    >
+      {isHighlighting ? <Highlighting /> : ""}
+      {isMiddleHighlighting ? <MiddleHighlighting /> : ""}
       <DateNum
-        index={index}
-        currentMonthFirstDate={currentMonthFirstDate}
-        nextMonthFirstDate={nextMonthFirstDate}
-        findToday={findToday}
+        isOtherDay={isOtherDay}
+        checkInDate={checkInDate}
+        checkOutDate={checkOutDate}
+        isHighlighting={isHighlighting}
       >
-        <TodayCSS findToday={findToday}>{elm}</TodayCSS>
+        {date}
       </DateNum>
     </DatesContainer>
   );
@@ -42,46 +76,47 @@ const DatesContainer = styled.li`
   display: flex;
   position: relative;
   width: calc(100% / 7);
-  padding: 0 0.6vw;
-  height: 9vw;
-  text-align: right;
-  border-bottom: 1px solid #e4e3e6;
-  border-left: 1px solid #e4e3e6;
+  padding: 3rem 0;
+  /* height: 9vw; */
+  text-align: center;
   list-style: none;
   box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
 `;
 
 const DateNum = styled.div<{
-  index: number;
-  currentMonthFirstDate: number;
-  nextMonthFirstDate: number;
-  findToday: boolean;
+  checkInDate?: Date;
+  checkOutDate?: Date;
+  isHighlighting?: boolean;
+  isOtherDay: boolean;
 }>`
-  padding: 1vw 0.9vw 0 0;
-  ${(props) => props.index < props.currentMonthFirstDate && `display:none`};
+  display: ${(props) => (props.isOtherDay ? "none" : "block")};
 
-  ${(props) =>
-    props.nextMonthFirstDate > 0 &&
-    props.index > props.nextMonthFirstDate - 1 &&
-    `
-    display:none
-  `};
+  &:hover {
+    ::after {
+      content: "";
+      display: block;
+      border: 3px solid var(--color-main);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  cursor: pointer;
 `;
 
-const TodayCSS = styled.span<{ findToday: boolean }>`
-  ${(props) =>
-    props.findToday &&
-    `position: relative;
-    padding: .4vw;
-    border-radius: 50%;
-    font-size: 1.2vw;
-    font-weight: 700;
-    color: #FFFFFF;
-    background-color:red
- `}
+const Highlighting = styled.div`
+  width: 10px;
+  height: 10px;
+  background-color: red;
 `;
-
-const Days = styled.div`
-  display: flex;
-  color: #969696;
+const MiddleHighlighting = styled.div`
+  width: 10px;
+  height: 10px;
+  background-color: pink;
 `;
