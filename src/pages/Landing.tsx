@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import NavigationBar from '../components/NavigationBar';
-import SearchBar from '../components/SearchBar';
+import NavigationBar from '../components/common/NavigationBar';
+import SearchBar from '../components/common/SearchBar';
 
 const Landing = () => {
   // 임의의 날짜, 투숙객수 로컬스토리지 저장
@@ -60,7 +60,7 @@ const LandingContentsContainer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  height: 40%;
+  height: 30%;
 `;
 
 const CatchphraseWrapper = styled.div`
@@ -74,7 +74,7 @@ const Catchphrase = styled.div`
 `;
 
 const SearchBarWrapper = styled.div`
-  height: 3.5rem;
+  height: 3.8rem;
   width: 50rem;
   margin-top: 2rem;
 `;

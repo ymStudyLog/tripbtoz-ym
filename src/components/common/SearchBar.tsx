@@ -3,14 +3,27 @@ import styled from 'styled-components';
 import { VscCalendar } from 'react-icons/vsc';
 import { IoPersonOutline } from 'react-icons/io5';
 import { IoSearch } from 'react-icons/io5';
+import CalendarModal from '../modal/CalendarModal';
+import ModalContainer from '../modal/ModalContainer';
 
 const SearchBar = () => {
+  const [showCalendarModal, setShowCalendarModal] = React.useState<boolean>(false);
+
   return (
     <SearchBarContainer>
       <IconWrapper>
         <VscCalendar />
       </IconWrapper>
-      <CheckInOutContainer>
+      <CheckInOutContainer
+        onClick={() => {
+          setShowCalendarModal(!showCalendarModal);
+        }}
+      >
+        {showCalendarModal && (
+          <ModalContainer>
+            <CalendarModal setShowCalendarModal={setShowCalendarModal} />
+          </ModalContainer>
+        )}
         <CheckInWrapper>
           <SubMenuTitle>체크인</SubMenuTitle>
           <SubMenuContents>8월 13일</SubMenuContents>
@@ -130,7 +143,7 @@ const SearchIconWrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 5rem;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   background-color: var(--color-main);
   color: var(--color-white);
 `;

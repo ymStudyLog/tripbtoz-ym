@@ -1,17 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import { useInView } from "react-intersection-observer";
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQueryClient
-} from "@tanstack/react-query";
-import { getHotelInformation, patchReservationDetail } from "../api/api";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { BasicHotelDataType, GetDataResultType } from "../types/hotelDataType";
-import { StayPeriodType } from "../types/localStorageType";
-import { HOTELDATA_PER_PAGE } from "../utils/infiniteScroll";
-import Loading from "../components/Loading";
+import React from 'react';
+import styled from 'styled-components';
+import { useInView } from 'react-intersection-observer';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { getHotelInformation, patchReservationDetail } from '../api/api';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { BasicHotelDataType, GetDataResultType } from '../types/hotelDataType';
+import { StayPeriodType } from '../types/localStorageType';
+import { HOTELDATA_PER_PAGE } from '../utils/infiniteScroll';
+import Loading from '../components/common/Loading';
 
 type EachInfinitePageType = {
   result: GetDataResultType;
@@ -26,14 +22,9 @@ const Reservation = () => {
   //TODO 맨 처음 마운트시 1페이지만 렌더링 되어야하는데 2페이지까지 한번에 렌더링됨
   //TODO hook으로 빼기
   const getPage = async (pageParam: number) => {
-    console.log("페이지", pageParam);
-    const hotelDatas = await getHotelInformation<GetDataResultType>(
-      `?_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`
-    );
-    const nextPage =
-      hotelDatas !== undefined && hotelDatas.length >= HOTELDATA_PER_PAGE
-        ? pageParam + 1
-        : undefined; //data가 10개보다 작아지면 마지막 페이지
+    console.log('페이지', pageParam);
+    const hotelDatas = await getHotelInformation<GetDataResultType>(`?_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`);
+    const nextPage = hotelDatas !== undefined && hotelDatas.length >= HOTELDATA_PER_PAGE ? pageParam + 1 : undefined; //data가 10개보다 작아지면 마지막 페이지
     return {
       result: hotelDatas,
       nextPage,
@@ -41,14 +32,9 @@ const Reservation = () => {
     };
   };
 
-  const { fetchNextPage, isFetchingNextPage, hasNextPage, data } =
-    useInfiniteQuery(
-      [`getTenHotelData`],
-      ({ pageParam = 1 }) => getPage(pageParam),
-      {
-        getNextPageParam: (lastPage) => lastPage.nextPage,
-      }
-    );
+  const { fetchNextPage, isFetchingNextPage, hasNextPage, data } = useInfiniteQuery([`getTenHotelData`], ({ pageParam = 1 }) => getPage(pageParam), {
+    getNextPageParam: (lastPage) => lastPage.nextPage,
+  });
 
   React.useEffect(() => {
     if (!data) return;
@@ -73,7 +59,7 @@ const Reservation = () => {
     <>
       <button
         onClick={() => {
-          localStorage.removeItem("reservedHotels");
+          localStorage.removeItem('reservedHotels');
         }}
       >
         로컬스토리지 초기화
@@ -81,35 +67,29 @@ const Reservation = () => {
 
       <div>
         {data?.pages.map((page: EachInfinitePageType, index: number) => (
-          <div key={index} style={{ border: "1px solid red" }}>
-            {page?.result?.map(
-              (eachHotelData: BasicHotelDataType, index: number) => {
-                return (
-                  <TempContainer key={index}>
-                    <TempHotelItem>
-                      <p>id: {eachHotelData.id}</p>
-                      <p>호텔명 : {eachHotelData.hotel_name}</p>
-                      <p>
-                        투숙인원 : {eachHotelData.occupancy.base}~
-                        {eachHotelData.occupancy.max}명
-                      </p>
-                    </TempHotelItem>
-                    <TempButton
-                      type="button"
-                      onClick={() => {
-                        setReservationInStorage(
-                          eachHotelData.id,
-                          eachHotelData.hotel_name
-                        );
-                        patchReservationDetail(eachHotelData.id, stayPeriod); //TODO react-query 적용 useMutation
-                      }}
-                    >
-                      예약
-                    </TempButton>
-                  </TempContainer>
-                );
-              }
-            )}
+          <div key={index} style={{ border: '1px solid red' }}>
+            {page?.result?.map((eachHotelData: BasicHotelDataType, index: number) => {
+              return (
+                <TempContainer key={index}>
+                  <TempHotelItem>
+                    <p>id: {eachHotelData.id}</p>
+                    <p>호텔명 : {eachHotelData.hotel_name}</p>
+                    <p>
+                      투숙인원 : {eachHotelData.occupancy.base}~{eachHotelData.occupancy.max}명
+                    </p>
+                  </TempHotelItem>
+                  <TempButton
+                    type='button'
+                    onClick={() => {
+                      setReservationInStorage(eachHotelData.id, eachHotelData.hotel_name);
+                      patchReservationDetail(eachHotelData.id, stayPeriod); //TODO react-query 적용 useMutation
+                    }}
+                  >
+                    예약
+                  </TempButton>
+                </TempContainer>
+              );
+            })}
           </div>
         ))}
       </div>
