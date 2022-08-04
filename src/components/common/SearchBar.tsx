@@ -69,8 +69,8 @@ const SearchBarContainer = styled.div`
 
 const CheckInOutContainer = styled.div`
   display: flex;
-  width: 20rem;
-  margin-left: 0 1.5rem;
+  width: 320px;
+  margin-left: 0 24px;
   border-right: 1.5px solid var(--color-border);
   position: relative;
 
@@ -83,8 +83,8 @@ const IconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 4rem;
-  font-size: 1.8rem;
+  width: 64px;
+  font-size: 28px;
 `;
 
 const CheckInWrapper = styled.div`
@@ -92,27 +92,27 @@ const CheckInWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 9rem;
-  padding-left: 1rem;
+  width: 144px;
+  padding-left: 16px;
 `;
 
 const SubMenuTitle = styled.div`
-  font-size: 0.9rem;
+  font-size: 14px;
   font-weight: 500;
   color: var(--color-subTitle);
 `;
 
 const SubMenuContents = styled.div`
-  font-size: 1.1rem;
+  font-size: 17.6px;
   font-weight: 700;
-  margin-top: 0.5rem;
+  margin-top: 8px;
 `;
 
 const StayPeriodText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 2rem;
+  width: 32px;
   color: var(--color-subTitle);
 `;
 
@@ -121,14 +121,14 @@ const CheckOutWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
-  width: 9rem;
-  padding-right: 1rem;
+  width: 144px;
+  padding-right: 16px;
 `;
 
 const GuestInfoContainer = styled.div`
   display: flex;
-  width: 17rem;
-  margin-left: 0 1.5rem;
+  width: 272px;
+  margin-left: 0 24px;
   position: relative;
 
   &:hover {
@@ -141,16 +141,16 @@ const GuestInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 20rem;
-  padding-left: 1rem;
+  width: 320px;
+  padding-left: 16px;
 `;
 
 const SearchIconWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 5rem;
-  font-size: 2.2rem;
+  width: 80px;
+  font-size: 35px;
   background-color: var(--color-main);
   color: var(--color-white);
 `;

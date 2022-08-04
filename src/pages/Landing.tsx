@@ -59,17 +59,17 @@ const LandingContentsContainer = styled.div`
 `;
 
 const CatchphraseWrapper = styled.div`
-  width: 50rem;
+  width: 800px;
 `;
 
 const Catchphrase = styled.div`
   font-weight: 700;
-  font-size: 2.1rem;
+  font-size: 34px;
   color: var(--color-catchphrase);
 `;
 
 const SearchBarWrapper = styled.div`
-  height: 3.8rem;
-  width: 50rem;
-  margin-top: 2rem;
+  height: 60px;
+  width: 800px;
+  margin-top: 20px;
 `;

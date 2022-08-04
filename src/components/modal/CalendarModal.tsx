@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CalendarModal = ({ setShowCalendarModal }: any) => {
-  return <CalendarModalContainer>캘린더 들어올 자리</CalendarModalContainer>;
+  return <CalendarModalContainer onClick={(event) => event.stopPropagation()}>캘린더 들어올 자리</CalendarModalContainer>;
 };
 
 export default CalendarModal;
