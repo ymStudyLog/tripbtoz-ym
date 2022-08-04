@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import { VscCalendar } from 'react-icons/vsc';
 import { IoPersonOutline } from 'react-icons/io5';
 import { IoSearch } from 'react-icons/io5';
-import CalendarModalPosition from '../modal/CalendarModalPosition';
 import CalendarModal from '../modal/CalendarModal';
-import CountModalPosition from '../modal/CountModalPosition';
 import CountModal from '../modal/CountModal';
 
 const SearchBar = () => {
@@ -21,13 +19,10 @@ const SearchBar = () => {
       <CheckInOutContainer
         onClick={() => {
           setShowCalendarModal(!showCalendarModal);
+          setShowCountModal(false);
         }}
       >
-        {showCalendarModal && (
-          <CalendarModalPosition>
-            <CalendarModal setShowCalendarModal={setShowCalendarModal} />
-          </CalendarModalPosition>
-        )}
+        {showCalendarModal && <CalendarModal setShowCalendarModal={setShowCalendarModal} />}
         <CheckInWrapper>
           <SubMenuTitle>체크인</SubMenuTitle>
           <SubMenuContents>8월 13일</SubMenuContents>
@@ -44,13 +39,10 @@ const SearchBar = () => {
       <GuestInfoContainer
         onClick={() => {
           setShowCountModal(!showCountModal);
+          setShowCalendarModal(false);
         }}
       >
-        {showCountModal && (
-          <CountModalPosition>
-            <CountModal setShowCountModal={setShowCountModal} />
-          </CountModalPosition>
-        )}
+        {showCountModal && <CountModal setShowCountModal={setShowCountModal} />}
         <GuestInfoWrapper>
           <SubMenuTitle>객실 / 인원</SubMenuTitle>
           <SubMenuContents>객실 1, 인원 3</SubMenuContents>
@@ -80,6 +72,7 @@ const CheckInOutContainer = styled.div`
   width: 20rem;
   margin-left: 0 1.5rem;
   border-right: 1.5px solid var(--color-border);
+  position: relative;
 
   &:hover {
     background-color: var(--color-hover);
@@ -136,6 +129,7 @@ const GuestInfoContainer = styled.div`
   display: flex;
   width: 17rem;
   margin-left: 0 1.5rem;
+  position: relative;
 
   &:hover {
     background-color: var(--color-hover);

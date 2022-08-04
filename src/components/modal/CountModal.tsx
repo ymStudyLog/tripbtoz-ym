@@ -75,7 +75,10 @@ const CountModal = ({ setShowCountModal }: any) => {
 export default CountModal;
 
 const CountModalContainer = styled.div`
-  width: 22rem;
+  position: absolute;
+  top: 63px;
+  left: -65px;
+  width: 335px;
   min-height: 10rem;
   background-color: var(--color-white);
   display: flex;

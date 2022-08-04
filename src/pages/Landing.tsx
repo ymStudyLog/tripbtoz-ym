@@ -55,7 +55,7 @@ const LandingContentsContainer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  height: 30%;
+  height: 300px;
 `;
 
 const CatchphraseWrapper = styled.div`
