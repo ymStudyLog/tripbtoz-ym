@@ -1,4 +1,3 @@
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getReservationData } from "../api/api";
 import { ReservationDataType } from "../types/hotelDataType";

@@ -9,22 +9,6 @@ const useLocalStorage = () => {
   });
   const [headCount, setHeadCount] = React.useState<HeadCountType>(0);
 
-  // React.useEffect(() => {
-  //   const periodData = localStorage.getItem("stayPeriod");
-  //   const headData = localStorage.getItem("headCount");
-  //   if (periodData !== null && headData !== null) {
-  //     const parsedPeriodData = JSON.parse(periodData);
-  //     const parsedHeadData = parseInt(headData);
-  //     setStayPeriod((prevState: StayPeriodType) => {
-  //       return {
-  //         ...prevState,
-  //         checkIn: parsedPeriodData.checkIn,
-  //         checkOut: parsedPeriodData.checkOut,
-  //       };
-  //     });
-  //     setHeadCount(parsedHeadData);
-  //   }
-  // }, []);
   const getStorage = React.useCallback((periodData: string, headData: string) => {
     const parsedPeriodData = JSON.parse(periodData);
     const parsedHeadData = parseInt(headData);
