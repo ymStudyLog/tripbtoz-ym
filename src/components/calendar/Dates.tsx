@@ -53,12 +53,16 @@ const Dates = ({
   return (
     <DatesContainer
       onClick={() => {
-        console.log(new Date(`${year}-${month}-${date}`));
         handleClickDate(new Date(`${year}-${month}-${date}`));
       }}
     >
       {isHighlighting ? <Highlighting /> : ""}
       {isMiddleHighlighting ? <MiddleHighlighting /> : ""}
+      {thisDate === convertDateToString(today) ? (
+        <TodayDot isHighlighting={isHighlighting} />
+      ) : (
+        ""
+      )}
       <DateNum
         isOtherDay={isOtherDay}
         checkInDate={checkInDate}
@@ -78,7 +82,6 @@ const DatesContainer = styled.li`
   position: relative;
   width: calc(100% / 7);
   padding: 1rem 0;
-  /* height: 9vw; */
   text-align: center;
   list-style: none;
   box-sizing: border-box;
@@ -132,4 +135,17 @@ const MiddleHighlighting = styled.div`
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background-color: pink;
+`;
+
+const TodayDot = styled.div<{ isHighlighting: boolean }>`
+  background-color: ${(props) =>
+    props.isHighlighting ? "#fff" : "var(--color-main)"};
+
+  border-radius: 50%;
+  width: 5px;
+  height: 5px;
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
