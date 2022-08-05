@@ -1,25 +1,71 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import { VscCalendar } from 'react-icons/vsc';
-import { IoPersonOutline } from 'react-icons/io5';
-import { IoSearch } from 'react-icons/io5';
-import CalendarModal from '../modal/CalendarModal';
-import CountModal from '../modal/CountModal';
-import { addDate, convertDateToString, getDateDiff } from '../../utils/dateUtils';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { VscCalendar } from "react-icons/vsc";
+import { IoPersonOutline } from "react-icons/io5";
+import { IoSearch } from "react-icons/io5";
+import CalendarModal from "../modal/CalendarModal";
+import CountModal from "../modal/CountModal";
+import {
+  addDate,
+  convertDateToString,
+  getDateDiff,
+} from "../../utils/dateUtils";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
-const SearchBar = () => {
+type Props = {
+  initialAdult?: number;
+  initialChild?: number;
+  initialCheckIn?: Date;
+  initialCheckOut?: Date;
+};
+const SearchBar = ({
+  initialAdult,
+  initialChild,
+  initialCheckIn,
+  initialCheckOut,
+}: Props) => {
+  console.log("여기", initialCheckIn);
   const today = new Date(convertDateToString(new Date()));
-  const [initialMonthDate, setInitialMonthDate] = React.useState(new Date(convertDateToString(new Date())));
-  const [checkIn, setCheckIn] = React.useState<Date | undefined>(addDate(today, 7));
-  const [checkOut, setCheckOut] = React.useState<Date | undefined>(addDate(today, 8));
-  const [showCalendarModal, setShowCalendarModal] = React.useState<boolean>(false);
+  const [initialMonthDate, setInitialMonthDate] = React.useState(
+    new Date(convertDateToString(new Date()))
+  );
+  const [checkIn, setCheckIn] = React.useState<Date | undefined>(
+    initialCheckIn ? initialCheckIn : addDate(today, 7)
+  );
+  const [checkOut, setCheckOut] = React.useState<Date | undefined>(
+    initialCheckOut ? initialCheckOut : addDate(today, 8)
+  );
+  const [showCalendarModal, setShowCalendarModal] =
+    React.useState<boolean>(false);
   const [showCountModal, setShowCountModal] = React.useState<boolean>(false);
+  const [adult, setAdult] = React.useState(initialAdult ? initialAdult : 2);
+  const [child, setChild] = React.useState(initialChild ? initialChild : 0);
 
   const navigate = useNavigate();
 
+  const { setStayPeriodInStorage, setNumberOfPeopleInStorage } =
+    useLocalStorage();
+
   const handleToHotel = () => {
-    navigate('/hotel');
+    if (adult + child <= 0) {
+      setShowCountModal(true);
+      return;
+    }
+    if (!checkIn || !checkOut) {
+      setShowCalendarModal(true);
+      return;
+    }
+    setStayPeriodInStorage(
+      `${checkIn.getFullYear()}. ${
+        checkIn.getMonth() + 1
+      }. ${checkIn.getDate()}.`,
+      `${checkOut.getFullYear()}. ${
+        checkOut.getMonth() + 1
+      }. ${checkOut.getDate()}.`
+    );
+    setNumberOfPeopleInStorage(adult, child);
+    navigate("/hotel");
   };
 
   return (
@@ -43,7 +89,10 @@ const SearchBar = () => {
               handleChangeMonthDate={(date: Date) => {
                 setInitialMonthDate(date);
               }}
-              handleChangeCheckInOut={(srcCheckIn?: Date, srcCheckOut?: Date) => {
+              handleChangeCheckInOut={(
+                srcCheckIn?: Date,
+                srcCheckOut?: Date
+              ) => {
                 let changed = false;
                 if (srcCheckIn !== checkIn || srcCheckOut !== checkOut) {
                   changed = true;
@@ -58,12 +107,22 @@ const SearchBar = () => {
           )}
           <CheckInWrapper>
             <SubMenuTitle>체크인</SubMenuTitle>
-            <SubMenuContents>{checkIn ? `${checkIn.getMonth() + 1}월 ${checkIn.getDate()}일` : '날짜추가'}</SubMenuContents>
+            <SubMenuContents>
+              {checkIn
+                ? `${checkIn.getMonth() + 1}월 ${checkIn.getDate()}일`
+                : "날짜추가"}
+            </SubMenuContents>
           </CheckInWrapper>
-          <StayPeriodText>{checkIn && checkOut ? `${getDateDiff(checkOut, checkIn)}박` : ''}</StayPeriodText>
+          <StayPeriodText>
+            {checkIn && checkOut ? `${getDateDiff(checkOut, checkIn)}박` : ""}
+          </StayPeriodText>
           <CheckOutWrapper>
             <SubMenuTitle>체크아웃</SubMenuTitle>
-            <SubMenuContents>{checkOut ? `${checkOut.getMonth() + 1}월 ${checkOut.getDate()}일` : '날짜추가'}</SubMenuContents>
+            <SubMenuContents>
+              {checkOut
+                ? `${checkOut.getMonth() + 1}월 ${checkOut.getDate()}일`
+                : "날짜추가"}
+            </SubMenuContents>
           </CheckOutWrapper>
         </CheckInOutContainer>
         <IconWrapper>
@@ -75,10 +134,23 @@ const SearchBar = () => {
             setShowCalendarModal(false);
           }}
         >
-          {showCountModal && <CountModal setShowCountModal={setShowCountModal} />}
+          {showCountModal && (
+            <CountModal
+              initialChild={child}
+              initialAdult={adult}
+              setShowCountModal={setShowCountModal}
+              handleChangeNumberOfPeople={(
+                srcAdult: number,
+                srcChild: number
+              ) => {
+                setAdult(srcAdult);
+                setChild(srcChild);
+              }}
+            />
+          )}
           <GuestInfoWrapper>
             <SubMenuTitle>인원</SubMenuTitle>
-            <SubMenuContents>성인 2 / 아이 0</SubMenuContents>
+            <SubMenuContents>{`성인 ${adult} / 아이 ${child}`}</SubMenuContents>
           </GuestInfoWrapper>
         </GuestInfoContainer>
         <SearchIconWrapper onClick={handleToHotel}>

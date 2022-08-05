@@ -1,4 +1,5 @@
-import { StayPeriodType, HeadCountType } from "../types/localStorageType";
+import React from "react";
+import { StayPeriodType, NumberOfPeopleType } from "../types/localStorageType";
 import { ReservationDataType } from "../types/hotelDataType";
 
 const useLocalStorage = () => {
@@ -11,9 +12,14 @@ const useLocalStorage = () => {
       })
     );
   };
-
-  const setHeadCountInStorage = (count: number) => {
-    localStorage.setItem("headCount", count.toString());
+  const setNumberOfPeopleInStorage = (adult: number, child: number) => {
+    localStorage.setItem(
+      "headCount",
+      JSON.stringify({
+        adult: adult,
+        child: child,
+      })
+    );
   };
 
   const setReservationInStorage = (
@@ -21,13 +27,14 @@ const useLocalStorage = () => {
     hotelName: string,
     stayPeriod: StayPeriodType,
     headCount: HeadCountType
+    //numberOfPeople 로컬스토리지 값 넘어와야됨 = numberOfPeople
   ) => {
     const prevStorageState = localStorage.getItem("reservationData");
     const newStorageState = [
       {
         hotel_id: id,
         hotel_name: hotelName,
-        headCount: headCount,
+        headCount: numberOfPeople.adult + numberOfPeople.child,
         reservationDetail: {
           checkIn: stayPeriod.checkIn,
           checkOut: stayPeriod.checkOut,
@@ -48,7 +55,7 @@ const useLocalStorage = () => {
 
   return {
     setStayPeriodInStorage,
-    setHeadCountInStorage,
+    setNumberOfPeopleInStorage,
     setReservationInStorage,
   };
 };

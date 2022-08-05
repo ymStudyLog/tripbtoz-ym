@@ -1,25 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
-import SearchBar from '../components/common/SearchBar';
+import React from "react";
+import styled from "styled-components";
+import SearchBar from "../components/common/SearchBar";
 
 const Landing = () => {
-  // TODO final 제출 전에 삭제 
-  React.useEffect(() => {
-    window.localStorage.clear();
-    localStorage.setItem(
-      'stayPeriod',
-      JSON.stringify({
-        checkIn: '2022. 8. 9.',
-        checkOut: '2022. 8. 11.',
-      })
-    );
-    localStorage.setItem('headCount', '4');
-  }, []);
-
   return (
     <>
       <BackgroundImageWrapper>
-        <BackgroundImage src='./images/background.jpg' />
+        <BackgroundImage src="./images/background.jpg" />
       </BackgroundImageWrapper>
       <LandingContentsContainer>
         <CatchphraseWrapper>
