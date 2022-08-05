@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import { FiMinusSquare } from "react-icons/fi";
-import { FiPlusSquare } from "react-icons/fi";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import { FiMinusSquare } from 'react-icons/fi';
+import { FiPlusSquare } from 'react-icons/fi';
 
 type Props = {
   initialAdult: number;
@@ -10,12 +10,7 @@ type Props = {
   handleChangeNumberOfPeople: (adult: number, child: number) => void;
 };
 
-const CountModal = ({
-  setShowCountModal,
-  handleChangeNumberOfPeople,
-  initialAdult,
-  initialChild,
-}: Props) => {
+const CountModal = ({ setShowCountModal, handleChangeNumberOfPeople, initialAdult, initialChild }: Props) => {
   const [numberOfPeople, setNumberOfPeople] = React.useState({
     adult: initialAdult,
     child: initialChild,
@@ -112,6 +107,11 @@ const CountModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   border: 1px solid var(--color-border);
+
+  @media screen and (max-width: 480px) {
+    width: 240px;
+    left: -5px;
+  }
 `;
 
 const CountGuestWrapper = styled.div`

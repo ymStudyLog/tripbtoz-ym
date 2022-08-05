@@ -1,6 +1,6 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 type Props = {};
 
@@ -8,28 +8,23 @@ const NavigationBar = (props: Props) => {
   const navigate = useNavigate();
 
   const handleLogo = () => {
-    navigate("/");
+    navigate('/');
     window.localStorage.clear();
   };
 
   const handleToReservation = () => {
-    navigate("/reservation");
+    navigate('/reservation');
   };
 
   return (
     <NavigationBarWrapper>
       <NavigationBarContainer>
         <LogoContainer>
-          <LogoImage
-            src="./images/logo-black-tripbtoz.png"
-            onClick={handleLogo}
-          />
+          <LogoImage src='./images/logo-black-tripbtoz.png' onClick={handleLogo} />
         </LogoContainer>
         <NavigationBarMenuItems>
           <CustomerService>고객센터</CustomerService>
-          <ReservationList onClick={handleToReservation}>
-            예약확인
-          </ReservationList>
+          <ReservationList onClick={handleToReservation}>예약확인</ReservationList>
         </NavigationBarMenuItems>
       </NavigationBarContainer>
     </NavigationBarWrapper>
