@@ -26,6 +26,7 @@ const Dates = ({
   let isHighlighting = false;
   let isMiddleHighlighting = false;
   const thisDate = convertDateToString(new Date(`${year}-${month}-${date}`));
+  const todayDate = convertDateToString(new Date(today));
   const thisCheckInDate = checkInDate
     ? convertDateToString(checkInDate)
     : undefined;
@@ -58,12 +59,14 @@ const Dates = ({
     >
       {isHighlighting ? <Highlighting /> : ""}
       {isMiddleHighlighting ? <MiddleHighlighting /> : ""}
-      {thisDate === convertDateToString(today) ? (
+      {thisDate === todayDate ? (
         <TodayDot isHighlighting={isHighlighting} />
       ) : (
         ""
       )}
+
       <DateNum
+        isBeforeToday={thisDate < todayDate}
         isOtherDay={isOtherDay}
         checkInDate={checkInDate}
         checkOutDate={checkOutDate}
@@ -94,14 +97,20 @@ const DateNum = styled.div<{
   checkOutDate?: Date;
   isHighlighting?: boolean;
   isOtherDay: boolean;
+  isBeforeToday: boolean;
 }>`
   display: ${(props) => (props.isOtherDay ? "none" : "block")};
-  color: ${(props) => (props.isHighlighting ? "#fff" : "black")};
+  /* color: ${(props) => (props.isHighlighting ? "#fff" : "black")};
+  color: ${(props) => (props.isBeforeToday ? "#D3D3D3" : "black")}; */
+
+  color: ${(props)=> (props.isBeforeToday? "#D3D3D3" : (props.isHighlighting?"#fff" : "black" ))};
+
   &:hover {
     ::after {
       content: "";
       display: block;
-      border: 3px solid var(--color-main);
+      border: ${(props) =>
+        props.isBeforeToday ? "#fff" : "3px solid var(--color-main)"};
       border-radius: 50%;
       width: 40px;
       height: 40px;
