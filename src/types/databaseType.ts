@@ -23,3 +23,14 @@ export type ReservationDataType = {
   headCount: NumberOfPeopleType;
   reservationDetail: StayPeriodType;
 };
+
+export type DatabaseLocalStorageType = {
+  stayPeriod: {
+    checkIn: string;
+    checkOut: string;
+  };
+  headCount: {
+    adult: number;
+    child: number;
+  };
+};

@@ -1,20 +1,26 @@
 import React from "react";
 import { HOTELDATA_PER_PAGE } from "../utils/infiniteScroll";
 import { getHotelInformation } from "../api/api";
-import { BasicHotelDataType, GetDataResultType } from "../types/hotelDataType";
+import { BasicHotelDataType, GetDataResultType } from "../types/databaseType";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
-import { QueryType } from "../types/queryType";
 
-const useInfiniteScroll = () => {
-  const getPage = async (pageParam: number , meta : string) => {
-    console.log("meta",meta); //성공
-    const finalQueryString: QueryType = (
-      meta.length !== 0 ? meta.concat("&") : "?"
-    ).concat(`_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`);
+type Props = {
+  storageQuery: string
+}
+
+const useInfiniteScroll = (props : Props) => {
+  const { storageQuery } = props;
+
+  const getPage = async (pageParam: number) => {
+    const finalQuery = storageQuery.length === 0 ?
+      `?_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`
+      : storageQuery.concat(
+        `&_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`
+      );
     const hotelDatas: GetDataResultType = await getHotelInformation<
       BasicHotelDataType[]
-    >(finalQueryString);
+    >(finalQuery);
     const nextPage =
       hotelDatas !== undefined && hotelDatas.length >= HOTELDATA_PER_PAGE
         ? pageParam + 1
@@ -29,7 +35,7 @@ const useInfiniteScroll = () => {
   const { fetchNextPage, isLoading, isFetchingNextPage, hasNextPage, data } =
     useInfiniteQuery(
       [`getTenHotelData`],
-      ({ pageParam = 1}, meta="") => getPage(pageParam, meta), //TODO 추가 query meta 값으로 전달하기
+      ({ pageParam = 1 }) => getPage(pageParam),
       {
         getNextPageParam: (lastPage) => lastPage.nextPage,
       }

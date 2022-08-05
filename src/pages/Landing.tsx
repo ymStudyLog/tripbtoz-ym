@@ -9,7 +9,6 @@ import Calendar from '../components/calendar/Calendar';
 
 const Landing = () => {
   const isMobile = useMediaQuery({ maxWidth: 480 });
-
   return (
     <>
       {isMobile ? (

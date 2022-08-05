@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import useDatabase from "../hooks/useDatabase";
-import { ReservationDataType } from "../types/hotelDataType";
+import { ReservationDataType } from "../types/databaseType";
 import { ReservationContainer } from "../styles/Hotel.style";
 import { HotelItemContainer } from "../styles/HotelItem.style";
 import { v4 as uuidv4 } from "uuid";

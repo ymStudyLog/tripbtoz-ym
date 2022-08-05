@@ -1,6 +1,5 @@
-import React from "react";
 import { StayPeriodType, NumberOfPeopleType } from "../types/localStorageType";
-import { ReservationDataType } from "../types/hotelDataType";
+import { ReservationDataType } from "../types/databaseType";
 
 const useLocalStorage = () => {
   const setStayPeriodInStorage = (startDate: string, endDate: string) => {
@@ -27,7 +26,6 @@ const useLocalStorage = () => {
     hotelName: string,
     stayPeriod: StayPeriodType,
     headCount: NumberOfPeopleType
-    //numberOfPeople 로컬스토리지 값 넘어와야됨 = numberOfPeople
   ) => {
     const prevStorageState = localStorage.getItem("reservationData");
     const newStorageState = [
