@@ -8,39 +8,45 @@ const useFilter = () => {
   const [headQuery, setHeadQuery] = React.useState<QueryType>("");
   const [stayPeriodQuery, setStayPeriodQuery] = React.useState<QueryType>("");
 
-  const filterByHeadCount = React.useCallback((count: HeadCountType) : void =>
-    setHeadQuery(`occupancy.base_lte=${count}&occupancy.max_gte=${count}`), []);
+  const filterByHeadCount = React.useCallback(
+    (count: HeadCountType): void =>
+      setHeadQuery(`occupancy.base_lte=${count}&occupancy.max_gte=${count}`),
+    []
+  );
 
-  const filterByStayPeriod = React.useCallback((
-    reservations: ReservationDataType[] | undefined,
-    period: StayPeriodType
-  ) : void => {
-    if (reservations !== undefined) {
-      const query = reservations
-        .filter((reservation: ReservationDataType) =>
-          areIntervalsOverlapping(
-            {
-              start: new Date(period.checkIn),
-              end: new Date(period.checkOut),
-            },
-            {
-              start: new Date(reservation.reservationDetail.checkIn),
-              end: new Date(reservation.reservationDetail.checkOut),
-            }
+  const filterByStayPeriod = React.useCallback(
+    (
+      reservations: ReservationDataType[] | undefined,
+      period: StayPeriodType
+    ): void => {
+      if (reservations !== undefined) {
+        const query = reservations
+          .filter((reservation: ReservationDataType) => {
+            return areIntervalsOverlapping(
+              {
+                start: new Date(period.checkIn),
+                end: new Date(period.checkOut),
+              },
+              {
+                start: new Date(reservation.reservationDetail.checkIn),
+                end: new Date(reservation.reservationDetail.checkOut),
+              }
+            )
+              ? reservation
+              : null;
+          })
+          .map(
+            (currentState: ReservationDataType) =>
+              `id_ne=${currentState.hotel_id}`
           )
-            ? reservation
-            : null
-        )
-        .map(
-          (currentState: ReservationDataType) =>
-            `id_ne=${currentState.hotel_id}`
-        )
-        .join("&");
+          .join("&");
         setStayPeriodQuery(query);
-    } else {
-      setStayPeriodQuery("");
-    }
-  },[]);
+      } else {
+        setStayPeriodQuery("");
+      }
+    },
+    []
+  );
 
   const filteredQueryString: QueryType = "?"
     .concat(headQuery)
@@ -50,7 +56,7 @@ const useFilter = () => {
   return {
     filterByHeadCount,
     filterByStayPeriod,
-    filteredQueryString
+    filteredQueryString,
   };
 };
 

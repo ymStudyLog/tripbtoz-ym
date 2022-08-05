@@ -1,12 +1,24 @@
-import React from 'react';
-import styled from 'styled-components';
-import { FiMinusSquare } from 'react-icons/fi';
-import { FiPlusSquare } from 'react-icons/fi';
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import { FiMinusSquare } from "react-icons/fi";
+import { FiPlusSquare } from "react-icons/fi";
 
-const CountModal = ({ setShowCountModal }: any) => {
+type Props = {
+  initialAdult: number;
+  initialChild: number;
+  setShowCountModal: any;
+  handleChangeNumberOfPeople: (adult: number, child: number) => void;
+};
+
+const CountModal = ({
+  setShowCountModal,
+  handleChangeNumberOfPeople,
+  initialAdult,
+  initialChild,
+}: Props) => {
   const [numberOfPeople, setNumberOfPeople] = React.useState({
-    adult: 2,
-    child: 0,
+    adult: initialAdult,
+    child: initialChild,
   });
 
   const isLessThan = (number: number, lessThan: number) => number < lessThan;
@@ -32,7 +44,10 @@ const CountModal = ({ setShowCountModal }: any) => {
 
   const increaseAdult = () => {
     if (isMoreThan(numberOfPeople.adult + 1, MAXIMUM.adult)) return;
-    setNumberOfPeople((prevState) => ({ ...prevState, adult: prevState.adult + 1 }));
+    setNumberOfPeople((prevState) => ({
+      ...prevState,
+      adult: prevState.adult + 1,
+    }));
   };
 
   const decreaseChild = () => {
@@ -45,8 +60,15 @@ const CountModal = ({ setShowCountModal }: any) => {
 
   const increaseChild = () => {
     if (isMoreThan(numberOfPeople.child + 1, MAXIMUM.child)) return;
-    setNumberOfPeople((prevState) => ({ ...prevState, child: prevState.child + 1 }));
+    setNumberOfPeople((prevState) => ({
+      ...prevState,
+      child: prevState.child + 1,
+    }));
   };
+
+  React.useEffect(() => {
+    handleChangeNumberOfPeople(numberOfPeople.adult, numberOfPeople.child);
+  }, [numberOfPeople]);
 
   return (
     <CountModalContainer onClick={(event) => event.stopPropagation()}>
