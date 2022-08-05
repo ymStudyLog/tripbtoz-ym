@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { VscCalendar } from "react-icons/vsc";
@@ -13,34 +13,60 @@ import {
 } from "../../utils/dateUtils";
 import useLocalStorage from "../../hooks/useLocalStorage";
 
-type Props = {
-  initialAdult?: number;
-  initialChild?: number;
-  initialCheckIn?: Date;
-  initialCheckOut?: Date;
-};
-const SearchBar = ({
-  initialAdult,
-  initialChild,
-  initialCheckIn,
-  initialCheckOut,
-}: Props) => {
-  console.log("여기", initialCheckIn);
+type LocalStorageType = string | null;
+
+// type Props = {
+//   initialAdult?: number;
+//   initialChild?: number;
+//   initialCheckIn?: Date;
+//   initialCheckOut?: Date;
+// };
+const SearchBar = (
+//   {
+//   initialAdult,
+//   initialChild,
+//   initialCheckIn,
+//   initialCheckOut,
+// }: Props
+) => {
   const today = new Date(convertDateToString(new Date()));
   const [initialMonthDate, setInitialMonthDate] = React.useState(
     new Date(convertDateToString(new Date()))
   );
+
+  React.useEffect(() => {
+    const periodData: LocalStorageType = localStorage.getItem("stayPeriod");
+    const numberOfPeopleData: LocalStorageType =
+      localStorage.getItem("headCount");
+    setCheckIn(
+      periodData ? new Date(JSON.parse(periodData).checkIn) : addDate(today, 7)
+    );
+    setCheckOut(
+      periodData ? new Date(JSON.parse(periodData).checkOut) : addDate(today, 8)
+    );
+    setAdult(numberOfPeopleData ? JSON.parse(numberOfPeopleData).adult : 2);
+    setChild(numberOfPeopleData ? JSON.parse(numberOfPeopleData).child : 0);
+  }, []);
+
+  // const [checkIn, setCheckIn] = React.useState<Date | undefined>(
+  //   initialCheckIn ? initialCheckIn : addDate(today, 7)
+  // );
+  // const [checkOut, setCheckOut] = React.useState<Date | undefined>(
+  //   initialCheckOut ? initialCheckOut : addDate(today, 8)
+  // );
+
   const [checkIn, setCheckIn] = React.useState<Date | undefined>(
-    initialCheckIn ? initialCheckIn : addDate(today, 7)
+    addDate(today, 7)
   );
   const [checkOut, setCheckOut] = React.useState<Date | undefined>(
-    initialCheckOut ? initialCheckOut : addDate(today, 8)
+    addDate(today, 8)
   );
+
   const [showCalendarModal, setShowCalendarModal] =
     React.useState<boolean>(false);
   const [showCountModal, setShowCountModal] = React.useState<boolean>(false);
-  const [adult, setAdult] = React.useState(initialAdult ? initialAdult : 2);
-  const [child, setChild] = React.useState(initialChild ? initialChild : 0);
+  const [adult, setAdult] = React.useState<number>(2);
+  const [child, setChild] = React.useState<number>(0);
 
   const navigate = useNavigate();
 

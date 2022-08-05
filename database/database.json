@@ -14006,7 +14006,10 @@
       "id": 1,
       "hotel_id": 5,
       "hotel_name": "알다프와 빌라스",
-      "headCount": 4,
+      "headCount": {
+        "adult": 2,
+        "child": 2
+      },
       "reservationDetail": {
         "checkIn": "2022. 8. 8.",
         "checkOut": "2022. 8. 10."
@@ -14016,7 +14019,10 @@
       "id": 2,
       "hotel_id": 7,
       "hotel_name": "Coastal Soul by Sea Scape Properties",
-      "headCount": 4,
+      "headCount": {
+        "adult": 2,
+        "child": 0
+      },
       "reservationDetail": {
         "checkIn": "2022. 8. 10.",
         "checkOut": "2022. 8. 13."
@@ -14026,7 +14032,10 @@
       "id": 3,
       "hotel_id": 17,
       "hotel_name": "Yeosu Glow Floor Pension",
-      "headCount": 4,
+      "headCount": {
+        "adult": 2,
+        "child": 2
+      },
       "reservationDetail": {
         "checkIn": "2022. 8. 20.",
         "checkOut": "2022. 8. 24."
@@ -14036,7 +14045,10 @@
       "id": 4,
       "hotel_id": 22,
       "hotel_name": "아쿠아비스타 비치 리조트 바이 팬핸들 겟어웨이즈",
-      "headCount": 4,
+      "headCount": {
+        "adult": 2,
+        "child": 1
+      },
       "reservationDetail": {
         "checkIn": "2022. 8. 9.",
         "checkOut": "2022. 8. 10."

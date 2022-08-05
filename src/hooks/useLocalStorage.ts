@@ -26,7 +26,7 @@ const useLocalStorage = () => {
     id: number,
     hotelName: string,
     stayPeriod: StayPeriodType,
-    headCount: HeadCountType
+    headCount: NumberOfPeopleType
     //numberOfPeople 로컬스토리지 값 넘어와야됨 = numberOfPeople
   ) => {
     const prevStorageState = localStorage.getItem("reservationData");
@@ -34,7 +34,7 @@ const useLocalStorage = () => {
       {
         hotel_id: id,
         hotel_name: hotelName,
-        headCount: numberOfPeople.adult + numberOfPeople.child,
+        headCount: headCount,
         reservationDetail: {
           checkIn: stayPeriod.checkIn,
           checkOut: stayPeriod.checkOut,

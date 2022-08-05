@@ -18,7 +18,7 @@ const Reservation = () => {
         return (
           <ReservationItemContainer key={uuidv4()}>
             <Content>호텔명 : {reservation.hotel_name}</Content>
-            <Content>투숙인원 : {reservation.headCount}</Content>
+            <Content>투숙인원 성인 : {reservation.headCount.adult}, 아이 : {reservation.headCount.child}</Content>
             <Content>
               투숙일자 : {reservation.reservationDetail.checkIn} ~
               {reservation.reservationDetail.checkOut}

@@ -4,19 +4,18 @@ import { addReservationData } from "../../api/api";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { BasicHotelDataType } from "../../types/hotelDataType";
 import { MakeReservationButton, HotelItemContainer } from "../../styles/HotelItem.style";
-import { HeadCountType, StayPeriodType } from "../../types/localStorageType";
+import { StayPeriodType, NumberOfPeopleType } from "../../types/localStorageType";
 
 type Props = {
   hotelData: BasicHotelDataType;
   stayPeriod : StayPeriodType;
-  headCount : HeadCountType;
+  headCount : NumberOfPeopleType;
 };
 
 const HotelItem = (props: Props) => {
   const { hotelData, stayPeriod, headCount } = props;
   // console.log("hotelitem", hotelData, stayPeriod, headCount);
-  const { stayPeriod, numberOfPeople, setReservationInStorage } =
-    useLocalStorage();
+  const { setReservationInStorage } = useLocalStorage();
   const [loading, setLoading] = React.useState<boolean>(false);
 
   return (
@@ -51,7 +50,7 @@ const HotelItem = (props: Props) => {
             addReservationData({
               hotel_id: hotelData.id,
               hotel_name: hotelData.hotel_name,
-              headCount: numberOfPeople.adult + numberOfPeople.child,
+              headCount: headCount,
               reservationDetail: stayPeriod,
             });
           }}

@@ -8,12 +8,12 @@ import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import HotelItem from "./HotelItem";
 import { PageContainer } from "../../styles/HotelList.style";
 import { v4 as uuidv4 } from "uuid";
-import { HeadCountType, StayPeriodType } from "../../types/localStorageType";
+import { NumberOfPeopleType, StayPeriodType } from "../../types/localStorageType";
 import { QueryType } from "../../types/queryType";
 
 type Props = {
   stayPeriod: StayPeriodType;
-  headCount: HeadCountType;
+  headCount: NumberOfPeopleType;
 };
 
 type EachInfinitePageType = {

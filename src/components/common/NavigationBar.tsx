@@ -9,7 +9,7 @@ const NavigationBar = (props: Props) => {
 
   const handleLogo = () => {
     navigate("/");
-    // window.localStorage.clear();
+    window.localStorage.clear();
   };
 
   const handleToReservation = () => {
