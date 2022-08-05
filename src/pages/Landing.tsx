@@ -24,9 +24,11 @@ const Landing = () => {
         <BackgroundImage src='./images/background.jpg' />
       </BackgroundImageWrapper>
       {isMobile ? (
-        <LandingContentsContainer>
+        <TestCalendarWrapper>
           <TestCalendarModal />
-        </LandingContentsContainer>
+          <TestCalendarModal />
+          <TestCalendarModal />
+        </TestCalendarWrapper>
       ) : (
         <LandingContentsContainer>
           <CatchphraseWrapper>
@@ -85,9 +87,17 @@ const Catchphrase = styled.div`
   color: var(--color-catchphrase);
 `;
 
+const TestCalendarWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 const TestCalendarModal = styled.div`
   width: 400px;
   min-height: 300px;
-  border: 1px solid var(--color-border);
+  border: 2px solid red;
   background-color: var(--color-red);
 `;
