@@ -11,23 +11,12 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 
 type LocalStorageType = string | null;
 
-// type Props = {
-//   initialAdult?: number;
-//   initialChild?: number;
-//   initialCheckIn?: Date;
-//   initialCheckOut?: Date;
-// };
-const SearchBar = () =>
-  //   {
-  //   initialAdult,
-  //   initialChild,
-  //   initialCheckIn,
-  //   initialCheckOut,
-  // }: Props
-  {
-    const today = new Date(convertDateToString(new Date()));
-    const [initialMonthDate, setInitialMonthDate] = React.useState(new Date(convertDateToString(new Date())));
-
+const SearchBar = (
+) => {
+  const today = new Date(convertDateToString(new Date()));
+  const [initialMonthDate, setInitialMonthDate] = React.useState(
+    new Date(convertDateToString(new Date()))
+  );
     React.useEffect(() => {
       const periodData: LocalStorageType = localStorage.getItem('stayPeriod');
       const numberOfPeopleData: LocalStorageType = localStorage.getItem('headCount');
@@ -36,13 +25,6 @@ const SearchBar = () =>
       setAdult(numberOfPeopleData ? JSON.parse(numberOfPeopleData).adult : 2);
       setChild(numberOfPeopleData ? JSON.parse(numberOfPeopleData).child : 0);
     }, []);
-
-    // const [checkIn, setCheckIn] = React.useState<Date | undefined>(
-    //   initialCheckIn ? initialCheckIn : addDate(today, 7)
-    // );
-    // const [checkOut, setCheckOut] = React.useState<Date | undefined>(
-    //   initialCheckOut ? initialCheckOut : addDate(today, 8)
-    // );
 
     const [checkIn, setCheckIn] = React.useState<Date | undefined>(addDate(today, 7));
     const [checkOut, setCheckOut] = React.useState<Date | undefined>(addDate(today, 8));

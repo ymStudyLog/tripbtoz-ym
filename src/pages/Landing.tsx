@@ -5,7 +5,6 @@ import SearchBar from '../components/common/SearchBar';
 
 const Landing = () => {
   const isMobile = useMediaQuery({ maxWidth: 480 });
-
   return (
     <>
       {isMobile ? (

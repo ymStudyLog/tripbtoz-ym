@@ -1,15 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import { getReservationData } from "../api/api";
-import { ReservationDataType } from "../types/hotelDataType";
+import { getLocalStorageData, getReservationData } from "../api/api";
+import { ReservationDataType, DatabaseLocalStorageType } from "../types/databaseType";
 
 const useDatabase = () => {
-  const { data } = useQuery(
+  const reservations = useQuery(
     ["getReservation"],
     () => getReservationData<ReservationDataType[]>("")
   );
-  
+
+  const localStorageData = useQuery(
+    ["getLocalStorageData"],
+    ()=> getLocalStorageData<DatabaseLocalStorageType>()
+  )
+
   return {
-    reservations : data,
+    reservations : reservations.data,
+    localStorageData : localStorageData.data,
   };
 };
 

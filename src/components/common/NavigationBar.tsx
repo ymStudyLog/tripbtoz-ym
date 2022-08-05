@@ -1,6 +1,7 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { emptyLocalStorageData } from "../../api/api";
 
 type Props = {};
 
@@ -10,6 +11,7 @@ const NavigationBar = (props: Props) => {
   const handleLogo = () => {
     navigate('/');
     window.localStorage.clear();
+    emptyLocalStorageData();
   };
 
   const handleToReservation = () => {

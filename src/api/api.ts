@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import { ReservationDataType } from "../types/hotelDataType";
+import { ReservationDataType } from "../types/databaseType";
+import { DatabaseLocalStorageType } from "../types/databaseType";
 
 const BASE_URL = "http://localhost:8000";
 
@@ -35,6 +36,42 @@ export const getReservationData = async <T>(
     const response: AxiosResponse<T> = await hotelService.get(
       `/reservations`.concat(endpoint)
     );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const saveLocalStorageData = async (
+  locaStorageDetail : DatabaseLocalStorageType
+) => {
+  try {
+    await hotelService.patch("/localStorage/1", locaStorageDetail);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const emptyLocalStorageData = async () => {
+  try {
+    await hotelService.patch("/localStorage/1", {
+      "stayPeriod": {
+        "checkIn": "",
+        "checkOut": ""
+      },
+      "headCount": {
+        "adult": 2,
+        "child": 0
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getLocalStorageData = async <T>(): Promise<T | undefined> => {
+  try {
+    const response: AxiosResponse<T> = await hotelService.get("/localStorage/1");
     return response.data;
   } catch (error) {
     console.log(error);
