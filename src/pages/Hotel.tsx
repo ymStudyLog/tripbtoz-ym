@@ -1,18 +1,22 @@
-import React from "react";
-import SearchBar from "../components/common/SearchBar";
-import HotelList from "../components/hotelList/HotelList";
-import useLocalStorage from "../hooks/useLocalStorage";
-import useFilter from "../hooks/useFilter";
-import useDatabase from "../hooks/useDatabase";
-import { ReservationContainer } from "../styles/Hotel.style";
+import React from 'react';
+import SearchBar from '../components/common/SearchBar';
+import HotelList from '../components/hotelList/HotelList';
+import MSearchBar from '../components/mobile/MSearchBar';
+import useLocalStorage from '../hooks/useLocalStorage';
+import useFilter from '../hooks/useFilter';
+import useDatabase from '../hooks/useDatabase';
+import { ReservationContainer } from '../styles/Hotel.style';
+import { useMediaQuery } from 'react-responsive';
 
 const Hotel = () => {
+  const isMobile = useMediaQuery({ maxWidth: 480 });
+
   const { reservations } = useDatabase();
   const { stayPeriod, headCount, getStorage } = useLocalStorage();
   const { filterByHeadCount, filterByStayPeriod } = useFilter();
 
-  const periodData = localStorage.getItem("stayPeriod");
-  const headData = localStorage.getItem("headCount");
+  const periodData = localStorage.getItem('stayPeriod');
+  const headData = localStorage.getItem('headCount');
 
   React.useEffect(() => {
     if (periodData !== null && headData !== null) {
@@ -23,20 +27,21 @@ const Hotel = () => {
   React.useEffect(() => {
     filterByHeadCount(headCount);
     filterByStayPeriod(reservations, stayPeriod);
-  }, [
-    headCount,
-    reservations,
-    stayPeriod,
-    filterByHeadCount,
-    filterByStayPeriod,
-  ]);
+  }, [headCount, reservations, stayPeriod, filterByHeadCount, filterByStayPeriod]);
 
   return (
     <>
-      <ReservationContainer>
-        <SearchBar />
-        <HotelList />
-      </ReservationContainer>
+      {isMobile ? (
+        <div>
+          <MSearchBar />
+          <HotelList />
+        </div>
+      ) : (
+        <ReservationContainer>
+          <SearchBar />
+          <HotelList />
+        </ReservationContainer>
+      )}
     </>
   );
 };

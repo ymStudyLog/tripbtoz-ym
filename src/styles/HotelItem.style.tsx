@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const MakeReservationButton = styled.button`
-  min-width: 106px;
+  width: 106px;
   margin-top: 1rem;
   margin-right: 1rem;
   padding: 6px 40px;
@@ -9,6 +9,13 @@ export const MakeReservationButton = styled.button`
   font-size: 14px;
   background-color: var(--color-main);
   color: var(--color-white);
+
+  @media screen and (max-width: 480px) {
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const HotelItemContainer = styled.div`
@@ -17,16 +24,29 @@ export const HotelItemContainer = styled.div`
   border: 1px solid var(--color-border);
   margin-top: 20px;
   display: flex;
+
+  @media screen and (max-width: 480px) {
+    width: 480px;
+  }
 `;
 
 export const HotelImage = styled.img`
   width: 300px;
+
+  @media screen and (max-width: 480px) {
+    width: 150px;
+  }
 `;
 
 export const HotelInfoWrapper = styled.div`
   padding: 20px 0 0 20px;
   width: 250px;
   line-height: 30px;
+
+  @media screen and (max-width: 480px) {
+    width: 180px;
+    line-height: 23px;
+  }
 `;
 
 export const Classification = styled.div`
@@ -43,6 +63,10 @@ export const Classification = styled.div`
 export const Name = styled.div`
   font-size: 20px;
   font-weight: 700;
+
+  @media screen and (max-width: 480px) {
+    font-size: 15px;
+  }
 `;
 
 export const Address = styled.div`
@@ -55,6 +79,11 @@ export const Review = styled.div`
   display: flex;
   justify-content: space-between;
   width: 150px;
+
+  @media screen and (max-width: 480px) {
+    font-size: 12px;
+    width: 110px;
+  }
 `;
 
 export const PriceAndButtonWrapper = styled.div`
@@ -62,6 +91,10 @@ export const PriceAndButtonWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
+
+  @media screen and (max-width: 480px) {
+    width: 160px;
+  }
 `;
 
 export const HotelPriceWrapper = styled.div`
@@ -77,6 +110,10 @@ export const HotelPriceWrapper = styled.div`
 export const Price = styled.div`
   font-size: 23px;
   font-weight: 700;
+
+  @media screen and (max-width: 480px) {
+    font-size: 18px;
+  }
 `;
 
 export const Subtext = styled.div`

@@ -4,6 +4,7 @@ import { useMediaQuery } from 'react-responsive';
 import SearchBar from '../components/common/SearchBar';
 import SelectButton from '../components/mobile/MSelectButton';
 import MSearchBar from '../components/mobile/MSearchBar';
+import Calendar from '../components/calendar/Calendar';
 
 const Landing = () => {
   const isMobile = useMediaQuery({ maxWidth: 480 });
@@ -26,11 +27,11 @@ const Landing = () => {
         <MobileBackground>
           <MSearchBar />
           {/* <TestCalendarWrapper>
-            <TestCalendarModal />
-            <TestCalendarModal />
-            <TestCalendarModal />
-          </TestCalendarWrapper> */}
-          <SelectButton />
+            <TestCalendarModal></TestCalendarModal> */}
+          {/* <TestCalendarModal />
+            <TestCalendarModal /> */}
+          {/* </TestCalendarWrapper>
+          <SelectButton /> */}
         </MobileBackground>
       ) : (
         <>
