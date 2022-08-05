@@ -1,15 +1,13 @@
 import styled from 'styled-components';
 import SearchBar from '../components/common/SearchBar';
-//import HotelList from '../components/HotelList';
-import HotelItem from '../components/hotelList/HotelItem';
+import HotelList from '../components/hotelList/HotelList';
 
 const Reservation = () => {
   return (
     <>
       <ReservationContainer>
         <SearchBar />
-        {/* <HotelList /> */}
-        <HotelItem />
+        <HotelList />
       </ReservationContainer>
     </>
   );

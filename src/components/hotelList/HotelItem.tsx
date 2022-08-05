@@ -1,34 +1,68 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import { addReservationData } from "../../api/api";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { BasicHotelDataType } from "../../types/hotelDataType";
+import { MakeReservationButton, HotelItemContainer } from "../../styles/HotelItem.style";
 
-type Props = {};
+type Props = {
+  hotelData: BasicHotelDataType;
+};
 
 const HotelItem = (props: Props) => {
+  const { hotelData } = props;
+  const { stayPeriod, headCount, setReservationInStorage } = useLocalStorage();
+  const [loading, setLoading] = React.useState<boolean>(false);
+
   return (
-    <HotelItemContainer>
-      <HotelImage />
+    <HotelItemContainer
+      style={loading ? { visibility: "visible" } : { visibility: "hidden" }}
+    >
+      <HotelImage
+        src={`${hotelData.image}`}
+        alt="hotel"
+        onLoad={() => {
+          setLoading(!loading);
+        }}
+        onError={() => {
+          console.log(`이미지 로딩 실패`);
+        }}
+      />
       <HotelInfoWrapper>
-        <Classification>3.5성급</Classification>
-        <Name>UH 스위트 코너스톤</Name>
-        <Address>우정국로2길 29 서울특별시</Address>
+        <Classification>{hotelData.star.toFixed(1)}성급</Classification>
+        <Name>{hotelData.hotel_name}</Name>
+        <Address>{hotelData.address}</Address>
+        <Review>
+          <p>{hotelData.grade}</p>
+          <p>총 {hotelData.review.toLocaleString("ko-KR")}건의 리뷰</p>
+        </Review>
       </HotelInfoWrapper>
-      <HotelPriceWrapper>
-        <Price>369,537원</Price>
-        <Subtext>세금 및 수수료 불포함</Subtext>
-      </HotelPriceWrapper>
+
+      <PriceAndButtonWrapper>
+        <MakeReservationButton
+          type="button"
+          onClick={() => {
+            setReservationInStorage(hotelData.id, hotelData.hotel_name);
+            addReservationData({
+              hotel_id: hotelData.id,
+              hotel_name: hotelData.hotel_name,
+              headCount: headCount,
+              reservationDetail: stayPeriod,
+            });
+          }}
+        >
+          예약
+        </MakeReservationButton>
+        <HotelPriceWrapper>
+          <Price>{hotelData.price.toLocaleString("ko-KR")}원</Price>
+          <Subtext>세금 및 수수료 불포함</Subtext>
+        </HotelPriceWrapper>
+      </PriceAndButtonWrapper>
     </HotelItemContainer>
   );
 };
 
 export default HotelItem;
-
-const HotelItemContainer = styled.div`
-  width: 800px;
-  height: 200px;
-  border: 1px solid var(--color-border);
-  margin-top: 20px;
-  display: flex;
-`;
 
 const HotelImage = styled.img`
   width: 300px;
@@ -60,6 +94,19 @@ const Address = styled.div`
   color: var(--color-subTitle);
   font-weight: 500;
   font-size: 14px;
+`;
+
+const Review = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+`;
+
+const PriceAndButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
 `;
 
 const HotelPriceWrapper = styled.div`

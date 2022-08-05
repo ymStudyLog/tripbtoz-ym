@@ -9,6 +9,7 @@ const useLocalStorage = () => {
   });
   const [headCount, setHeadCount] = React.useState<HeadCountType>(0);
 
+  //TODO 일반 함수로 바꾸고 다른 곳에서 import 해서 useEffect로 감싸기
   React.useEffect(() => {
     const periodData = localStorage.getItem("stayPeriod");
     const headData = localStorage.getItem("headCount");
@@ -25,6 +26,20 @@ const useLocalStorage = () => {
       setHeadCount(parsedHeadData);
     }
   }, []);
+
+  const setStayPeriodInStorage = (startDate: string, endDate: string) => {
+    localStorage.setItem(
+      'stayPeriod',
+      JSON.stringify({
+        checkIn: startDate,
+        checkOut: endDate,
+      })
+    );
+  };
+
+  const setHeadCountInStorage = (count: number) => {
+    localStorage.setItem('headCount', count.toString());
+  }
 
   const setReservationInStorage = (id: number, hotelName: string) => {
     const prevStorageState = localStorage.getItem("reservationData");
@@ -54,6 +69,8 @@ const useLocalStorage = () => {
   return {
     stayPeriod,
     headCount,
+    setStayPeriodInStorage,
+    setHeadCountInStorage,
     setReservationInStorage,
   };
 };

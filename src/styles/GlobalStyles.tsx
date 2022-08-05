@@ -44,6 +44,7 @@ button {
     --color-subTitle: #9fa1a7;
     --color-catchphrase: #11482d;
     --color-main: #ff375c;
+    --color-loading: #f1f1f1;
   }
 
 `;
