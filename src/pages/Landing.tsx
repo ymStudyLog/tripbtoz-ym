@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import NavigationBar from '../components/common/NavigationBar';
 import SearchBar from '../components/common/SearchBar';
 
 const Landing = () => {
@@ -18,7 +17,6 @@ const Landing = () => {
 
   return (
     <>
-      <NavigationBar />
       <BackgroundImageWrapper>
         <BackgroundImage src='./images/background.jpg' />
       </BackgroundImageWrapper>
@@ -26,9 +24,7 @@ const Landing = () => {
         <CatchphraseWrapper>
           <Catchphrase>Play Share Stay, 트립비토즈</Catchphrase>
         </CatchphraseWrapper>
-        <SearchBarWrapper>
-          <SearchBar />
-        </SearchBarWrapper>
+        <SearchBar />
       </LandingContentsContainer>
     </>
   );
@@ -66,10 +62,4 @@ const Catchphrase = styled.div`
   font-weight: 700;
   font-size: 34px;
   color: var(--color-catchphrase);
-`;
-
-const SearchBarWrapper = styled.div`
-  height: 60px;
-  width: 800px;
-  margin-top: 20px;
 `;
