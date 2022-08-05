@@ -1,18 +1,38 @@
 import React from "react";
 import styled from "styled-components";
+import { addMonthDate } from "../../utils/dateUtils";
 type Props = {
+  todayDate: Date;
+  showMonthDate: Date;
+  maxMonth: number;
   handleChangePrevButton: () => void;
   handleChangeNextButton: () => void;
 };
 
-const Head = (props: Props) => {
-  const { handleChangePrevButton, handleChangeNextButton } = props;
+const Head = ({
+  todayDate,
+  showMonthDate,
+  maxMonth,
+  handleChangePrevButton,
+  handleChangeNextButton,
+}: Props) => {
+  const laterMonthDate = addMonthDate(todayDate, maxMonth);
 
   return (
     <HeadContainer>
       <ButtonContainer>
-        <Button onClick={handleChangePrevButton}>&lt;</Button>
-        <Button onClick={handleChangeNextButton}>&gt;</Button>
+        {todayDate.getFullYear() >= showMonthDate.getFullYear() &&
+        todayDate.getMonth() >= showMonthDate.getMonth() ? (
+          <div></div>
+        ) : (
+          <Button onClick={handleChangePrevButton}>&lt;</Button>
+        )}
+        {laterMonthDate.getFullYear() <= showMonthDate.getFullYear() &&
+        laterMonthDate.getMonth() <= showMonthDate.getMonth() ? (
+          <div></div>
+        ) : (
+          <Button onClick={handleChangeNextButton}>&gt;</Button>
+        )}
       </ButtonContainer>
     </HeadContainer>
   );
