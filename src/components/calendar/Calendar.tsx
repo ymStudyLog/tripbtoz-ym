@@ -124,4 +124,6 @@ export default Calendar;
 const BodyContainer = styled.div`
   display: flex;
   flex-direction: row;
+  height: 400px;
+  margin-bottom: 20px;
 `;

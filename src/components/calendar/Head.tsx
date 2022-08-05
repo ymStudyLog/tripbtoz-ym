@@ -51,9 +51,9 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 75px;
+  padding: 0 40px;
   position: absolute;
-  top: 42px;
+  top: 35px;
   width: 100%;
   z-index: 10;
 `;
