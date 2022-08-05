@@ -44,6 +44,10 @@ const BackgroundImage = styled.img`
   position: absolute;
   z-index: -1;
   top: 0;
+
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const LandingContentsContainer = styled.div`
@@ -56,6 +60,11 @@ const LandingContentsContainer = styled.div`
 
 const CatchphraseWrapper = styled.div`
   width: 800px;
+
+  @media screen and (max-width: 850px) {
+    width: 500px;
+    transition: 0.8s all ease;
+  }
 `;
 
 const Catchphrase = styled.div`
