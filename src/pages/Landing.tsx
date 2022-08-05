@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import SearchBar from '../components/common/SearchBar';
+import SelectButton from '../components/mobile/MSelectButton';
+import MSearchBar from '../components/mobile/MSearchBar';
 
 const Landing = () => {
   const isMobile = useMediaQuery({ maxWidth: 480 });
@@ -20,28 +22,38 @@ const Landing = () => {
 
   return (
     <>
-      <BackgroundImageWrapper>
-        <BackgroundImage src='./images/background.jpg' />
-      </BackgroundImageWrapper>
       {isMobile ? (
-        <TestCalendarWrapper>
-          <TestCalendarModal />
-          <TestCalendarModal />
-          <TestCalendarModal />
-        </TestCalendarWrapper>
+        <MobileBackground>
+          <MSearchBar />
+          {/* <TestCalendarWrapper>
+            <TestCalendarModal />
+            <TestCalendarModal />
+            <TestCalendarModal />
+          </TestCalendarWrapper> */}
+          <SelectButton />
+        </MobileBackground>
       ) : (
-        <LandingContentsContainer>
-          <CatchphraseWrapper>
-            <Catchphrase>Play Share Stay, 트립비토즈</Catchphrase>
-          </CatchphraseWrapper>
-          <SearchBar />
-        </LandingContentsContainer>
+        <>
+          <BackgroundImageWrapper>
+            <BackgroundImage src='./images/background.jpg' />
+          </BackgroundImageWrapper>
+          <LandingContentsContainer>
+            <CatchphraseWrapper>
+              <Catchphrase>Play Share Stay, 트립비토즈</Catchphrase>
+            </CatchphraseWrapper>
+            <SearchBar />
+          </LandingContentsContainer>
+        </>
       )}
     </>
   );
 };
 
 export default Landing;
+
+const MobileBackground = styled.div`
+  background-color: var(--color-mobileBackground);
+`;
 
 const BackgroundImageWrapper = styled.div`
   display: flex;
@@ -55,10 +67,6 @@ const BackgroundImage = styled.img`
   position: absolute;
   z-index: -1;
   top: 0;
-
-  @media screen and (max-width: 480px) {
-    display: none;
-  }
 `;
 
 const LandingContentsContainer = styled.div`
@@ -71,14 +79,6 @@ const LandingContentsContainer = styled.div`
 
 const CatchphraseWrapper = styled.div`
   width: 800px;
-
-  @media screen and (max-width: 850px) {
-    width: 500px;
-    transition: 0.8s all ease;
-  }
-  @media screen and (max-width: 480px) {
-    display: none;
-  }
 `;
 
 const Catchphrase = styled.div`
@@ -88,7 +88,6 @@ const Catchphrase = styled.div`
 `;
 
 const TestCalendarWrapper = styled.div`
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -96,8 +95,8 @@ const TestCalendarWrapper = styled.div`
 `;
 
 const TestCalendarModal = styled.div`
-  width: 400px;
-  min-height: 300px;
+  width: 480px;
+  min-height: 400px;
   border: 2px solid red;
   background-color: var(--color-red);
 `;

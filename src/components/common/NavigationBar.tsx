@@ -46,6 +46,10 @@ const NavigationBarContainer = styled.div`
   align-items: center;
   height: 100%;
   width: 800px;
+
+  @media screen and (max-width: 480px) {
+    padding: 0 30px;
+  }
 `;
 
 const LogoContainer = styled.div`
