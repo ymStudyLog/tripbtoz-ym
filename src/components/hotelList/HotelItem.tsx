@@ -1,15 +1,14 @@
-import React from "react";
-import styled from "styled-components";
-import { addReservationData } from "../../api/api";
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { BasicHotelDataType } from "../../types/hotelDataType";
-import { MakeReservationButton, HotelItemContainer } from "../../styles/HotelItem.style";
-import { StayPeriodType, NumberOfPeopleType } from "../../types/localStorageType";
+import React from 'react';
+import { addReservationData } from '../../api/api';
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { BasicHotelDataType } from '../../types/hotelDataType';
+import * as H from '../../styles/HotelItem.style';
+import { StayPeriodType, NumberOfPeopleType } from '../../types/localStorageType';
 
 type Props = {
   hotelData: BasicHotelDataType;
-  stayPeriod : StayPeriodType;
-  headCount : NumberOfPeopleType;
+  stayPeriod: StayPeriodType;
+  headCount: NumberOfPeopleType;
 };
 
 const HotelItem = (props: Props) => {
@@ -19,12 +18,10 @@ const HotelItem = (props: Props) => {
   const [loading, setLoading] = React.useState<boolean>(false);
 
   return (
-    <HotelItemContainer
-      style={loading ? { visibility: "visible" } : { visibility: "hidden" }}
-    >
-      <HotelImage
+    <H.HotelItemContainer style={loading ? { visibility: 'visible' } : { visibility: 'hidden' }}>
+      <H.HotelImage
         src={`${hotelData.image}`}
-        alt="hotel"
+        alt='hotel'
         onLoad={() => {
           setLoading(!loading);
         }}
@@ -32,19 +29,19 @@ const HotelItem = (props: Props) => {
           console.log(`이미지 로딩 실패`);
         }}
       />
-      <HotelInfoWrapper>
-        <Classification>{hotelData.star.toFixed(1)}성급</Classification>
-        <Name>{hotelData.hotel_name}</Name>
-        <Address>{hotelData.address}</Address>
-        <Review>
+      <H.HotelInfoWrapper>
+        <H.Classification>{hotelData.star.toFixed(1)}성급</H.Classification>
+        <H.Name>{hotelData.hotel_name}</H.Name>
+        <H.Address>{hotelData.address}</H.Address>
+        <H.Review>
           <p>{hotelData.grade}</p>
-          <p>총 {hotelData.review.toLocaleString("ko-KR")}건의 리뷰</p>
-        </Review>
-      </HotelInfoWrapper>
+          <p>총 {hotelData.review.toLocaleString('ko-KR')}건의 리뷰</p>
+        </H.Review>
+      </H.HotelInfoWrapper>
 
-      <PriceAndButtonWrapper>
-        <MakeReservationButton
-          type="button"
+      <H.PriceAndButtonWrapper>
+        <H.MakeReservationButton
+          type='button'
           onClick={() => {
             setReservationInStorage(hotelData.id, hotelData.hotel_name, stayPeriod, headCount);
             addReservationData({
@@ -56,80 +53,14 @@ const HotelItem = (props: Props) => {
           }}
         >
           예약
-        </MakeReservationButton>
-        <HotelPriceWrapper>
-          <Price>{hotelData.price.toLocaleString("ko-KR")}원</Price>
-          <Subtext>세금 및 수수료 불포함</Subtext>
-        </HotelPriceWrapper>
-      </PriceAndButtonWrapper>
-    </HotelItemContainer>
+        </H.MakeReservationButton>
+        <H.HotelPriceWrapper>
+          <H.Price>{hotelData.price.toLocaleString('ko-KR')}원</H.Price>
+          <H.Subtext>세금 및 수수료 불포함</H.Subtext>
+        </H.HotelPriceWrapper>
+      </H.PriceAndButtonWrapper>
+    </H.HotelItemContainer>
   );
 };
 
 export default HotelItem;
-
-const HotelImage = styled.img`
-  width: 300px;
-`;
-
-const HotelInfoWrapper = styled.div`
-  padding: 20px 0 0 20px;
-  width: 250px;
-  line-height: 30px;
-`;
-
-const Classification = styled.div`
-  border: 1px solid var(--color-black);
-  width: 50px;
-  height: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 13px;
-  margin-bottom: 5px;
-`;
-
-const Name = styled.div`
-  font-size: 20px;
-  font-weight: 700;
-`;
-
-const Address = styled.div`
-  color: var(--color-subTitle);
-  font-weight: 500;
-  font-size: 14px;
-`;
-
-const Review = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 150px;
-`;
-
-const PriceAndButtonWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-`;
-
-const HotelPriceWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  text-align: end;
-  width: 250px;
-  padding: 0 20px 20px 0;
-  line-height: 30px;
-`;
-
-const Price = styled.div`
-  font-size: 23px;
-  font-weight: 700;
-`;
-
-const Subtext = styled.div`
-  color: var(--color-border);
-  font-weight: 400;
-  font-size: 12px;
-`;

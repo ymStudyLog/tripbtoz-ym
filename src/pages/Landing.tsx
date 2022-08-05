@@ -1,11 +1,7 @@
-
 import React from 'react';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
 import SearchBar from '../components/common/SearchBar';
-import SelectButton from '../components/mobile/MSelectButton';
-import MSearchBar from '../components/mobile/MSearchBar';
-import Calendar from '../components/calendar/Calendar';
 
 const Landing = () => {
   const isMobile = useMediaQuery({ maxWidth: 480 });
@@ -13,15 +9,9 @@ const Landing = () => {
   return (
     <>
       {isMobile ? (
-        <MobileBackground>
-          <MSearchBar />
-          {/* <TestCalendarWrapper>
-            <TestCalendarModal></TestCalendarModal> */}
-          {/* <TestCalendarModal />
-            <TestCalendarModal /> */}
-          {/* </TestCalendarWrapper>
-          <SelectButton /> */}
-        </MobileBackground>
+        <div>
+          <SearchBar />
+        </div>
       ) : (
         <>
           <BackgroundImageWrapper>
@@ -35,16 +25,11 @@ const Landing = () => {
           </LandingContentsContainer>
         </>
       )}
-
     </>
   );
 };
 
 export default Landing;
-
-const MobileBackground = styled.div`
-  background-color: var(--color-mobileBackground);
-`;
 
 const BackgroundImageWrapper = styled.div`
   display: flex;
