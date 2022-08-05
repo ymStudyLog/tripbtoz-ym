@@ -1,24 +1,50 @@
-import React from "react";
-import styled from "styled-components";
-import SearchBar from "../components/common/SearchBar";
+
+import React from 'react';
+import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
+import SearchBar from '../components/common/SearchBar';
+import SelectButton from '../components/mobile/MSelectButton';
+import MSearchBar from '../components/mobile/MSearchBar';
+import Calendar from '../components/calendar/Calendar';
 
 const Landing = () => {
+  const isMobile = useMediaQuery({ maxWidth: 480 });
+
   return (
     <>
-      <BackgroundImageWrapper>
-        <BackgroundImage src="./images/background.jpg" />
-      </BackgroundImageWrapper>
-      <LandingContentsContainer>
-        <CatchphraseWrapper>
-          <Catchphrase>Play Share Stay, 트립비토즈</Catchphrase>
-        </CatchphraseWrapper>
-        <SearchBar />
-      </LandingContentsContainer>
+      {isMobile ? (
+        <MobileBackground>
+          <MSearchBar />
+          {/* <TestCalendarWrapper>
+            <TestCalendarModal></TestCalendarModal> */}
+          {/* <TestCalendarModal />
+            <TestCalendarModal /> */}
+          {/* </TestCalendarWrapper>
+          <SelectButton /> */}
+        </MobileBackground>
+      ) : (
+        <>
+          <BackgroundImageWrapper>
+            <BackgroundImage src='./images/background.jpg' />
+          </BackgroundImageWrapper>
+          <LandingContentsContainer>
+            <CatchphraseWrapper>
+              <Catchphrase>Play Share Stay, 트립비토즈</Catchphrase>
+            </CatchphraseWrapper>
+            <SearchBar />
+          </LandingContentsContainer>
+        </>
+      )}
+
     </>
   );
 };
 
 export default Landing;
+
+const MobileBackground = styled.div`
+  background-color: var(--color-mobileBackground);
+`;
 
 const BackgroundImageWrapper = styled.div`
   display: flex;
@@ -50,4 +76,18 @@ const Catchphrase = styled.div`
   font-weight: 700;
   font-size: 34px;
   color: var(--color-catchphrase);
+`;
+
+const TestCalendarWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TestCalendarModal = styled.div`
+  width: 480px;
+  min-height: 400px;
+  border: 2px solid red;
+  background-color: var(--color-red);
 `;

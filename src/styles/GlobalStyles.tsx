@@ -45,6 +45,7 @@ button {
     --color-catchphrase: #11482d;
     --color-main: #ff375c;
     --color-loading: #f1f1f1;
+    --color-mobileBackground: #eeeeee;
   }
 
 `;
