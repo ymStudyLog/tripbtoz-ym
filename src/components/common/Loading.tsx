@@ -1,20 +1,25 @@
-import React from "react";
 import styled from "styled-components";
+import { PageContainer } from "../../styles/HotelList.style";
+import { HotelItemContainer } from "../../styles/HotelItem.style";
+import { HOTELDATA_PER_PAGE } from "../../utils/infiniteScroll";
+import { v4 as uuidv4 } from "uuid";
 
-type Props = {};
-
-//TODO reservation 페이지 레이아웃 완료되면 그거 가져다가 로딩바 만들기 트립비토즈 로딩바 참고
-const Loading = (props: Props) => {
-  return <LoadingContainer>Loading...</LoadingContainer>;
+const Loading = () : JSX.Element => {
+  const loadingRepetition = new Array(HOTELDATA_PER_PAGE).fill(0);
+  return (
+    <LoadingContainer>
+      {loadingRepetition.map((index) => {
+        return <LoadingItem key={uuidv4()}/>;
+      })}
+    </LoadingContainer>
+  );
 };
 
 export default Loading;
 
-const LoadingContainer = styled.div`
-  width: 100%;
-  height: 200px;
-  background-color: yellow;
-  font-size: 30px;
-  display: flex;
-  justify-content: center;
+const LoadingContainer = styled(PageContainer)``;
+
+const LoadingItem = styled(HotelItemContainer)`
+  background-color: var(--color-loading);
+  border-color: var(--color-loading) !important;
 `;

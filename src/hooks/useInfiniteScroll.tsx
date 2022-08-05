@@ -6,9 +6,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import { QueryType } from "../types/queryType";
 import useFilter from "../hooks/useFilter";
+import Loading from "../components/common/Loading";
 
-//TODO 다른 곳 보고와야 데이터 보이는 현상 해결하기 -> useEffect? 아니면 reservation 넘어오기 전에 미리 쿼리 생성?
-//TODO 맨 처음 마운트시 1페이지만 렌더링 되어야하는 데 2페이지까지 한번에 렌더링 됨 -> 해결된듯? 원인만 찾아보기
 const useInfiniteScroll = () => {
   const { filteredQueryString } = useFilter();
 
@@ -49,7 +48,7 @@ const useInfiniteScroll = () => {
       if (!isLastPage && inView) setTimeout(fetchNextPage, 500);
     }, [inView]);
 
-    return <div ref={ref}></div>;
+    return <div ref={ref}><Loading /></div>;
   };
 
   return {

@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import SearchBar from '../components/common/SearchBar';
 
 const Landing = () => {
-  // TODO landing 페이지에서 로컬스토리지 저장 성공하면 삭제 예정
+  // TODO final 제출 전에 삭제 
   React.useEffect(() => {
     localStorage.setItem(
       'stayPeriod',
       JSON.stringify({
-        checkIn: '2022. 8. 10.',
-        checkOut: '2022. 8. 13.',
+        checkIn: '2022. 8. 18.',
+        checkOut: '2022. 8. 20.',
       })
     );
     localStorage.setItem('headCount', '4');
