@@ -11,26 +11,60 @@ import {
   convertDateToString,
   getDateDiff,
 } from "../../utils/dateUtils";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
-const SearchBar = () => {
+type Props = {
+  initialAdult?: number;
+  initialChild?: number;
+  initialCheckIn?: Date;
+  initialCheckOut?: Date;
+};
+const SearchBar = ({
+  initialAdult,
+  initialChild,
+  initialCheckIn,
+  initialCheckOut,
+}: Props) => {
+  console.log("여기", initialCheckIn);
   const today = new Date(convertDateToString(new Date()));
   const [initialMonthDate, setInitialMonthDate] = React.useState(
     new Date(convertDateToString(new Date()))
   );
   const [checkIn, setCheckIn] = React.useState<Date | undefined>(
-    addDate(today, 7)
+    initialCheckIn ? initialCheckIn : addDate(today, 7)
   );
   const [checkOut, setCheckOut] = React.useState<Date | undefined>(
-    addDate(today, 8)
+    initialCheckOut ? initialCheckOut : addDate(today, 8)
   );
   const [showCalendarModal, setShowCalendarModal] =
     React.useState<boolean>(false);
   const [showCountModal, setShowCountModal] = React.useState<boolean>(false);
-  const [adult, setAdult] = React.useState(2);
-  const [child, setChild] = React.useState(0);
+  const [adult, setAdult] = React.useState(initialAdult ? initialAdult : 2);
+  const [child, setChild] = React.useState(initialChild ? initialChild : 0);
+
   const navigate = useNavigate();
 
+  const { setStayPeriodInStorage, setNumberOfPeopleInStorage } =
+    useLocalStorage();
+
   const handleToHotel = () => {
+    if (adult + child <= 0) {
+      setShowCountModal(true);
+      return;
+    }
+    if (!checkIn || !checkOut) {
+      setShowCalendarModal(true);
+      return;
+    }
+    setStayPeriodInStorage(
+      `${checkIn.getFullYear()}. ${
+        checkIn.getMonth() + 1
+      }. ${checkIn.getDate()}.`,
+      `${checkOut.getFullYear()}. ${
+        checkOut.getMonth() + 1
+      }. ${checkOut.getDate()}.`
+    );
+    setNumberOfPeopleInStorage(adult, child);
     navigate("/hotel");
   };
 

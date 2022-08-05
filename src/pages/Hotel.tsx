@@ -5,36 +5,49 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import useFilter from "../hooks/useFilter";
 import useDatabase from "../hooks/useDatabase";
 import { ReservationContainer } from "../styles/Hotel.style";
+import { NumberOfPeopleType, StayPeriodType } from "../types/localStorageType";
 
 const Hotel = () => {
   const { reservations } = useDatabase();
-  const { stayPeriod, headCount, getStorage } = useLocalStorage();
+  const { stayPeriod, numberOfPeople, getStorage } = useLocalStorage();
   const { filterByHeadCount, filterByStayPeriod } = useFilter();
 
   const periodData = localStorage.getItem("stayPeriod");
-  const headData = localStorage.getItem("headCount");
+  const numberOfPeopleData = localStorage.getItem("numberOfPeople");
+
+  const parsedStayPeriod: StayPeriodType = periodData
+    ? JSON.parse(periodData)
+    : { checkIn: "", checkOut: "" };
+  const parsedNumberOfPeopleData: NumberOfPeopleType = numberOfPeopleData
+    ? JSON.parse(numberOfPeopleData)
+    : { adult: 2, child: 0 };
 
   React.useEffect(() => {
-    if (periodData !== null && headData !== null) {
-      getStorage(periodData, headData);
+    if (periodData !== null && numberOfPeopleData !== null) {
+      getStorage(periodData, numberOfPeopleData);
     }
-  }, [periodData, headData, getStorage]);
+  }, [periodData, numberOfPeopleData, getStorage]);
 
   React.useEffect(() => {
-    filterByHeadCount(headCount);
+    filterByHeadCount(numberOfPeople.adult + numberOfPeople.child);
     filterByStayPeriod(reservations, stayPeriod);
   }, [
-    headCount,
     reservations,
     stayPeriod,
     filterByHeadCount,
     filterByStayPeriod,
+    numberOfPeople.adult,
+    numberOfPeople.child,
   ]);
-
   return (
     <>
       <ReservationContainer>
-        <SearchBar />
+        <SearchBar
+          initialAdult={parsedNumberOfPeopleData.adult}
+          initialChild={parsedNumberOfPeopleData.child}
+          initialCheckIn={new Date(parsedStayPeriod.checkIn)}
+          initialCheckOut={new Date(parsedStayPeriod.checkOut)}
+        />
         <HotelList />
       </ReservationContainer>
     </>
