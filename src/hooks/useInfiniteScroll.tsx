@@ -8,7 +8,6 @@ import { QueryType } from "../types/queryType";
 import useFilter from "../hooks/useFilter";
 import Loading from "../components/common/Loading";
 
-//TODO 다른 곳 보고와야 데이터 보이는 현상 해결하기 -> useEffect? 아니면 reservation 넘어오기 전에 미리 쿼리 생성?
 const useInfiniteScroll = () => {
   const { filteredQueryString } = useFilter();
 

@@ -2,13 +2,14 @@ import styled from "styled-components";
 import { PageContainer } from "../../styles/HotelList.style";
 import { HotelItemContainer } from "../../styles/HotelItem.style";
 import { HOTELDATA_PER_PAGE } from "../../utils/infiniteScroll";
+import { v4 as uuidv4 } from "uuid";
 
 const Loading = () : JSX.Element => {
   const loadingRepetition = new Array(HOTELDATA_PER_PAGE).fill(0);
   return (
     <LoadingContainer>
       {loadingRepetition.map((index) => {
-        return <LoadingItem key={index}/>;
+        return <LoadingItem key={uuidv4()}/>;
       })}
     </LoadingContainer>
   );

@@ -7,6 +7,7 @@ import Loading from "../common/Loading";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import HotelItem from "./HotelItem";
 import { PageContainer } from "../../styles/HotelList.style";
+import { v4 as uuidv4 } from "uuid";
 
 type EachInfinitePageType = {
   result: GetDataResultType;
@@ -18,25 +19,24 @@ const HotelList = () => {
   const { isLoading, hasNextPage, data, isFetchingNextPage, ObservationBox } =
     useInfiniteScroll();
 
-  // if (isLoading) return <Loading />; //TODO 
-
   return (
     <>
-    {isLoading ? <Loading /> : 
-      <div>
-      {data?.pages.map((page: EachInfinitePageType, index: number) => (
-        <PageContainer key={index}>
-          {page?.result?.map(
-            (eachHotelData: BasicHotelDataType, index: number) => {
-              return <HotelItem key={index} hotelData={eachHotelData} />;
-            }
-          )}
-        </PageContainer>
-      ))}
-      </div>
-    }
-    {/* TODO 깜빡이는 현상 생김 */}
-      {!isFetchingNextPage && hasNextPage ? <ObservationBox /> : null} 
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div>
+          {data?.pages.map((page: EachInfinitePageType, index: number) => (
+            <PageContainer key={uuidv4()}>
+              {page?.result?.map(
+                (eachHotelData: BasicHotelDataType, index: number) => {
+                  return <HotelItem key={uuidv4()} hotelData={eachHotelData} />;
+                }
+              )}
+            </PageContainer>
+          ))}
+        </div>
+      )}
+      {!isFetchingNextPage && hasNextPage ? <ObservationBox /> : null}
     </>
   );
 };
