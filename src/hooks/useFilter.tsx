@@ -3,22 +3,20 @@ import { areIntervalsOverlapping } from "date-fns";
 import { ReservationDataType } from "../types/hotelDataType";
 import { HeadCountType, StayPeriodType } from "../types/localStorageType";
 import { QueryType } from "../types/queryType";
-import useLocalStorage from "../hooks/useLocalStorage";
-import useDatabase from "../hooks/useDatabase";
 
 const useFilter = () => {
-  const { reservations } = useDatabase();
-  const { headCount, stayPeriod } = useLocalStorage();
+  const [headQuery, setHeadQuery] = React.useState<QueryType>("");
+  const [stayPeriodQuery, setStayPeriodQuery] = React.useState<QueryType>("");
 
-  const filterByHeadCount = (count: HeadCountType): QueryType =>
-    `occupancy.base_lte=${count}&occupancy.max_gte=${count}`;
+  const filterByHeadCount = React.useCallback((count: HeadCountType) : void =>
+    setHeadQuery(`occupancy.base_lte=${count}&occupancy.max_gte=${count}`), []);
 
-  const filterByStayPeriod = (
+  const filterByStayPeriod = React.useCallback((
     reservations: ReservationDataType[] | undefined,
     period: StayPeriodType
-  ): QueryType => {
+  ) : void => {
     if (reservations !== undefined) {
-      return reservations
+      const query = reservations
         .filter((reservation: ReservationDataType) =>
           areIntervalsOverlapping(
             {
@@ -38,22 +36,20 @@ const useFilter = () => {
             `id_ne=${currentState.hotel_id}`
         )
         .join("&");
+        setStayPeriodQuery(query);
     } else {
-      return "";
+      setStayPeriodQuery("");
     }
-  };
-
-  React.useEffect(() => {
-    filterByHeadCount(headCount);
-    filterByStayPeriod(reservations, stayPeriod);
-  }, [headCount, reservations, stayPeriod]);
+  },[]);
 
   const filteredQueryString: QueryType = "?"
-    .concat(filterByHeadCount(headCount))
+    .concat(headQuery)
     .concat("&")
-    .concat(filterByStayPeriod(reservations, stayPeriod));
+    .concat(stayPeriodQuery);
 
   return {
+    filterByHeadCount,
+    filterByStayPeriod,
     filteredQueryString
   };
 };

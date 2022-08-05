@@ -9,6 +9,7 @@ const NavigationBar = (props: Props) => {
 
   const handleLogo = () => {
     navigate('/');
+    window.localStorage.clear();
   };
 
   const handleToReservation = () => {
@@ -50,7 +51,7 @@ const NavigationBarContainer = styled.div`
 const LogoContainer = styled.div`
   width: 160px;
   height: 48px;
-  display: flex:
+  display: flex;
   justify-content: center;
   align-items: center;
 `;

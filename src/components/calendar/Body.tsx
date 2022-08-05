@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { addMonthDate } from "../../utils/dateUtils";
 import Dates from "./Dates";
+import { v4 as uuidv4 } from "uuid";
 
 type Props = {
   today: Date;
@@ -95,7 +96,7 @@ const Body = ({
         <DatesContainer>
           {totalDate.map((date, index) => (
             <Dates
-              key={index}
+              key={uuidv4()}
               year={date.getFullYear()}
               month={date.getMonth() + 1}
               date={date.getDate()}
@@ -137,7 +138,7 @@ const HeadText = styled.div`
 `;
 
 const BodyContentContainer = styled.div`
-  margin: 30px;
+  margin: 20px ;
   height: auto;
 `;
 
