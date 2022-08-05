@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import { addReservationData } from "../api/api";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { BasicHotelDataType, GetDataResultType } from "../types/hotelDataType";
-import Loading from "./common/Loading";
-import useInfiniteScroll from "../hooks/useInfiniteScroll";
+import React from 'react';
+import styled from 'styled-components';
+import { addReservationData } from '../api/api';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { BasicHotelDataType, GetDataResultType } from '../types/hotelDataType';
+import Loading from './common/Loading';
+import useInfiniteScroll from '../hooks/useInfiniteScroll';
 
 type EachInfinitePageType = {
   result: GetDataResultType;
@@ -14,8 +14,7 @@ type EachInfinitePageType = {
 
 const HotelList = () => {
   const { stayPeriod, headCount, setReservationInStorage } = useLocalStorage();
-  const { isLoading, hasNextPage, data, isFetchingNextPage, ObservationBox } =
-    useInfiniteScroll();
+  const { isLoading, hasNextPage, data, isFetchingNextPage, ObservationBox } = useInfiniteScroll();
 
   if (isLoading) return <Loading />; //TODO isLoading일때랑 아닐때 랑 구분해서 return하기 지금 전혀 구분 안되는중
 
@@ -76,6 +75,9 @@ export default HotelList;
 
 const HotelItemContainer = styled.div`
   border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const HotelItem = styled.div`

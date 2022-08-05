@@ -68,6 +68,7 @@ const NavigationBarMenuItems = styled.div`
   width: 160px;
   height: 48px;
   font-size: 17px;
+  padding-right: 8px;
 `;
 
 const CustomerService = styled.div`

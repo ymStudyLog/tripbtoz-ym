@@ -1,108 +1,101 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
-import { VscCalendar } from "react-icons/vsc";
-import { IoPersonOutline } from "react-icons/io5";
-import { IoSearch } from "react-icons/io5";
-import CalendarModal from "../modal/CalendarModal";
-import CountModal from "../modal/CountModal";
-import {
-  addDate,
-  convertDateToString,
-  getDateDiff,
-} from "../../utils/dateUtils";
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { VscCalendar } from 'react-icons/vsc';
+import { IoPersonOutline } from 'react-icons/io5';
+import { IoSearch } from 'react-icons/io5';
+import CalendarModal from '../modal/CalendarModal';
+import CountModal from '../modal/CountModal';
+import { addDate, convertDateToString, getDateDiff } from '../../utils/dateUtils';
 
 const SearchBar = () => {
   const today = new Date(convertDateToString(new Date()));
-  const [initialMonthDate, setInitialMonthDate] = React.useState(
-    new Date(convertDateToString(new Date()))
-  );
-  const [checkIn, setCheckIn] = React.useState<Date | undefined>(
-    addDate(today, 7)
-  );
-  const [checkOut, setCheckOut] = React.useState<Date | undefined>(
-    addDate(today, 8)
-  );
-  const [showCalendarModal, setShowCalendarModal] =
-    React.useState<boolean>(false);
-
+  const [initialMonthDate, setInitialMonthDate] = React.useState(new Date(convertDateToString(new Date())));
+  const [checkIn, setCheckIn] = React.useState<Date | undefined>(addDate(today, 7));
+  const [checkOut, setCheckOut] = React.useState<Date | undefined>(addDate(today, 8));
+  const [showCalendarModal, setShowCalendarModal] = React.useState<boolean>(false);
   const [showCountModal, setShowCountModal] = React.useState<boolean>(false);
 
+  const navigate = useNavigate();
+
+  const handleToHotel = () => {
+    navigate('/hotel');
+  };
+
   return (
-    <SearchBarContainer>
-      <IconWrapper>
-        <VscCalendar />
-      </IconWrapper>
-      <CheckInOutContainer
-        onClick={() => {
-          setShowCalendarModal(!showCalendarModal);
-          setShowCountModal(false);
-        }}
-      >
-        {showCalendarModal && (
-          <CalendarModal
-            initialCheckIn={checkIn}
-            initialCheckOut={checkOut}
-            today={new Date(convertDateToString(new Date()))}
-            initialMonthDate={initialMonthDate}
-            handleChangeMonthDate={(date: Date) => {
-              setInitialMonthDate(date);
-            }}
-            handleChangeCheckInOut={(srcCheckIn?: Date, srcCheckOut?: Date) => {
-              let changed = false;
-              if (srcCheckIn !== checkIn || srcCheckOut !== checkOut) {
-                changed = true;
-              }
-              setCheckIn(srcCheckIn);
-              setCheckOut(srcCheckOut);
-              if (changed && srcCheckIn && srcCheckOut) {
-                setShowCalendarModal(false);
-              }
-            }}
-          />
-        )}
-        <CheckInWrapper>
-          <SubMenuTitle>체크인</SubMenuTitle>
-          <SubMenuContents>
-            {checkIn
-              ? `${checkIn.getMonth() + 1}월 ${checkIn.getDate()}일`
-              : "날짜추가"}
-          </SubMenuContents>
-        </CheckInWrapper>
-        <StayPeriodText>
-          {checkIn && checkOut ? `${getDateDiff(checkOut, checkIn)}박` : ""}
-        </StayPeriodText>
-        <CheckOutWrapper>
-          <SubMenuTitle>체크아웃</SubMenuTitle>
-          <SubMenuContents>
-            {checkOut
-              ? `${checkOut.getMonth() + 1}월 ${checkOut.getDate()}일`
-              : "날짜추가"}
-          </SubMenuContents>
-        </CheckOutWrapper>
-      </CheckInOutContainer>
-      <IconWrapper>
-        <IoPersonOutline />
-      </IconWrapper>
-      <GuestInfoContainer
-        onClick={() => {
-          setShowCountModal(!showCountModal);
-          setShowCalendarModal(false);
-        }}
-      >
-        {showCountModal && <CountModal setShowCountModal={setShowCountModal} />}
-        <GuestInfoWrapper>
-          <SubMenuTitle>객실 / 인원</SubMenuTitle>
-          <SubMenuContents>객실 1, 인원 {77}</SubMenuContents>
-        </GuestInfoWrapper>
-      </GuestInfoContainer>
-      <SearchIconWrapper>
-        <IoSearch />
-      </SearchIconWrapper>
-    </SearchBarContainer>
+    <SearchBarWrapper>
+      <SearchBarContainer>
+        <IconWrapper>
+          <VscCalendar />
+        </IconWrapper>
+        <CheckInOutContainer
+          onClick={() => {
+            setShowCalendarModal(!showCalendarModal);
+            setShowCountModal(false);
+          }}
+        >
+          {showCalendarModal && (
+            <CalendarModal
+              initialCheckIn={checkIn}
+              initialCheckOut={checkOut}
+              today={new Date(convertDateToString(new Date()))}
+              initialMonthDate={initialMonthDate}
+              handleChangeMonthDate={(date: Date) => {
+                setInitialMonthDate(date);
+              }}
+              handleChangeCheckInOut={(srcCheckIn?: Date, srcCheckOut?: Date) => {
+                let changed = false;
+                if (srcCheckIn !== checkIn || srcCheckOut !== checkOut) {
+                  changed = true;
+                }
+                setCheckIn(srcCheckIn);
+                setCheckOut(srcCheckOut);
+                if (changed && srcCheckIn && srcCheckOut) {
+                  setShowCalendarModal(false);
+                }
+              }}
+            />
+          )}
+          <CheckInWrapper>
+            <SubMenuTitle>체크인</SubMenuTitle>
+            <SubMenuContents>{checkIn ? `${checkIn.getMonth() + 1}월 ${checkIn.getDate()}일` : '날짜추가'}</SubMenuContents>
+          </CheckInWrapper>
+          <StayPeriodText>{checkIn && checkOut ? `${getDateDiff(checkOut, checkIn)}박` : ''}</StayPeriodText>
+          <CheckOutWrapper>
+            <SubMenuTitle>체크아웃</SubMenuTitle>
+            <SubMenuContents>{checkOut ? `${checkOut.getMonth() + 1}월 ${checkOut.getDate()}일` : '날짜추가'}</SubMenuContents>
+          </CheckOutWrapper>
+        </CheckInOutContainer>
+        <IconWrapper>
+          <IoPersonOutline />
+        </IconWrapper>
+        <GuestInfoContainer
+          onClick={() => {
+            setShowCountModal(!showCountModal);
+            setShowCalendarModal(false);
+          }}
+        >
+          {showCountModal && <CountModal setShowCountModal={setShowCountModal} />}
+          <GuestInfoWrapper>
+            <SubMenuTitle>인원</SubMenuTitle>
+            <SubMenuContents>성인 2 / 아이 0</SubMenuContents>
+          </GuestInfoWrapper>
+        </GuestInfoContainer>
+        <SearchIconWrapper onClick={handleToHotel}>
+          <IoSearch />
+        </SearchIconWrapper>
+      </SearchBarContainer>
+    </SearchBarWrapper>
   );
 };
 
 export default SearchBar;
+
+const SearchBarWrapper = styled.div`
+  height: 60px;
+  width: 800px;
+  margin-top: 20px;
+`;
 
 const SearchBarContainer = styled.div`
   display: flex;
