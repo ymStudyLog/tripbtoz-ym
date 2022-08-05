@@ -1,3 +1,4 @@
+
 import React from 'react';
 import styled from 'styled-components';
 import { useMediaQuery } from 'react-responsive';
@@ -8,18 +9,6 @@ import Calendar from '../components/calendar/Calendar';
 
 const Landing = () => {
   const isMobile = useMediaQuery({ maxWidth: 480 });
-
-  // TODO final 제출 전에 삭제
-  React.useEffect(() => {
-    localStorage.setItem(
-      'stayPeriod',
-      JSON.stringify({
-        checkIn: '2022. 8. 18.',
-        checkOut: '2022. 8. 20.',
-      })
-    );
-    localStorage.setItem('headCount', '4');
-  }, []);
 
   return (
     <>
@@ -46,6 +35,7 @@ const Landing = () => {
           </LandingContentsContainer>
         </>
       )}
+
     </>
   );
 };

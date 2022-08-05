@@ -5,13 +5,13 @@ import { BasicHotelDataType, GetDataResultType } from "../types/hotelDataType";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import { QueryType } from "../types/queryType";
-import useFilter from "../hooks/useFilter";
 
 const useInfiniteScroll = () => {
-  const { filteredQueryString } = useFilter();
-
-  const getPage = async (pageParam: number) => {
-    const finalQueryString : QueryType = filteredQueryString.concat(`&_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`);
+  const getPage = async (pageParam: number , meta : string) => {
+    console.log("meta",meta); //성공
+    const finalQueryString: QueryType = (
+      meta.length !== 0 ? meta.concat("&") : "?"
+    ).concat(`_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`);
     const hotelDatas: GetDataResultType = await getHotelInformation<
       BasicHotelDataType[]
     >(finalQueryString);
@@ -29,13 +29,13 @@ const useInfiniteScroll = () => {
   const { fetchNextPage, isLoading, isFetchingNextPage, hasNextPage, data } =
     useInfiniteQuery(
       [`getTenHotelData`],
-      ({ pageParam = 1 }) => getPage(pageParam),
+      ({ pageParam = 1}, meta="") => getPage(pageParam, meta), //TODO 추가 query meta 값으로 전달하기
       {
         getNextPageParam: (lastPage) => lastPage.nextPage,
       }
     );
 
-  const ObservationBox = () : JSX.Element => {
+  const ObservationBox = (): JSX.Element => {
     const [ref, inView] = useInView();
 
     React.useEffect(() => {

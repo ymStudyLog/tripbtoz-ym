@@ -1,27 +1,8 @@
 import React from "react";
-import { StayPeriodType, HeadCountType } from "../types/localStorageType";
+import { StayPeriodType, NumberOfPeopleType } from "../types/localStorageType";
 import { ReservationDataType } from "../types/hotelDataType";
 
 const useLocalStorage = () => {
-  const [stayPeriod, setStayPeriod] = React.useState<StayPeriodType>({
-    checkIn: "",
-    checkOut: "",
-  });
-  const [headCount, setHeadCount] = React.useState<HeadCountType>(0);
-
-  const getStorage = React.useCallback((periodData: string, headData: string) => {
-    const parsedPeriodData = JSON.parse(periodData);
-    const parsedHeadData = parseInt(headData);
-    setStayPeriod((prevState: StayPeriodType) => {
-      return {
-        ...prevState,
-        checkIn: parsedPeriodData.checkIn,
-        checkOut: parsedPeriodData.checkOut,
-      };
-    });
-    setHeadCount(parsedHeadData);
-  },[]);
-
   const setStayPeriodInStorage = (startDate: string, endDate: string) => {
     localStorage.setItem(
       "stayPeriod",
@@ -31,12 +12,23 @@ const useLocalStorage = () => {
       })
     );
   };
-
-  const setHeadCountInStorage = (count: number) => {
-    localStorage.setItem("headCount", count.toString());
+  const setNumberOfPeopleInStorage = (adult: number, child: number) => {
+    localStorage.setItem(
+      "headCount",
+      JSON.stringify({
+        adult: adult,
+        child: child,
+      })
+    );
   };
 
-  const setReservationInStorage = (id: number, hotelName: string) => {
+  const setReservationInStorage = (
+    id: number,
+    hotelName: string,
+    stayPeriod: StayPeriodType,
+    headCount: NumberOfPeopleType
+    //numberOfPeople 로컬스토리지 값 넘어와야됨 = numberOfPeople
+  ) => {
     const prevStorageState = localStorage.getItem("reservationData");
     const newStorageState = [
       {
@@ -62,11 +54,8 @@ const useLocalStorage = () => {
   };
 
   return {
-    stayPeriod,
-    headCount,
-    getStorage,
     setStayPeriodInStorage,
-    setHeadCountInStorage,
+    setNumberOfPeopleInStorage,
     setReservationInStorage,
   };
 };
