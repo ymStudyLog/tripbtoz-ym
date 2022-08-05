@@ -1,27 +1,7 @@
-import React from "react";
 import { StayPeriodType, HeadCountType } from "../types/localStorageType";
 import { ReservationDataType } from "../types/hotelDataType";
 
 const useLocalStorage = () => {
-  const [stayPeriod, setStayPeriod] = React.useState<StayPeriodType>({
-    checkIn: "",
-    checkOut: "",
-  });
-  const [headCount, setHeadCount] = React.useState<HeadCountType>(0);
-
-  const getStorage = React.useCallback((periodData: string, headData: string) => {
-    const parsedPeriodData = JSON.parse(periodData);
-    const parsedHeadData = parseInt(headData);
-    setStayPeriod((prevState: StayPeriodType) => {
-      return {
-        ...prevState,
-        checkIn: parsedPeriodData.checkIn,
-        checkOut: parsedPeriodData.checkOut,
-      };
-    });
-    setHeadCount(parsedHeadData);
-  },[]);
-
   const setStayPeriodInStorage = (startDate: string, endDate: string) => {
     localStorage.setItem(
       "stayPeriod",
@@ -36,7 +16,12 @@ const useLocalStorage = () => {
     localStorage.setItem("headCount", count.toString());
   };
 
-  const setReservationInStorage = (id: number, hotelName: string) => {
+  const setReservationInStorage = (
+    id: number,
+    hotelName: string,
+    stayPeriod: StayPeriodType,
+    headCount: HeadCountType
+  ) => {
     const prevStorageState = localStorage.getItem("reservationData");
     const newStorageState = [
       {
@@ -62,9 +47,6 @@ const useLocalStorage = () => {
   };
 
   return {
-    stayPeriod,
-    headCount,
-    getStorage,
     setStayPeriodInStorage,
     setHeadCountInStorage,
     setReservationInStorage,

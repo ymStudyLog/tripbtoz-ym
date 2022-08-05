@@ -5,6 +5,7 @@ import SearchBar from '../components/common/SearchBar';
 const Landing = () => {
   // TODO final 제출 전에 삭제 
   React.useEffect(() => {
+    window.localStorage.clear();
     localStorage.setItem(
       'stayPeriod',
       JSON.stringify({

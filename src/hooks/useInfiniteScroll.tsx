@@ -9,7 +9,7 @@ import useFilter from "../hooks/useFilter";
 
 const useInfiniteScroll = () => {
   const { filteredQueryString } = useFilter();
-
+  console.log("투숙객,투숙기간 필터링 쿼리", filteredQueryString);
   const getPage = async (pageParam: number) => {
     const finalQueryString : QueryType = filteredQueryString.concat(`&_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`);
     const hotelDatas: GetDataResultType = await getHotelInformation<
