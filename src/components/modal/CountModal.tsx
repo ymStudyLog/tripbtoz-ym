@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { FiMinusSquare } from "react-icons/fi";
-import { FiPlusSquare } from "react-icons/fi";
+import React from 'react';
+import styled from 'styled-components';
+import { FiMinusSquare } from 'react-icons/fi';
+import { FiPlusSquare } from 'react-icons/fi';
 
 const CountModal = ({ setShowCountModal }: any) => {
   const [numberOfPeople, setNumberOfPeople] = React.useState({
@@ -21,7 +21,6 @@ const CountModal = ({ setShowCountModal }: any) => {
     adult: 1,
     child: 0,
   };
-
 
   const decreaseAdult = () => {
     if (isLessThan(numberOfPeople.adult - 1, MINIMUM.adult)) return;
@@ -90,6 +89,7 @@ const CountModalContainer = styled.div`
   background-color: var(--color-white);
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--color-border);
 `;
 
 const CountGuestWrapper = styled.div`

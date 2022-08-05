@@ -38,6 +38,7 @@ button {
 
 :root {
     --color-white: #fff;
+    --color-black: #000;
     --color-border: #cdcdcd;
     --color-hover: #e8e8e8;
     --color-subTitle: #9fa1a7;
