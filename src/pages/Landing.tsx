@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useMediaQuery } from 'react-responsive';
 import SearchBar from '../components/common/SearchBar';
 
 const Landing = () => {
-  // TODO final 제출 전에 삭제 
+  const isMobile = useMediaQuery({ maxWidth: 480 });
+
+  // TODO final 제출 전에 삭제
   React.useEffect(() => {
     localStorage.setItem(
       'stayPeriod',
@@ -20,12 +23,18 @@ const Landing = () => {
       <BackgroundImageWrapper>
         <BackgroundImage src='./images/background.jpg' />
       </BackgroundImageWrapper>
-      <LandingContentsContainer>
-        <CatchphraseWrapper>
-          <Catchphrase>Play Share Stay, 트립비토즈</Catchphrase>
-        </CatchphraseWrapper>
-        <SearchBar />
-      </LandingContentsContainer>
+      {isMobile ? (
+        <LandingContentsContainer>
+          <TestCalendarModal />
+        </LandingContentsContainer>
+      ) : (
+        <LandingContentsContainer>
+          <CatchphraseWrapper>
+            <Catchphrase>Play Share Stay, 트립비토즈</Catchphrase>
+          </CatchphraseWrapper>
+          <SearchBar />
+        </LandingContentsContainer>
+      )}
     </>
   );
 };
@@ -65,10 +74,20 @@ const CatchphraseWrapper = styled.div`
     width: 500px;
     transition: 0.8s all ease;
   }
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const Catchphrase = styled.div`
   font-weight: 700;
   font-size: 34px;
   color: var(--color-catchphrase);
+`;
+
+const TestCalendarModal = styled.div`
+  width: 400px;
+  min-height: 300px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-red);
 `;

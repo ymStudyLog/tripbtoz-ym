@@ -95,6 +95,10 @@ const SearchBarWrapper = styled.div`
   height: 60px;
   width: 800px;
   margin-top: 20px;
+
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const SearchBarContainer = styled.div`
