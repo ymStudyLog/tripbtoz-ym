@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import Calendar from "../calendar/Calendar";
+import React from 'react';
+import styled from 'styled-components';
+import Calendar from '../calendar/Calendar';
 
 type Props = {
   today: Date;
@@ -11,14 +11,7 @@ type Props = {
   handleChangeMonthDate?: (date: Date) => void;
 };
 
-const CalendarModal = ({
-  today,
-  initialCheckIn,
-  initialCheckOut,
-  initialMonthDate,
-  handleChangeCheckInOut,
-  handleChangeMonthDate,
-}: Props) => {
+const CalendarModal = ({ today, initialCheckIn, initialCheckOut, initialMonthDate, handleChangeCheckInOut, handleChangeMonthDate }: Props) => {
   return (
     <CalendarModalContainer onClick={(e) => e.stopPropagation()}>
       <Calendar
@@ -44,4 +37,9 @@ const CalendarModalContainer = styled.div`
   min-height: 22rem;
   border: 1px solid var(--color-border);
   background-color: var(--color-white);
+
+  @media screen and (max-width: 480px) {
+    width: 470px;
+    left: 3px;
+  }
 `;

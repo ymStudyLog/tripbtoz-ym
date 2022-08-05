@@ -3,7 +3,7 @@ import { addReservationData } from "../../api/api";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { BasicHotelDataType } from "../../types/databaseType";
 import useDatabase from "../../hooks/useDatabase";
-import * as H from "../../styles/HotelItem.style";
+import * as H from '../../styles/HotelItem.style';
 
 type Props = {
   hotelData: BasicHotelDataType;
@@ -21,7 +21,7 @@ const HotelItem = (props: Props) => {
     >
       <H.HotelImage
         src={`${hotelData.image}`}
-        alt="hotel"
+        alt='hotel'
         onLoad={() => {
           setLoading(!loading);
         }}
@@ -35,7 +35,7 @@ const HotelItem = (props: Props) => {
         <H.Address>{hotelData.address}</H.Address>
         <H.Review>
           <p>{hotelData.grade}</p>
-          <p>총 {hotelData.review.toLocaleString("ko-KR")}건의 리뷰</p>
+          <p>총 {hotelData.review.toLocaleString("ko-KR")}건의 리뷰</p>v
         </H.Review>
       </H.HotelInfoWrapper>
 

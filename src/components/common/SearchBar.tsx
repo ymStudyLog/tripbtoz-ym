@@ -1,17 +1,13 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { VscCalendar } from "react-icons/vsc";
-import { IoPersonOutline } from "react-icons/io5";
-import { IoSearch } from "react-icons/io5";
-import CalendarModal from "../modal/CalendarModal";
-import CountModal from "../modal/CountModal";
-import {
-  addDate,
-  convertDateToString,
-  getDateDiff,
-} from "../../utils/dateUtils";
-import useLocalStorage from "../../hooks/useLocalStorage";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { VscCalendar } from 'react-icons/vsc';
+import { IoPersonOutline } from 'react-icons/io5';
+import { IoSearch } from 'react-icons/io5';
+import CalendarModal from '../modal/CalendarModal';
+import CountModal from '../modal/CountModal';
+import { addDate, convertDateToString, getDateDiff } from '../../utils/dateUtils';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 type LocalStorageType = string | null;
 
@@ -21,152 +17,117 @@ const SearchBar = (
   const [initialMonthDate, setInitialMonthDate] = React.useState(
     new Date(convertDateToString(new Date()))
   );
+    React.useEffect(() => {
+      const periodData: LocalStorageType = localStorage.getItem('stayPeriod');
+      const numberOfPeopleData: LocalStorageType = localStorage.getItem('headCount');
+      setCheckIn(periodData ? new Date(JSON.parse(periodData).checkIn) : addDate(today, 7));
+      setCheckOut(periodData ? new Date(JSON.parse(periodData).checkOut) : addDate(today, 8));
+      setAdult(numberOfPeopleData ? JSON.parse(numberOfPeopleData).adult : 2);
+      setChild(numberOfPeopleData ? JSON.parse(numberOfPeopleData).child : 0);
+    }, []);
 
-  React.useEffect(() => {
-    const periodData: LocalStorageType = localStorage.getItem("stayPeriod");
-    const numberOfPeopleData: LocalStorageType =
-      localStorage.getItem("headCount");
-    setCheckIn(
-      periodData ? new Date(JSON.parse(periodData).checkIn) : addDate(today, 7)
+    const [checkIn, setCheckIn] = React.useState<Date | undefined>(addDate(today, 7));
+    const [checkOut, setCheckOut] = React.useState<Date | undefined>(addDate(today, 8));
+
+    const [showCalendarModal, setShowCalendarModal] = React.useState<boolean>(false);
+    const [showCountModal, setShowCountModal] = React.useState<boolean>(false);
+    const [adult, setAdult] = React.useState<number>(2);
+    const [child, setChild] = React.useState<number>(0);
+
+    const navigate = useNavigate();
+
+    const { setStayPeriodInStorage, setNumberOfPeopleInStorage } = useLocalStorage();
+
+    const handleToHotel = () => {
+      if (adult + child <= 0) {
+        setShowCountModal(true);
+        return;
+      }
+      if (!checkIn || !checkOut) {
+        setShowCalendarModal(true);
+        return;
+      }
+      setStayPeriodInStorage(`${checkIn.getFullYear()}. ${checkIn.getMonth() + 1}. ${checkIn.getDate()}.`, `${checkOut.getFullYear()}. ${checkOut.getMonth() + 1}. ${checkOut.getDate()}.`);
+      setNumberOfPeopleInStorage(adult, child);
+      navigate('/hotel');
+    };
+
+    return (
+      <SearchBarWrapper>
+        <SearchBarContainer>
+          <IconWrapper>
+            <VscCalendar />
+          </IconWrapper>
+          <CheckInOutContainer
+            onClick={() => {
+              setShowCalendarModal(!showCalendarModal);
+              setShowCountModal(false);
+            }}
+          >
+            {showCalendarModal && (
+              <CalendarModal
+                initialCheckIn={checkIn}
+                initialCheckOut={checkOut}
+                today={new Date(convertDateToString(new Date()))}
+                initialMonthDate={initialMonthDate}
+                handleChangeMonthDate={(date: Date) => {
+                  setInitialMonthDate(date);
+                }}
+                handleChangeCheckInOut={(srcCheckIn?: Date, srcCheckOut?: Date) => {
+                  let changed = false;
+                  if (srcCheckIn !== checkIn || srcCheckOut !== checkOut) {
+                    changed = true;
+                  }
+                  setCheckIn(srcCheckIn);
+                  setCheckOut(srcCheckOut);
+                  if (changed && srcCheckIn && srcCheckOut) {
+                    setShowCalendarModal(false);
+                  }
+                }}
+              />
+            )}
+            <CheckInWrapper>
+              <SubMenuTitle>체크인</SubMenuTitle>
+              <SubMenuContents>{checkIn ? `${checkIn.getMonth() + 1}월 ${checkIn.getDate()}일` : '날짜추가'}</SubMenuContents>
+            </CheckInWrapper>
+            <StayPeriodText>{checkIn && checkOut ? `${getDateDiff(checkOut, checkIn)}박` : ''}</StayPeriodText>
+            <CheckOutWrapper>
+              <SubMenuTitle>체크아웃</SubMenuTitle>
+              <SubMenuContents>{checkOut ? `${checkOut.getMonth() + 1}월 ${checkOut.getDate()}일` : '날짜추가'}</SubMenuContents>
+            </CheckOutWrapper>
+          </CheckInOutContainer>
+          <IconWrapper>
+            <IoPersonOutline />
+          </IconWrapper>
+          <GuestInfoContainer
+            onClick={() => {
+              setShowCountModal(!showCountModal);
+              setShowCalendarModal(false);
+            }}
+          >
+            {showCountModal && (
+              <CountModal
+                initialChild={child}
+                initialAdult={adult}
+                setShowCountModal={setShowCountModal}
+                handleChangeNumberOfPeople={(srcAdult: number, srcChild: number) => {
+                  setAdult(srcAdult);
+                  setChild(srcChild);
+                }}
+              />
+            )}
+            <GuestInfoWrapper>
+              <SubMenuTitle>인원</SubMenuTitle>
+              <SubMenuContents>{`성인 ${adult} / 아이 ${child}`}</SubMenuContents>
+            </GuestInfoWrapper>
+          </GuestInfoContainer>
+          <SearchIconWrapper onClick={handleToHotel}>
+            <IoSearch />
+          </SearchIconWrapper>
+        </SearchBarContainer>
+      </SearchBarWrapper>
     );
-    setCheckOut(
-      periodData ? new Date(JSON.parse(periodData).checkOut) : addDate(today, 8)
-    );
-    setAdult(numberOfPeopleData ? JSON.parse(numberOfPeopleData).adult : 2);
-    setChild(numberOfPeopleData ? JSON.parse(numberOfPeopleData).child : 0);
-  }, []);
-
-  const [checkIn, setCheckIn] = React.useState<Date | undefined>(
-    addDate(today, 7)
-  );
-  const [checkOut, setCheckOut] = React.useState<Date | undefined>(
-    addDate(today, 8)
-  );
-
-  const [showCalendarModal, setShowCalendarModal] =
-    React.useState<boolean>(false);
-  const [showCountModal, setShowCountModal] = React.useState<boolean>(false);
-  const [adult, setAdult] = React.useState<number>(2);
-  const [child, setChild] = React.useState<number>(0);
-
-  const navigate = useNavigate();
-
-  const { setStayPeriodInStorage, setNumberOfPeopleInStorage } =
-    useLocalStorage();
-
-  const handleToHotel = () => {
-    if (adult + child <= 0) {
-      setShowCountModal(true);
-      return;
-    }
-    if (!checkIn || !checkOut) {
-      setShowCalendarModal(true);
-      return;
-    }
-    setStayPeriodInStorage(
-      `${checkIn.getFullYear()}. ${
-        checkIn.getMonth() + 1
-      }. ${checkIn.getDate()}.`,
-      `${checkOut.getFullYear()}. ${
-        checkOut.getMonth() + 1
-      }. ${checkOut.getDate()}.`
-    );
-    setNumberOfPeopleInStorage(adult, child);
-    navigate("/hotel");
   };
-
-  return (
-    <SearchBarWrapper>
-      <SearchBarContainer>
-        <IconWrapper>
-          <VscCalendar />
-        </IconWrapper>
-        <CheckInOutContainer
-          onClick={() => {
-            setShowCalendarModal(!showCalendarModal);
-            setShowCountModal(false);
-          }}
-        >
-          {showCalendarModal && (
-            <CalendarModal
-              initialCheckIn={checkIn}
-              initialCheckOut={checkOut}
-              today={new Date(convertDateToString(new Date()))}
-              initialMonthDate={initialMonthDate}
-              handleChangeMonthDate={(date: Date) => {
-                setInitialMonthDate(date);
-              }}
-              handleChangeCheckInOut={(
-                srcCheckIn?: Date,
-                srcCheckOut?: Date
-              ) => {
-                let changed = false;
-                if (srcCheckIn !== checkIn || srcCheckOut !== checkOut) {
-                  changed = true;
-                }
-                setCheckIn(srcCheckIn);
-                setCheckOut(srcCheckOut);
-                if (changed && srcCheckIn && srcCheckOut) {
-                  setShowCalendarModal(false);
-                }
-              }}
-            />
-          )}
-          <CheckInWrapper>
-            <SubMenuTitle>체크인</SubMenuTitle>
-            <SubMenuContents>
-              {checkIn
-                ? `${checkIn.getMonth() + 1}월 ${checkIn.getDate()}일`
-                : "날짜추가"}
-            </SubMenuContents>
-          </CheckInWrapper>
-          <StayPeriodText>
-            {checkIn && checkOut ? `${getDateDiff(checkOut, checkIn)}박` : ""}
-          </StayPeriodText>
-          <CheckOutWrapper>
-            <SubMenuTitle>체크아웃</SubMenuTitle>
-            <SubMenuContents>
-              {checkOut
-                ? `${checkOut.getMonth() + 1}월 ${checkOut.getDate()}일`
-                : "날짜추가"}
-            </SubMenuContents>
-          </CheckOutWrapper>
-        </CheckInOutContainer>
-        <IconWrapper>
-          <IoPersonOutline />
-        </IconWrapper>
-        <GuestInfoContainer
-          onClick={() => {
-            setShowCountModal(!showCountModal);
-            setShowCalendarModal(false);
-          }}
-        >
-          {showCountModal && (
-            <CountModal
-              initialChild={child}
-              initialAdult={adult}
-              setShowCountModal={setShowCountModal}
-              handleChangeNumberOfPeople={(
-                srcAdult: number,
-                srcChild: number
-              ) => {
-                setAdult(srcAdult);
-                setChild(srcChild);
-              }}
-            />
-          )}
-          <GuestInfoWrapper>
-            <SubMenuTitle>인원</SubMenuTitle>
-            <SubMenuContents>{`성인 ${adult} / 아이 ${child}`}</SubMenuContents>
-          </GuestInfoWrapper>
-        </GuestInfoContainer>
-        <SearchIconWrapper onClick={handleToHotel}>
-          <IoSearch />
-        </SearchIconWrapper>
-      </SearchBarContainer>
-    </SearchBarWrapper>
-  );
-};
 
 export default SearchBar;
 
@@ -175,9 +136,9 @@ const SearchBarWrapper = styled.div`
   width: 800px;
   margin-top: 20px;
 
-  /* @media screen and (max-width: 480px) {
-    display: none;
-  } */
+  @media screen and (max-width: 480px) {
+    width: 480px;
+  }
 `;
 
 const SearchBarContainer = styled.div`
@@ -200,6 +161,10 @@ const CheckInOutContainer = styled.div`
   &:hover {
     background-color: var(--color-hover);
   }
+
+  @media screen and (max-width: 480px) {
+    width: 240px;
+  }
 `;
 
 const IconWrapper = styled.div`
@@ -208,6 +173,10 @@ const IconWrapper = styled.div`
   align-items: center;
   width: 64px;
   font-size: 28px;
+
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const CheckInWrapper = styled.div`
@@ -257,6 +226,10 @@ const GuestInfoContainer = styled.div`
   &:hover {
     background-color: var(--color-hover);
   }
+
+  @media screen and (max-width: 480px) {
+    width: 240px;
+  }
 `;
 
 const GuestInfoWrapper = styled.div`
@@ -266,6 +239,10 @@ const GuestInfoWrapper = styled.div`
   align-items: flex-start;
   width: 320px;
   padding-left: 16px;
+
+  @media screen and (max-width: 480px) {
+    width: 180px;
+  }
 `;
 
 const SearchIconWrapper = styled.div`
@@ -276,4 +253,9 @@ const SearchIconWrapper = styled.div`
   font-size: 35px;
   background-color: var(--color-main);
   color: var(--color-white);
+
+  @media screen and (max-width: 480px) {
+    width: 80px;
+    font-size: 30px;
+  }
 `;
