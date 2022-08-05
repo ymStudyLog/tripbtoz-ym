@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BasicHotelDataType,
   GetDataResultType,
@@ -36,7 +35,12 @@ const HotelList = () => {
           ))}
         </div>
       )}
-      {!isFetchingNextPage && hasNextPage ? <ObservationBox /> : null}
+      {!isFetchingNextPage && hasNextPage ? (
+        <>
+          <ObservationBox />
+          <Loading />
+        </>
+      ) : null}
     </>
   );
 };

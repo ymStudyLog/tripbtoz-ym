@@ -1,12 +1,12 @@
 import React from "react";
-import styled from "styled-components";
 import SearchBar from "../components/common/SearchBar";
 import HotelList from "../components/hotelList/HotelList";
-import useLocalStorage from '../hooks/useLocalStorage';
-import useFilter from '../hooks/useFilter';
-import useDatabase from '../hooks/useDatabase';
+import useLocalStorage from "../hooks/useLocalStorage";
+import useFilter from "../hooks/useFilter";
+import useDatabase from "../hooks/useDatabase";
+import { ReservationContainer } from "../styles/Hotel.style";
 
-const Reservation = () => {
+const Hotel = () => {
   const { reservations } = useDatabase();
   const { stayPeriod, headCount, getStorage } = useLocalStorage();
   const { filterByHeadCount, filterByStayPeriod } = useFilter();
@@ -41,11 +41,4 @@ const Reservation = () => {
   );
 };
 
-export default Reservation;
-
-const ReservationContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+export default Hotel;

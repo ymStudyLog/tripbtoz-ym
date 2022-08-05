@@ -6,14 +6,12 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 import { QueryType } from "../types/queryType";
 import useFilter from "../hooks/useFilter";
-import Loading from "../components/common/Loading";
 
 const useInfiniteScroll = () => {
   const { filteredQueryString } = useFilter();
 
   const getPage = async (pageParam: number) => {
     const finalQueryString : QueryType = filteredQueryString.concat(`&_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`);
-    console.log("쿼리 체크",finalQueryString);
     const hotelDatas: GetDataResultType = await getHotelInformation<
       BasicHotelDataType[]
     >(finalQueryString);
@@ -48,7 +46,7 @@ const useInfiniteScroll = () => {
       if (!isLastPage && inView) setTimeout(fetchNextPage, 500);
     }, [inView]);
 
-    return <div ref={ref}><Loading /></div>;
+    return <div ref={ref}></div>;
   };
 
   return {
