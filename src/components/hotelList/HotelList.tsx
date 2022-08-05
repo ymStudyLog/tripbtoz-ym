@@ -1,3 +1,4 @@
+import React from "react";
 import {
   BasicHotelDataType,
   GetDataResultType,
@@ -8,6 +9,7 @@ import HotelItem from "./HotelItem";
 import { PageContainer } from "../../styles/HotelList.style";
 import { v4 as uuidv4 } from "uuid";
 import { HeadCountType, StayPeriodType } from "../../types/localStorageType";
+import { QueryType } from "../../types/queryType";
 
 type Props = {
   stayPeriod: StayPeriodType;
@@ -22,8 +24,16 @@ type EachInfinitePageType = {
 
 const HotelList = (props: Props) => {
   const { stayPeriod, headCount } = props;
+  // console.log("hotelList",stayPeriod, headCount);
   const { isLoading, hasNextPage, data, isFetchingNextPage, ObservationBox } =
     useInfiniteScroll();
+
+  // const [queryState, setQueryState] = React.useState<QueryType>("");
+  // useFilterThis({
+  //   headCount: headCount,
+  //   stayPeriod: stayPeriod,
+  //   setQueryState: setQueryState,
+  // });
 
   return (
     <>

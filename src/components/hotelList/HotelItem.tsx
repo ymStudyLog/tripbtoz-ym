@@ -14,6 +14,7 @@ type Props = {
 
 const HotelItem = (props: Props) => {
   const { hotelData, stayPeriod, headCount } = props;
+  // console.log("hotelitem", hotelData, stayPeriod, headCount);
   const { setReservationInStorage } = useLocalStorage();
   const [loading, setLoading] = React.useState<boolean>(false);
 

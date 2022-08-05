@@ -9,8 +9,8 @@ const Landing = () => {
     localStorage.setItem(
       'stayPeriod',
       JSON.stringify({
-        checkIn: '2022. 8. 18.',
-        checkOut: '2022. 8. 20.',
+        checkIn: '2022. 8. 9.',
+        checkOut: '2022. 8. 11.',
       })
     );
     localStorage.setItem('headCount', '4');
