@@ -13,6 +13,7 @@ type Props = {
   initialCheckIn: Date | undefined;
   initialCheckOut: Date | undefined;
   initialMonthDate: Date;
+  maxMonth: number;
   handleChangeCheckInOut?: (checkIn?: Date, checkOut?: Date) => void;
   handleChangeMonthDate?: (date: Date) => void;
 };
@@ -27,12 +28,12 @@ const Calendar = ({
   initialCheckIn,
   initialCheckOut,
   initialMonthDate,
+  maxMonth,
   handleChangeCheckInOut,
   handleChangeMonthDate,
 }: Props) => {
   const [todayDate, setTodayDate] = React.useState(today);
   const [showMonthDate, setShowMonthDate] = React.useState(initialMonthDate);
-
   const [checkInOut, setCheckInOut] = React.useState<CheckInOutType>({
     checkIn: initialCheckIn,
     checkOut: initialCheckOut,
@@ -90,6 +91,9 @@ const Calendar = ({
   return (
     <>
       <Head
+        maxMonth={maxMonth}
+        todayDate={todayDate}
+        showMonthDate={showMonthDate}
         handleChangePrevButton={handleChangePrevButton}
         handleChangeNextButton={handleChangeNextButton}
       />
@@ -120,4 +124,6 @@ export default Calendar;
 const BodyContainer = styled.div`
   display: flex;
   flex-direction: row;
+  height: 400px;
+  margin-bottom: 20px;
 `;

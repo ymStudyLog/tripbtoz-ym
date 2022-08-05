@@ -137,7 +137,7 @@ const HeadText = styled.div`
 `;
 
 const BodyContentContainer = styled.div`
-  margin: 30px;
+  margin: 20px ;
   height: auto;
 `;
 

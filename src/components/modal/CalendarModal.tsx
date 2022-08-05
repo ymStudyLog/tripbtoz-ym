@@ -22,6 +22,7 @@ const CalendarModal = ({
   return (
     <CalendarModalContainer onClick={(e) => e.stopPropagation()}>
       <Calendar
+        maxMonth={11}
         today={today}
         initialCheckIn={initialCheckIn}
         initialCheckOut={initialCheckOut}
