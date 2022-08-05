@@ -3,38 +3,6 @@ import { StayPeriodType, NumberOfPeopleType } from "../types/localStorageType";
 import { ReservationDataType } from "../types/hotelDataType";
 
 const useLocalStorage = () => {
-  const [stayPeriod, setStayPeriod] = React.useState<StayPeriodType>({
-    checkIn: "",
-    checkOut: "",
-  });
-  const [numberOfPeople, setNumberOfPeople] =
-    React.useState<NumberOfPeopleType>({
-      adult: 0,
-      child: 0,
-    });
-
-  const getStorage = React.useCallback(
-    (periodData: string, numberOfPeopleData: string) => {
-      const parsedPeriodData = JSON.parse(periodData);
-      const parsedNumberOfPeopleData = JSON.parse(numberOfPeopleData);
-      setStayPeriod((prevState: StayPeriodType) => {
-        return {
-          ...prevState,
-          checkIn: parsedPeriodData.checkIn,
-          checkOut: parsedPeriodData.checkOut,
-        };
-      });
-      setNumberOfPeople((numberOfPeople: NumberOfPeopleType) => {
-        return {
-          ...numberOfPeople,
-          adult: parsedNumberOfPeopleData.adult,
-          child: parsedNumberOfPeopleData.child,
-        };
-      });
-    },
-    []
-  );
-
   const setStayPeriodInStorage = (startDate: string, endDate: string) => {
     localStorage.setItem(
       "stayPeriod",
@@ -54,8 +22,13 @@ const useLocalStorage = () => {
     );
   };
 
- 
-  const setReservationInStorage = (id: number, hotelName: string) => {
+  const setReservationInStorage = (
+    id: number,
+    hotelName: string,
+    stayPeriod: StayPeriodType,
+    headCount: HeadCountType
+    //numberOfPeople 로컬스토리지 값 넘어와야됨 = numberOfPeople
+  ) => {
     const prevStorageState = localStorage.getItem("reservationData");
     const newStorageState = [
       {
@@ -81,9 +54,6 @@ const useLocalStorage = () => {
   };
 
   return {
-    stayPeriod,
-    numberOfPeople,
-    getStorage,
     setStayPeriodInStorage,
     setNumberOfPeopleInStorage,
     setReservationInStorage,

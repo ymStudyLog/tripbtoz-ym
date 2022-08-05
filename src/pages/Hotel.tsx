@@ -1,54 +1,55 @@
 import React from "react";
 import SearchBar from "../components/common/SearchBar";
 import HotelList from "../components/hotelList/HotelList";
-import useLocalStorage from "../hooks/useLocalStorage";
 import useFilter from "../hooks/useFilter";
-import useDatabase from "../hooks/useDatabase";
 import { ReservationContainer } from "../styles/Hotel.style";
-import { NumberOfPeopleType, StayPeriodType } from "../types/localStorageType";
+import { HeadCountType, StayPeriodType, NumberOfPeopleType } from "../types/localStorageType";
+import { QueryType } from "../types/queryType";
+
+type LocalStorageType = string | null;
 
 const Hotel = () => {
-  const { reservations } = useDatabase();
-  const { stayPeriod, numberOfPeople, getStorage } = useLocalStorage();
-  const { filterByHeadCount, filterByStayPeriod } = useFilter();
-
-  const periodData = localStorage.getItem("stayPeriod");
-  const numberOfPeopleData = localStorage.getItem("headCount");
-
-  const parsedStayPeriod: StayPeriodType = periodData
-    ? JSON.parse(periodData)
-    : { checkIn: "", checkOut: "" };
-  const parsedNumberOfPeopleData: NumberOfPeopleType = numberOfPeopleData
-    ? JSON.parse(numberOfPeopleData)
-    : { adult: 2, child: 0 };
+  const { filterByStayPeriod, filterByHeadCount, createFilteredQuery } =
+    useFilter();
+  const stayPeriodRef = React.useRef<StayPeriodType>({ //=parsedStayPeriod
+    checkIn: "",
+    checkOut: "",
+  });
+  const headCountRef = React.useRef<NumberOfPeopleType>({ //=parsedNumberOfPeopleData
+    adult: 2,
+    child: 0,
+  });
+  const queryRef = React.useRef<QueryType>("");
 
   React.useEffect(() => {
+    const periodData : LocalStorageType = localStorage.getItem("stayPeriod");
+    const numberOfPeopleData : LocalStorageType = localStorage.getItem("headCount");
+    
     if (periodData !== null && numberOfPeopleData !== null) {
-      getStorage(periodData, numberOfPeopleData);
+      stayPeriodRef.current = JSON.parse(periodData);
+      headCountRef.current = JSON.parse(numberOfPeopleData);
+      queryRef.current = createFilteredQuery(
+        filterByStayPeriod(stayPeriodRef.current),
+        filterByHeadCount(headCountRef.current)
+      );
+      
+      console.log("hotel", queryRef.current); //TODO useInfiniteScroll에 전달해야됨
     }
-  }, [periodData, numberOfPeopleData, getStorage]);
+  }, [filterByStayPeriod, filterByHeadCount, createFilteredQuery]);
 
-  React.useEffect(() => {
-    filterByHeadCount(numberOfPeople.adult + numberOfPeople.child);
-    filterByStayPeriod(reservations, stayPeriod);
-  }, [
-    reservations,
-    stayPeriod,
-    filterByHeadCount,
-    filterByStayPeriod,
-    numberOfPeople.adult,
-    numberOfPeople.child,
-  ]);
   return (
     <>
       <ReservationContainer>
         <SearchBar
-          initialAdult={parsedNumberOfPeopleData.adult}
-          initialChild={parsedNumberOfPeopleData.child}
-          initialCheckIn={new Date(parsedStayPeriod.checkIn)}
-          initialCheckOut={new Date(parsedStayPeriod.checkOut)}
+          initialAdult={headCountRef.adult}
+          initialChild={headCountRef.child}
+          initialCheckIn={new Date(stayPeriodRef.checkIn)}
+          initialCheckOut={new Date(stayPeriodRef.checkOut)}
         />
-        <HotelList />
+        <HotelList
+          stayPeriod={stayPeriodRef.current}
+          headCount={headCountRef.current}
+        />
       </ReservationContainer>
     </>
   );
