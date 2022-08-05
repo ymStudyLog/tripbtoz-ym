@@ -13,6 +13,7 @@ ${reset}
   }
 
 html {
+  font-family: 'Noto Sans KR', sans-serif;
   word-break: keep-all;
 
   * {
@@ -36,11 +37,16 @@ button {
 }
 
 :root {
-    
-    --color-white: #ffffff;
-  
+    --color-white: #fff;
+    --color-black: #000;
+    --color-border: #cdcdcd;
+    --color-hover: #e8e8e8;
+    --color-subTitle: #9fa1a7;
+    --color-catchphrase: #11482d;
+    --color-main: #ff375c;
+    --color-loading: #f1f1f1;
+    --color-mobileBackground: #eeeeee;
   }
-
 
 `;
 

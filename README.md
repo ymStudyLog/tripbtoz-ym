@@ -1,46 +1,60 @@
-# Getting Started with Create React App
+# 1. 프로젝트 설치 및 실행
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```
+git clone https://github.com/Wanted-Pre-Onboarding-FE-Team5/tripbtoz
 
-## Available Scripts
+npm i
 
-In the project directory, you can run:
+npm start
 
-### `npm start`
+//windows 운영체제에서 npm start 명령어로 json-server 실행이 안될 경우 추가로 아래 명령어 사용
+npm run server
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+//json-server port 설정 = "json-server --watch ./database/database.json --port 8000" 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
 
-### `npm test`
+## 2. 프로젝트 목표
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+트립비토즈에서 제공한 기획안에서 필수로 요구한 기능을 전부 구현한다.
 
-### `npm run build`
+## 3. 기술스택
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+typescript 
+react-router-dom
+styled-components 
+styled-reset 
+json-server
+react-query
+date-fns
+uuid
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 4. 프로젝트 진행 방향
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. 레이아웃, 스타일
 
-### `npm run eject`
+트립비토즈 웹사이트를 기준으로 레이아웃 구현
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+2. 페이지 구분
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+ - 랜딩 페이지(Landing) : 검색창에서 투숙인원과 투숙기간 선택 후 search -> localStorage에 각각의 정보 저장 후 호텔 페이지로 이동
+ 
+ - 호텔 페이지(Hotel) : 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+ - 예약확인 페이지(Reservation) :  
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+3. 역할 분담
 
-## Learn More
+| 팀원 이름                               | 기능                                                                                                     |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| [김슬기](https://github.com/sgsg9447)   | 캘린더 구현 |
+| [이유미](https://github.com/ymStudyLog) | 전체 레이아웃,스타일 담당 |
+| [김연진](https://github.com/yunjink)    | 호텔 정보 렌더링 담당 |
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 8. 제작과정 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<슬기>
+
+<연진>
+
+<유미>
