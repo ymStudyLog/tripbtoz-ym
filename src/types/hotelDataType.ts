@@ -7,6 +7,12 @@ export type BasicHotelDataType = {
     base: number;
     max: number;
   };
+  star : number;
+  address : string;
+  price : number;
+  review : number;
+  grade : number;
+  image : string;
 };
 
 export type GetDataResultType = BasicHotelDataType[] | undefined;

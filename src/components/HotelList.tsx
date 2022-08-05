@@ -19,23 +19,31 @@ const HotelList = () => {
 
   if (isLoading) return <Loading />; //TODO isLoading일때랑 아닐때 랑 구분해서 return하기 지금 전혀 구분 안되는중
 
+  // "image" : src에 이미지 전달하기 
   return (
     <>
       {data?.pages.map((page: EachInfinitePageType, index: number) => (
-        <TempHotelItemContainer key={index}>
+        <HotelItemContainer key={index}>
           {page?.result?.map(
             (eachHotelData: BasicHotelDataType, index: number) => {
               return (
-                <TempHotelItem key={index}>
-                  <TempHotelDetail>
-                    <p>id: {eachHotelData.id}</p>
+                <HotelItem key={index}>
+                  <HotelDetail>
+                    <div>
                     <p>호텔명 : {eachHotelData.hotel_name}</p>
+                    <p>id: {eachHotelData.id}</p>
                     <p>
                       투숙인원 : {eachHotelData.occupancy.base}~
                       {eachHotelData.occupancy.max}명
                     </p>
-                  </TempHotelDetail>
-                  <TempMakeReservationButton
+                    <p>{eachHotelData.star.toFixed(1)}성급</p>
+                    <p>{eachHotelData.address}</p>
+                    <p>{eachHotelData.price.toLocaleString("ko-KR")}원</p>
+                    <p>총 {eachHotelData.review.toLocaleString("ko-KR")}건의 리뷰</p>
+                    <p>grade : {eachHotelData.grade} 나중에 시간되면 rating 구현하기</p>
+                    </div>
+                  </HotelDetail>
+                  <MakeReservationButton
                     type="button"
                     onClick={() => {
                       setReservationInStorage(
@@ -51,12 +59,12 @@ const HotelList = () => {
                     }}
                   >
                     예약
-                  </TempMakeReservationButton>
-                </TempHotelItem>
+                  </MakeReservationButton>
+                </HotelItem>
               );
             }
           )}
-        </TempHotelItemContainer>
+        </HotelItemContainer>
       ))}
       {hasNextPage ? <Loading /> : null}
       {!isFetchingNextPage && <ObservationBox />}
@@ -66,25 +74,25 @@ const HotelList = () => {
 
 export default HotelList;
 
-const TempHotelItemContainer = styled.div`
+const HotelItemContainer = styled.div`
   border: 1px solid red;
 `;
 
-const TempHotelItem = styled.div`
-  width: 400px;
-  height: 200px;
+const HotelItem = styled.div`
+  width: 500px;
+  height: 280px;
   display: flex;
   justify-content: space-between;
   border: 1px solid black;
 `;
 
-const TempHotelDetail = styled.div`
+const HotelDetail = styled.div`
   width: 300px;
-  height: 80px;
+  height: 150px;
   border: 1px solid blue;
 `;
 
-const TempMakeReservationButton = styled.button`
+const MakeReservationButton = styled.button`
   width: 50px;
   height: 30px;
 `;
