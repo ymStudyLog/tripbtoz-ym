@@ -13,7 +13,7 @@ const Hotel = () => {
   const { filterByHeadCount, filterByStayPeriod } = useFilter();
 
   const periodData = localStorage.getItem("stayPeriod");
-  const numberOfPeopleData = localStorage.getItem("numberOfPeople");
+  const numberOfPeopleData = localStorage.getItem("headCount");
 
   const parsedStayPeriod: StayPeriodType = periodData
     ? JSON.parse(periodData)

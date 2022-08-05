@@ -46,7 +46,7 @@ const useLocalStorage = () => {
   };
   const setNumberOfPeopleInStorage = (adult: number, child: number) => {
     localStorage.setItem(
-      "numberOfPeople",
+      "headCount",
       JSON.stringify({
         adult: adult,
         child: child,
