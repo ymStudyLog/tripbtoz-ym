@@ -5,8 +5,8 @@ import { ReservationContainer } from "../styles/Hotel.style";
 import { saveLocalStorageData } from "../api/api";
 import useFilter from "../hooks/useFilter";
 import useDatabase from "../hooks/useDatabase";
-import { StayPeriodType, NumberOfPeopleType } from '../types/localStorageType';
-import { QueryType } from '../types/queryType';
+import { StayPeriodType, NumberOfPeopleType } from "../types/localStorageType";
+import { QueryType } from "../types/queryType";
 
 type LocalStorageType = string | null;
 
@@ -27,7 +27,7 @@ const Hotel = () => {
   const { localStorageData } = useDatabase();
   const { filterByHeadCount, filterByStayPeriod } = useFilter();
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     if (localStorageData !== undefined) {
       filterByStayPeriod(
         localStorageData.stayPeriod,
@@ -35,13 +35,13 @@ const Hotel = () => {
         filterByHeadCount
       );
     }
-  },[filterByStayPeriod,filterByHeadCount,localStorageData]);
+  }, [filterByStayPeriod, filterByHeadCount, localStorageData]);
 
   return (
     <>
       <ReservationContainer>
         <SearchBar />
-        <HotelList stayPeriod={stayPeriodRef.current} headCount={headCountRef.current} />
+        <HotelList />
       </ReservationContainer>
     </>
   );
