@@ -14058,8 +14058,8 @@
   "localStorage": [
     {
       "stayPeriod": {
-        "checkIn": "2022. 8. 10.",
-        "checkOut": "2022. 8. 12."
+        "checkIn": "",
+        "checkOut": ""
       },
       "headCount": {
         "adult": 2,
