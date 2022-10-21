@@ -1,77 +1,48 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useMediaQuery } from 'react-responsive';
-import SearchBar from '../components/common/SearchBar';
+import styled from "styled-components";
 
 const Landing = () => {
-  const isMobile = useMediaQuery({ maxWidth: 480 });
+  //TODO 모달이 오픈 => 컴포넌트 위에 떠있는 상태라서 컴포넌트 height가 자동으로 조절되지 않는다 =>
   return (
-    <>
-      {isMobile ? (
-        <div>
-          <SearchBar />
-        </div>
-      ) : (
-        <>
-          <BackgroundImageWrapper>
-            <BackgroundImage src='./images/background.jpg' />
-          </BackgroundImageWrapper>
-          <LandingContentsContainer>
-            <CatchphraseWrapper>
-              <Catchphrase>Play Share Stay, 트립비토즈</Catchphrase>
-            </CatchphraseWrapper>
-            <SearchBar />
-          </LandingContentsContainer>
-        </>
-      )}
-    </>
+    <LandingContainer>
+      <CatchPhrase>Play Share Stay, 트립비토즈</CatchPhrase>
+    </LandingContainer>
   );
 };
 
 export default Landing;
 
-const BackgroundImageWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const LandingContainer = styled.div`
+  max-width: auto;
+  height: 120vh;
+  padding-top: 150px;
+
+  @media screen and (max-width: 480px) {
+    padding-top: 80px;
+  }
 `;
 
-const BackgroundImage = styled.img`
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  z-index: -1;
-  top: 0;
-`;
-
-const LandingContentsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  height: 300px;
-`;
-
-const CatchphraseWrapper = styled.div`
-  width: 800px;
-`;
-
-const Catchphrase = styled.div`
+const CatchPhrase = styled.div`
+  max-width: 800px;
   font-weight: 700;
   font-size: 34px;
   color: var(--color-catchphrase);
+
+  @media screen and (max-width: 480px) {
+    font-size: 28px;
+    padding-left: 5px;
+  }
 `;
 
-const TestCalendarWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+// const TestCalendarWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
-const TestCalendarModal = styled.div`
-  width: 480px;
-  min-height: 400px;
-  border: 2px solid red;
-  background-color: var(--color-red);
-`;
+// const TestCalendarModal = styled.div`
+//   width: 480px;
+//   min-height: 400px;
+//   border: 2px solid red;
+//   background-color: var(--color-red);
+// `;

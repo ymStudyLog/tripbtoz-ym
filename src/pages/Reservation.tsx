@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import useDatabase from "../hooks/useDatabase";
 import { ReservationDataType } from "../types/databaseType";
-import { ReservationContainer } from "../styles/Hotel.style";
 import { HotelItemContainer } from "../styles/HotelItem.style";
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,15 +9,16 @@ const Reservation = () => {
   const { reservations } = useDatabase();
 
   return (
-    <ReservationPageContainer>
-      <Title>
-      <h1>예약 내역</h1>
-      </Title>
+    <ReservationContainer>
+      <Title>예약 내역</Title>
       {reservations?.map((reservation: ReservationDataType) => {
         return (
           <ReservationItemContainer key={uuidv4()}>
             <Content>호텔명 : {reservation.hotel_name}</Content>
-            <Content>투숙인원 성인 : {reservation.headCount.adult}, 아이 : {reservation.headCount.child}</Content>
+            <Content>
+              투숙인원 성인 : {reservation.headCount.adult}, 아이 :{" "}
+              {reservation.headCount.child}
+            </Content>
             <Content>
               투숙일자 : {reservation.reservationDetail.checkIn} ~
               {reservation.reservationDetail.checkOut}
@@ -26,26 +26,32 @@ const Reservation = () => {
           </ReservationItemContainer>
         );
       })}
-    </ReservationPageContainer>
+    </ReservationContainer>
   );
 };
 
 export default Reservation;
 
-const ReservationPageContainer = styled(ReservationContainer)`
+const ReservationContainer = styled.div`
+  height: auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 const ReservationItemContainer = styled(HotelItemContainer)`
   height: auto;
-  padding: 15px 4px;
+  padding: 15px 8px;
+  font-size: 18px;
   flex-direction: column;
 `;
 
-const Title = styled(HotelItemContainer)`
+const Title = styled.h1`
   border: none;
   height: auto;
-  flex-direction: column;
+  margin: 1rem 0;
   font-size: 30px;
+  font-weight: bold;
+  background-color: transparent;
 `;
 
 const Content = styled.p`

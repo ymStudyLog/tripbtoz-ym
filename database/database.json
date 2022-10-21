@@ -14055,17 +14055,14 @@
       }
     }
   ],
-  "localStorage": [
-    {
-      "stayPeriod": {
-        "checkIn": "",
-        "checkOut": ""
-      },
-      "headCount": {
-        "adult": 2,
-        "child": 0
-      },
-      "id": 1
+  "localStorage": {
+    "stayPeriod": {
+      "checkIn": "2022. 11. 1.",
+      "checkOut": "2022. 11. 2."
+    },
+    "headCount": {
+      "adult": 2,
+      "child": 1
     }
-  ]
+  }
 }

@@ -1,12 +1,12 @@
 import React from "react";
+import Loading from "./Loading";
+import HotelItem from "./HotelItem";
+import PageContainer from "../../layout/PageContainer";
+import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import {
   BasicHotelDataType,
   GetDataResultType,
 } from "../../types/databaseType";
-import Loading from "../common/Loading";
-import useInfiniteScroll from "../../hooks/useInfiniteScroll";
-import HotelItem from "./HotelItem";
-import { PageContainer } from "../../styles/HotelList.style";
 import { v4 as uuidv4 } from "uuid";
 
 type EachInfinitePageType = {

@@ -1,5 +1,5 @@
 import React from "react";
-import { addReservationData } from "../../api/api";
+import { saveReservationData } from "../../api/api";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { BasicHotelDataType } from "../../types/databaseType";
 import useDatabase from "../../hooks/useDatabase";
@@ -50,7 +50,7 @@ const HotelItem = (props: Props) => {
                 localStorageData.stayPeriod,
                 localStorageData.headCount
               );
-              addReservationData({
+              saveReservationData({
                 hotel_id: hotelData.id,
                 hotel_name: hotelData.hotel_name,
                 headCount: localStorageData.headCount,

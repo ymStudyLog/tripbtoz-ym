@@ -3,7 +3,7 @@ export type StayPeriodType = {
   checkOut: string;
 };
 
-export type NumberOfPeopleType = {
+export type HeadCountType = {
   adult: number;
   child: number;
 };

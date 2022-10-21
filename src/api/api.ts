@@ -1,25 +1,26 @@
 import axios, { AxiosResponse } from "axios";
 import { ReservationDataType } from "../types/databaseType";
 import { DatabaseLocalStorageType } from "../types/databaseType";
+import { HeadCountType, StayPeriodType } from "../types/localStorageType";
 
 const BASE_URL = "http://localhost:8000";
 
-export const hotelService = axios.create({ baseURL: `${BASE_URL}` });
+const hotelService = axios.create({ baseURL: `${BASE_URL}` });
 
 export const getHotelInformation = async <T>(
-  endpoint: string = ""
+  query: string = ""
 ): Promise<T | undefined> => {
   try {
     const response: AxiosResponse<T> = await hotelService.get(
-      `/hotels`.concat(endpoint)
+      `/hotels`.concat(query)
     );
     return response.data;
   } catch (error) {
     console.log(error);
   }
-};
+}; //TODO try-catch 구조로 undefined 반환할 것인지?
 
-export const addReservationData = async (
+export const saveReservationData = async (
   reservationDetail: ReservationDataType
 ) => {
   try {
@@ -30,11 +31,11 @@ export const addReservationData = async (
 };
 
 export const getReservationData = async <T>(
-  endpoint: string = ""
+  query: string = ""
 ): Promise<T | undefined> => {
   try {
     const response: AxiosResponse<T> = await hotelService.get(
-      `/reservations`.concat(endpoint)
+      `/reservations${query}`
     );
     return response.data;
   } catch (error) {
@@ -42,11 +43,13 @@ export const getReservationData = async <T>(
   }
 };
 
+//TODO 로컬스토리지에 있는 데이터를 왜 db에도 저장했었는지 기억해내기 => 필요없으면 삭제하기
 export const saveLocalStorageData = async (
-  locaStorageDetail : DatabaseLocalStorageType
+  children: "stayPeriod" | "headCount",
+  data: { stayPeriod: StayPeriodType } | { headCount: HeadCountType }
 ) => {
   try {
-    await hotelService.patch("/localStorage/1", locaStorageDetail);
+    await hotelService.patch(`/localStorage?_expand=${children}`, data);
   } catch (error) {
     console.log(error);
   }
@@ -54,14 +57,16 @@ export const saveLocalStorageData = async (
 
 export const emptyLocalStorageData = async () => {
   try {
-    await hotelService.patch("/localStorage/1", {
-      "stayPeriod": {
-        "checkIn": "",
-        "checkOut": ""
+    saveLocalStorageData("stayPeriod", {
+      stayPeriod: {
+        checkIn: "",
+        checkOut: "",
       },
-      "headCount": {
-        "adult": 2,
-        "child": 0
+    });
+    saveLocalStorageData("headCount", {
+      headCount: {
+        adult: 2,
+        child: 0,
       },
     });
   } catch (error) {
@@ -71,7 +76,7 @@ export const emptyLocalStorageData = async () => {
 
 export const getLocalStorageData = async <T>(): Promise<T | undefined> => {
   try {
-    const response: AxiosResponse<T> = await hotelService.get("/localStorage/1");
+    const response: AxiosResponse<T> = await hotelService.get("/localStorage?q=stayPeriod&q=headCount");
     return response.data;
   } catch (error) {
     console.log(error);

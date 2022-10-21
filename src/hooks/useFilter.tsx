@@ -1,7 +1,7 @@
 import React from "react";
 import { areIntervalsOverlapping } from "date-fns";
 import { ReservationDataType } from "../types/databaseType";
-import { NumberOfPeopleType, StayPeriodType } from "../types/localStorageType";
+import { HeadCountType, StayPeriodType } from "../types/localStorageType";
 import { QueryType } from "../types/queryType";
 import useDatabase from "../hooks/useDatabase";
 
@@ -9,7 +9,7 @@ const useFilter = () => {
   const { reservations } = useDatabase();
 
   const filterByHeadCount = (
-    headCount: NumberOfPeopleType,
+    headCount: HeadCountType,
     query: QueryType
   ): void => {
     const totalCount = headCount.adult + headCount.child;
@@ -26,7 +26,7 @@ const useFilter = () => {
   const filterByStayPeriod = React.useCallback(
     (
       stayPeriod: StayPeriodType,
-      headCount: NumberOfPeopleType,
+      headCount: HeadCountType,
       callback: any
     ): void => {
       if (reservations !== undefined) {

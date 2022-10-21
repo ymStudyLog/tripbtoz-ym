@@ -1,4 +1,4 @@
-import { NumberOfPeopleType, StayPeriodType } from "./localStorageType";
+import { HeadCountType, StayPeriodType } from "./localStorageType";
 
 export type BasicHotelDataType = {
   id: number;
@@ -20,17 +20,11 @@ export type GetDataResultType = BasicHotelDataType[] | undefined;
 export type ReservationDataType = {
   hotel_id: number;
   hotel_name: string;
-  headCount: NumberOfPeopleType;
+  headCount: HeadCountType;
   reservationDetail: StayPeriodType;
 };
 
 export type DatabaseLocalStorageType = {
-  stayPeriod: {
-    checkIn: string;
-    checkOut: string;
-  };
-  headCount: {
-    adult: number;
-    child: number;
-  };
+  stayPeriod: StayPeriodType;
+  headCount: HeadCountType;
 };

@@ -21,6 +21,7 @@ export const MakeReservationButton = styled.button`
 export const HotelItemContainer = styled.div`
   width: 800px;
   height: 200px;
+  background-color: var(--color-white);
   border: 1px solid var(--color-border);
   margin-top: 20px;
   display: flex;
