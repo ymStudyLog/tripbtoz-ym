@@ -1,7 +1,7 @@
 import React from "react";
 import { HOTELDATA_PER_PAGE } from "../utils/infiniteScroll";
 import { getHotelInformation } from "../api/api";
-import { BasicHotelDataType, GetDataResultType } from "../types/databaseType";
+import { HotelDataType, GetDataResultType } from "../types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 
@@ -19,7 +19,7 @@ const useInfiniteScroll = (props : Props) => {
         `&_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`
       );
     const hotelDatas: GetDataResultType = await getHotelInformation<
-      BasicHotelDataType[]
+      HotelDataType[]
     >(finalQuery);
     const nextPage =
       hotelDatas !== undefined && hotelDatas.length >= HOTELDATA_PER_PAGE

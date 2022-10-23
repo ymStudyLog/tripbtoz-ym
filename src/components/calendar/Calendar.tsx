@@ -32,7 +32,7 @@ const Calendar = ({
   handleChangeCheckInOut,
   handleChangeMonthDate,
 }: Props) => {
-  const [todayDate, setTodayDate] = React.useState(today);
+  const [todayDate, setTodayDate] = React.useState(today); //TODO today=new Date() = todayDate
   const [showMonthDate, setShowMonthDate] = React.useState(initialMonthDate);
   const [checkInOut, setCheckInOut] = React.useState<CheckInOutType>({
     checkIn: initialCheckIn,

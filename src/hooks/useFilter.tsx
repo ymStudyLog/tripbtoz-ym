@@ -1,12 +1,12 @@
 import React from "react";
 import { areIntervalsOverlapping } from "date-fns";
-import { ReservationDataType } from "../types/databaseType";
-import { HeadCountType, StayPeriodType } from "../types/localStorageType";
-import { QueryType } from "../types/queryType";
-import useDatabase from "../hooks/useDatabase";
+import { ReservationDataType } from "../types";
+import { HeadCountType, StayPeriodType, QueryType } from "../types";
+import useReactQuery from "../hooks/useReactQuery";
 
+//TODO 지금 메이저 에러 여기서 발생 중!
 const useFilter = () => {
-  const { reservations } = useDatabase();
+  const { reservations } = useReactQuery();
 
   const filterByHeadCount = (
     headCount: HeadCountType,

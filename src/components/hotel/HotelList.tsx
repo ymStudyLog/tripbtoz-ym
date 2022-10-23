@@ -1,12 +1,12 @@
 import React from "react";
-import Loading from "./Loading";
+import Loading from "../../layout/Loading";
 import HotelItem from "./HotelItem";
 import PageContainer from "../../layout/PageContainer";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import {
-  BasicHotelDataType,
+  HotelDataType,
   GetDataResultType,
-} from "../../types/databaseType";
+} from "../../types";
 import { v4 as uuidv4 } from "uuid";
 
 type EachInfinitePageType = {
@@ -31,7 +31,7 @@ const HotelList = () => {
           {data?.pages.map((page: EachInfinitePageType, index: number) => (
             <PageContainer key={uuidv4()}>
               {page?.result?.map(
-                (eachHotelData: BasicHotelDataType, index: number) => {
+                (eachHotelData: HotelDataType, index: number) => {
                   return <HotelItem key={uuidv4()} hotelData={eachHotelData} />;
                 }
               )}

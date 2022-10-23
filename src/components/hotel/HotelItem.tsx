@@ -1,18 +1,18 @@
 import React from "react";
 import { saveReservationData } from "../../api/api";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { BasicHotelDataType } from "../../types/databaseType";
-import useDatabase from "../../hooks/useDatabase";
+import { HotelDataType } from "../../types";
+import useReactQuery from "../../hooks/useReactQuery";
 import * as H from '../../styles/HotelItem.style';
 
 type Props = {
-  hotelData: BasicHotelDataType;
+  hotelData: HotelDataType;
 };
 
 const HotelItem = (props: Props) => {
   const { hotelData } = props;
   const { setReservationInStorage } = useLocalStorage();
-  const { localStorageData } = useDatabase();
+  const { localStorageData } = useReactQuery();
   const [loading, setLoading] = React.useState<boolean>(false);
 
   return (
@@ -35,7 +35,7 @@ const HotelItem = (props: Props) => {
         <H.Address>{hotelData.address}</H.Address>
         <H.Review>
           <p>{hotelData.grade}</p>
-          <p>총 {hotelData.review.toLocaleString("ko-KR")}건의 리뷰</p>v
+          <p>총 {hotelData.review.toLocaleString("ko-KR")}건의 리뷰</p>
         </H.Review>
       </H.HotelInfoWrapper>
 

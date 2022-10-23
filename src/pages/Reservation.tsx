@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import useDatabase from "../hooks/useDatabase";
-import { ReservationDataType } from "../types/databaseType";
+import useReactQuery from "../hooks/useReactQuery";
+import { ReservationDataType } from "../types";
 import { HotelItemContainer } from "../styles/HotelItem.style";
 import { v4 as uuidv4 } from "uuid";
 
 const Reservation = () => {
-  const { reservations } = useDatabase();
+  const { reservations } = useReactQuery();
 
   return (
     <ReservationContainer>

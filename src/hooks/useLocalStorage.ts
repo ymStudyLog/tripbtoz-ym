@@ -1,27 +1,50 @@
+import React from "react";
 import { saveLocalStorageData } from "../api/api";
-import { StayPeriodType, HeadCountType } from "../types/localStorageType";
-import { ReservationDataType } from "../types/databaseType";
+import { convertDateToString } from "../utils/dateUtils";
+import { ReservationDataType, StayPeriodType, HeadCountType } from "../types";
 
 const useLocalStorage = () => {
-  const setStayPeriodInStorage = (startDate: string, endDate: string) => {
+  //TODO type 설정하기
+  const [previousPeriod, setPreviousPeriod] = React.useState<any>({
+    checkIn: null,
+    checkOut: null,
+  });
+  const [previousHead, setPreviousHead] = React.useState<any>({
+    adult: null,
+    child: null,
+  });
+
+  const parseLocalStorage = React.useCallback(
+    (periodObj: string, headObj: string) => {
+      const parserPeriod = JSON.parse(periodObj);
+      const convertToDateObj = {
+        checkIn: new Date(parserPeriod.checkIn),
+        checkOut: new Date(parserPeriod.checkOut),
+      };
+      setPreviousPeriod(convertToDateObj);
+      setPreviousHead(JSON.parse(headObj));
+    },
+    []
+  );
+
+  const setStayPeriodInStorage = (
+    startDate: Date | null,
+    endDate: Date | null
+  ) => {
     const formattedPeriod: StayPeriodType = {
-      checkIn: startDate,
-      checkOut: endDate,
+      checkIn: startDate === null ? "" : convertDateToString(startDate),
+      checkOut: endDate === null ? "" : convertDateToString(endDate),
     };
     localStorage.setItem("stayPeriod", JSON.stringify(formattedPeriod));
     saveLocalStorageData("stayPeriod", { stayPeriod: formattedPeriod });
   };
 
-  const setHeadCountInStorage = (adult: number, child: number) => {
-    const formattedHead: HeadCountType = {
-      adult: adult,
-      child: child,
-    };
-    localStorage.setItem("headCount", JSON.stringify(formattedHead));
-    saveLocalStorageData("headCount", { headCount: formattedHead });
+  const setHeadCountInStorage = (headCountData: HeadCountType) => {
+    localStorage.setItem("headCount", JSON.stringify(headCountData));
+    saveLocalStorageData("headCount", { headCount: headCountData });
   };
 
-  //TODO 이거는 어케 합쳐 말어?? => 예약을 취소하는 버튼도 구현해서 이거랑 합치기 
+  //TODO 이거는 어케 합쳐 말어?? => 예약을 취소하는 버튼도 구현해서 이거랑 합치기
   const setReservationInStorage = (
     id: number,
     hotelName: string,
@@ -53,6 +76,9 @@ const useLocalStorage = () => {
   };
 
   return {
+    prevStayPeriod: previousPeriod,
+    prevHeadCount: previousHead,
+    parseLocalStorage,
     setStayPeriodInStorage,
     setHeadCountInStorage,
     setReservationInStorage,

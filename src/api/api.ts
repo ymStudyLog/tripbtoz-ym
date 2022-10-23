@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import { ReservationDataType } from "../types/databaseType";
-import { DatabaseLocalStorageType } from "../types/databaseType";
-import { HeadCountType, StayPeriodType } from "../types/localStorageType";
+import { ReservationDataType } from "../types";
+import { LocalStorageType, HeadCountType, StayPeriodType } from "../types";
 
 const BASE_URL = "http://localhost:8000";
 
@@ -74,7 +73,7 @@ export const emptyLocalStorageData = async () => {
   }
 };
 
-export const getLocalStorageData = async <T>(): Promise<T | undefined> => {
+export const parseLocalStorageData = async <T>(): Promise<T | undefined> => {
   try {
     const response: AxiosResponse<T> = await hotelService.get("/localStorage?q=stayPeriod&q=headCount");
     return response.data;

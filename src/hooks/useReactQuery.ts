@@ -1,16 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { getLocalStorageData, getReservationData } from "../api/api";
-import { ReservationDataType, DatabaseLocalStorageType } from "../types/databaseType";
+import { parseLocalStorageData, getReservationData } from "../api/api";
+import { ReservationDataType, LocalStorageType } from "../types";
 
-const useDatabase = () => {
+const useReactQuery = () => {
   const reservations = useQuery(
     ["getReservation"],
     () => getReservationData<ReservationDataType[]>("")
   );
 
   const localStorageData = useQuery(
-    ["getLocalStorageData"],
-    ()=> getLocalStorageData<DatabaseLocalStorageType>()
+    ["parseLocalStorageData"],
+    ()=> parseLocalStorageData<LocalStorageType>()
   )
 
   return {
@@ -19,4 +19,4 @@ const useDatabase = () => {
   };
 };
 
-export default useDatabase;
+export default useReactQuery;

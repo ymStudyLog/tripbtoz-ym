@@ -1,283 +1,141 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { VscCalendar } from "react-icons/vsc";
-import { IoPersonOutline } from "react-icons/io5";
-import { IoSearch } from "react-icons/io5";
-import CalendarModal from "../modal/CalendarModal";
-import CountModal from "../modal/CountModal";
-import {
-  addDate,
-  convertDateToString,
-  getDateDiff,
-} from "../../utils/dateUtils";
+import { getDateDiff } from "../../utils/dateUtils";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import useHeadCount from "../../hooks/useHeadCount";
+import useStayPeriod from "../../hooks/useStayPeriod";
+import * as S from "../../styles/SearchBar.style";
+import { VscCalendar } from "react-icons/vsc";
+import { IoSearch, IoPersonOutline } from "react-icons/io5";
 
 type Props = {
   endpoint: string;
 };
 
 const SearchBar = (props: Props) => {
-  const { endpoint } = props; 
+  const { endpoint } = props;
+  const today = new Date();
   const navigate = useNavigate();
+  const {
+    prevStayPeriod,
+    prevHeadCount,
+    parseLocalStorage,
+    setStayPeriodInStorage,
+    setHeadCountInStorage,
+  } = useLocalStorage();
 
-  //TODO 캘린더 관련 -> 커스텀 hook으로
-  const today = new Date(convertDateToString(new Date())); //오늘 날짜 -> 구지 이렇게 하는 이유가,,,?
-  const [initialMonthDate, setInitialMonthDate] = React.useState(
-    new Date(convertDateToString(new Date()))
-  );
-  const [checkIn, setCheckIn] = React.useState<Date | undefined>(
-    addDate(today, 7)
-  );
-  const [checkOut, setCheckOut] = React.useState<Date | undefined>(
-    addDate(today, 8)
-  );
-  const [showCalendarModal, setShowCalendarModal] =
-    React.useState<boolean>(false);
+  const {
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
+    showCalendarModal,
+    setShowCalendarModal,
+    isCalenderModalClicked,
+  } = useStayPeriod({ today });
 
-  //TODO 인원수 관련 -> 커스텀 hook으로
-  const [showCountModal, setShowCountModal] = React.useState<boolean>(false);
-  const [adult, setAdult] = React.useState<number>(2);
-  const [child, setChild] = React.useState<number>(0);
+  const {
+    count,
+    setCount,
+    showCountModal,
+    setShowCountModal,
+    countValueString,
+    isCountModalClicked,
+  } = useHeadCount();
 
-  const { setStayPeriodInStorage, setHeadCountInStorage } = useLocalStorage();
+  React.useEffect(() => {
+    const storageStayPeriod = localStorage.getItem("stayPeriod");
+    const storageHeadCount = localStorage.getItem("headCount");
+    if (storageStayPeriod !== null && storageHeadCount !== null) {
+      parseLocalStorage(storageStayPeriod, storageHeadCount);
+    }
+  }, [parseLocalStorage]);
+
+  React.useEffect(() => {
+    if (prevStayPeriod.checkIn !== null && prevStayPeriod.checkOut !== null) {
+      setStartDate(prevStayPeriod.checkIn);
+      setEndDate(prevStayPeriod.checkOut);
+    }
+  }, [prevStayPeriod]);
+
+  React.useEffect(() => {
+    if (prevHeadCount.adult !== null && prevHeadCount.child !== null) {
+      setCount({
+        adult: prevHeadCount.adult,
+        child: prevHeadCount.child,
+      });
+    }
+  }, [prevHeadCount]);
 
   const searchHotelData = () => {
     setShowCalendarModal(false);
     setShowCountModal(false);
-    checkIn !== undefined &&
-      checkOut !== undefined &&
-      setStayPeriodInStorage(
-        `${checkIn?.getFullYear()}. ${
-          checkIn?.getMonth() + 1
-        }. ${checkIn?.getDate()}.`,
-        `${checkOut?.getFullYear()}. ${
-          checkOut?.getMonth() + 1
-        }. ${checkOut?.getDate()}.`
-      );
-    setHeadCountInStorage(adult, child);
+    if (startDate !== undefined && endDate !== undefined) {
+      setStayPeriodInStorage(startDate, endDate);
+    }
+    setHeadCountInStorage(count);
     navigate("/hotel");
   };
 
   return (
-    <SearchBarContainer endpoint={endpoint}>
-      <IconContainer>
+    <S.SearchBarContainer endpoint={endpoint}>
+      {/*TODO 아이콘 컨테이너랑 아이콘을 통째로 export -> import 해오면 안되나?  */}
+      <S.IconContainer>
         <VscCalendar />
-      </IconContainer>
-      <CheckInOutContainer
+      </S.IconContainer>
+      <S.CheckInOutContainer
         onClick={() => {
           setShowCalendarModal(!showCalendarModal);
           setShowCountModal(false);
         }}
       >
-        {showCalendarModal && (
-          <CalendarModal
-            initialCheckIn={checkIn}
-            initialCheckOut={checkOut}
-            today={new Date(convertDateToString(new Date()))}
-            initialMonthDate={initialMonthDate}
-            handleChangeMonthDate={(date: Date) => {
-              setInitialMonthDate(date);
-            }}
-            handleChangeCheckInOut={(srcCheckIn?: Date, srcCheckOut?: Date) => {
-              let changed = false;
-              if (srcCheckIn !== checkIn || srcCheckOut !== checkOut) {
-                changed = true;
-              }
-              setCheckIn(srcCheckIn);
-              setCheckOut(srcCheckOut);
-              if (changed && srcCheckIn && srcCheckOut) {
-                setShowCalendarModal(false);
-              }
-            }}
-          />
-        )}
-        <CheckIn>
-          <ItemTitle>체크인</ItemTitle>
-          <Item>
-            {checkIn
-              ? `${checkIn.getMonth() + 1}월 ${checkIn.getDate()}일`
-              : "날짜추가"}
-          </Item>
-        </CheckIn>
+        {isCalenderModalClicked()}
+        <S.CheckIn>
+          <S.ValueTitle>체크인</S.ValueTitle>
+          <S.Value>
+            {startDate === undefined
+              ? `날짜추가`
+              : `${startDate.getMonth() + 1}월 ${startDate.getDate()}일`}
+          </S.Value>
+        </S.CheckIn>
 
-        <StayPeriodText>
-          {checkIn && checkOut ? `${getDateDiff(checkOut, checkIn)}박` : ""}
-        </StayPeriodText>
+        <S.StayPeriodText>
+          {startDate === undefined || endDate === undefined
+            ? ""
+            : `${getDateDiff(endDate, startDate)}박`}
+        </S.StayPeriodText>
 
-        <CheckOut>
-          <ItemTitle>체크아웃</ItemTitle>
-          <Item>
-            {checkOut
-              ? `${checkOut.getMonth() + 1}월 ${checkOut.getDate()}일`
-              : "날짜추가"}
-          </Item>
-        </CheckOut>
-      </CheckInOutContainer>
+        <S.CheckOut>
+          <S.ValueTitle>체크아웃</S.ValueTitle>
+          <S.Value>
+            {endDate === undefined
+              ? `날짜추가`
+              : `${endDate.getMonth() + 1}월 ${endDate.getDate()}일`}
+          </S.Value>
+        </S.CheckOut>
+      </S.CheckInOutContainer>
 
-      <IconContainer>
+      <S.IconContainer>
         <IoPersonOutline />
-      </IconContainer>
+      </S.IconContainer>
 
-      <GuestInfoContainer
+      <S.GuestInfoContainer
         onClick={() => {
           setShowCountModal(!showCountModal);
           setShowCalendarModal(false);
         }}
       >
-        {showCountModal && (
-          <CountModal
-            initialChild={child}
-            initialAdult={adult}
-            setShowCountModal={setShowCountModal}
-            handleChangeNumberOfPeople={(
-              srcAdult: number,
-              srcChild: number
-            ) => {
-              setAdult(srcAdult);
-              setChild(srcChild);
-            }}
-          />
-        )}
-        <GuestInfo>
-          <ItemTitle>인원</ItemTitle>
-          <Item>{`성인 ${adult} / 아이 ${child}`}</Item>
-        </GuestInfo>
-      </GuestInfoContainer>
-      <SearchIconContainer onClick={searchHotelData}>
+        {isCountModalClicked()}
+        <S.GuestInfo>
+          <S.ValueTitle>인원</S.ValueTitle>
+          <S.Value>{countValueString}</S.Value>
+        </S.GuestInfo>
+      </S.GuestInfoContainer>
+      <S.SearchIconContainer onClick={searchHotelData}>
         <IoSearch />
-      </SearchIconContainer>
-    </SearchBarContainer>
+      </S.SearchIconContainer>
+    </S.SearchBarContainer>
   );
 };
 
 export default SearchBar;
-
-const SearchBarContainer = styled.div<{ endpoint: string }>`
-  position: absolute;
-  top: ${(props) => (props.endpoint === "/" ? "200px" : 0)};
-  width: 800px;
-  height: 60px;
-  background-color: var(--color-white);
-  border: 1.5px solid var(--color-border);
-  display: flex;
-
-  @media screen and (max-width: 480px) {
-    width: 480px;
-  }
-`;
-
-const IconContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 64px;
-  height: 100%;
-  font-size: 28px;
-
-  @media screen and (max-width: 480px) {
-    display: none;
-  }
-`;
-
-const CheckInOutContainer = styled.div`
-  display: flex;
-  width: 320px;
-  margin-left: 0 24px;
-  border-right: 1.5px solid var(--color-border);
-  position: relative;
-  cursor: pointer;
-
-  &:hover {
-    background-color: var(--color-hover);
-  }
-
-  @media screen and (max-width: 480px) {
-    width: 240px;
-  }
-`;
-
-const StyledDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-//TODO 너비 조정
-const CheckInOut = styled(StyledDiv)`
-  width: 144px;
-`;
-
-const CheckIn = styled(CheckInOut)`
-  align-items: flex-start;
-  padding-left: 16px;
-`;
-
-const CheckOut = styled(CheckInOut)`
-  align-items: flex-end;
-  padding-right: 16px;
-`;
-
-//TODO 너비 조정
-const GuestInfo = styled(StyledDiv)`
-  align-items: flex-start;
-  width: 320px;
-  padding-left: 16px;
-
-  @media screen and (max-width: 480px) {
-    width: 180px;
-  }
-`;
-
-const ItemTitle = styled.div`
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-subTitle);
-`;
-
-const Item = styled.div`
-  font-size: 17.6px;
-  font-weight: 700;
-  margin-top: 8px;
-`;
-
-//TODO span으로 바꿔서 반응형시 옮기기?
-const StayPeriodText = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 32px;
-  color: var(--color-subTitle);
-`;
-
-const GuestInfoContainer = styled.div`
-  display: flex;
-  width: 272px;
-  margin-left: 0 24px;
-  position: relative;
-  cursor: pointer;
-
-  &:hover {
-    background-color: var(--color-hover);
-  }
-
-  @media screen and (max-width: 480px) {
-    width: 240px;
-  }
-`;
-
-const SearchIconContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80px;
-  font-size: 35px;
-  background-color: var(--color-main);
-  color: var(--color-white);
-  cursor: pointer;
-
-  @media screen and (max-width: 480px) {
-    width: 80px;
-    font-size: 30px;
-  }
-`;
