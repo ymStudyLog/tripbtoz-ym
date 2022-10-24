@@ -1,6 +1,5 @@
 import React from "react";
 import { saveReservationData } from "../../api/api";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import { HotelDataType } from "../../types";
 import useReactQuery from "../../hooks/useReactQuery";
 import * as H from '../../styles/HotelItem.style';
@@ -11,7 +10,6 @@ type Props = {
 
 const HotelItem = (props: Props) => {
   const { hotelData } = props;
-  const { setReservationInStorage } = useLocalStorage();
   const { localStorageData } = useReactQuery();
   const [loading, setLoading] = React.useState<boolean>(false);
 
@@ -44,12 +42,6 @@ const HotelItem = (props: Props) => {
           type="button"
           onClick={() => {
             if (localStorageData !== undefined) {
-              setReservationInStorage(
-                hotelData.id,
-                hotelData.hotel_name,
-                localStorageData.stayPeriod,
-                localStorageData.headCount
-              );
               saveReservationData({
                 hotel_id: hotelData.id,
                 hotel_name: hotelData.hotel_name,

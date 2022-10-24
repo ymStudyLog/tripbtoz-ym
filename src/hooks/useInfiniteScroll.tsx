@@ -6,16 +6,16 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 
 type Props = {
-  storageQuery: string
+  query: string
 }
 
 const useInfiniteScroll = (props : Props) => {
-  const { storageQuery } = props;
+  const { query } = props;
 
   const getPage = async (pageParam: number) => {
-    const finalQuery = storageQuery.length === 0 ?
+    const finalQuery = query.length === 0 ?
       `?_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`
-      : storageQuery.concat(
+      : query.concat(
         `&_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`
       );
     const hotelDatas: GetDataResultType = await getHotelInformation<

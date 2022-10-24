@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const Reservation = () => {
   const { reservations } = useReactQuery();
-
+//TODO 예약을 취소하는 버튼도 구현하기
   return (
     <ReservationContainer>
       <Title>예약 내역</Title>

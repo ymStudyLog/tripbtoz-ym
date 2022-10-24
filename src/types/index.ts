@@ -23,8 +23,6 @@ export type HeadCountType = {
   child: number;
 };
 
-export type QueryType = string;
-
 export type GetDataResultType = HotelDataType[] | undefined;
 
 export type ReservationDataType = {

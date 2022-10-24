@@ -14057,11 +14057,11 @@
   ],
   "localStorage": {
     "stayPeriod": {
-      "checkIn": "2022-11-01",
-      "checkOut": "2022-11-03"
+      "checkIn": "2022-11-02",
+      "checkOut": "2022-11-06"
     },
     "headCount": {
-      "adult": 1,
+      "adult": 3,
       "child": 1
     }
   }

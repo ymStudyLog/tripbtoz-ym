@@ -3,11 +3,12 @@ import Loading from "../../layout/Loading";
 import HotelItem from "./HotelItem";
 import PageContainer from "../../layout/PageContainer";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
-import {
-  HotelDataType,
-  GetDataResultType,
-} from "../../types";
+import { HotelDataType, GetDataResultType } from "../../types";
 import { v4 as uuidv4 } from "uuid";
+
+type Props = {
+  query: string;
+};
 
 type EachInfinitePageType = {
   result: GetDataResultType;
@@ -15,12 +16,11 @@ type EachInfinitePageType = {
   isLast: boolean;
 };
 
-const HotelList = () => {
-  const queryString = localStorage.getItem("query");
-  const storageQuery = queryString !== null ? queryString : "";
-
+const HotelList = (props: Props) => {
+  const { query } = props;
+//useInfiniteScroll에는 ""혹은 쿼리 스트링이 들어가야함
   const { isLoading, hasNextPage, data, isFetchingNextPage, ObservationBox } =
-    useInfiniteScroll({storageQuery});
+    useInfiniteScroll({ query });
 
   return (
     <>
