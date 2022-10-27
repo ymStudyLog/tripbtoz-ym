@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import PageContainer from "./PageContainer";
 import { HotelItemContainer } from "../styles/HotelItem.style";
-import { HOTELDATA_PER_PAGE } from "../utils/infiniteScroll";
+import { HOTELDATA_PER_PAGE } from "../hooks/useInfiniteScroll";
 import { v4 as uuidv4 } from "uuid";
 
 const Loading = () : JSX.Element => {

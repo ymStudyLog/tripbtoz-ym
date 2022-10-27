@@ -1,7 +1,6 @@
 import React from "react";
-import { saveReservationData } from "../../api/api";
+import { saveReservation } from "../../api/api";
 import { HotelDataType } from "../../types";
-import useReactQuery from "../../hooks/useReactQuery";
 import * as H from '../../styles/HotelItem.style';
 
 type Props = {
@@ -10,7 +9,7 @@ type Props = {
 
 const HotelItem = (props: Props) => {
   const { hotelData } = props;
-  const { localStorageData } = useReactQuery();
+//TODO 호텔 페이지에서 여기까지 로컬스토리지 값 가져다 줘야함
   const [loading, setLoading] = React.useState<boolean>(false);
 
   return (
@@ -41,14 +40,14 @@ const HotelItem = (props: Props) => {
         <H.MakeReservationButton
           type="button"
           onClick={() => {
-            if (localStorageData !== undefined) {
-              saveReservationData({
-                hotel_id: hotelData.id,
-                hotel_name: hotelData.hotel_name,
-                headCount: localStorageData.headCount,
-                reservationDetail: localStorageData.stayPeriod,
-              });
-            }
+            // if (localStorageData !== undefined) {
+            //   saveReservation({
+            //     hotel_id: hotelData.id,
+            //     hotel_name: hotelData.hotel_name,
+            //     headCount: localStorageData.headCount,
+            //     reservationDetail: localStorageData.stayPeriod,
+            //   });
+            // }
           }}
         >
           예약

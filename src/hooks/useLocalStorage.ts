@@ -1,78 +1,47 @@
 import React from "react";
-import { saveLocalStorageData } from "../api/api";
 import { convertDateToString } from "../utils/dateUtils";
-import { ReservationDataType, StayPeriodType, HeadCountType } from "../types";
+import { StayPeriodType, HeadCountType } from "../types";
 
 const useLocalStorage = () => {
-  //TODO type 설정하기
-  const [previousPeriod, setPreviousPeriod] = React.useState<any>({
+  //TODO 이름 변경하기 currentPeriod 이런식으로 -> 각각의 set 함수도 반환하기(Searchbar에서 써야됨)
+  const [previousPeriod, setPreviousPeriod] = React.useState<StayPeriodType<Date|null>>({
     checkIn: null,
     checkOut: null,
   });
-  const [previousHead, setPreviousHead] = React.useState<any>({
+  const [previousHead, setPreviousHead] = React.useState<HeadCountType<number|null>>({
     adult: null,
     child: null,
   });
 
   const parseLocalStorage = React.useCallback(
-    (periodObj: string, headObj: string) => {
-      const parserPeriod = JSON.parse(periodObj);
-      const convertToDateObj = {
-        checkIn: new Date(parserPeriod.checkIn),
-        checkOut: new Date(parserPeriod.checkOut),
-      };
-      setPreviousPeriod(convertToDateObj);
-      setPreviousHead(JSON.parse(headObj));
+    (periodObj: string | null, headObj: string | null) => {
+      if (typeof periodObj === "string" && typeof headObj === "string") {
+        const parserPeriod = JSON.parse(periodObj);
+        const convertToDateObj = {
+          checkIn: new Date(parserPeriod.checkIn),
+          checkOut: new Date(parserPeriod.checkOut),
+        };
+        setPreviousPeriod(convertToDateObj);
+        setPreviousHead(JSON.parse(headObj));
+      }
     },
     []
   );
-
+  
   const setStayPeriodInStorage = (
     startDate: Date | null,
     endDate: Date | null
   ) => {
-    const formattedPeriod: StayPeriodType = {
+    const formattedPeriod: StayPeriodType<string> = {
       checkIn: startDate === null ? "" : convertDateToString(startDate),
       checkOut: endDate === null ? "" : convertDateToString(endDate),
     };
     localStorage.setItem("stayPeriod", JSON.stringify(formattedPeriod));
-    saveLocalStorageData("stayPeriod", { stayPeriod: formattedPeriod });
   };
 
-  const setHeadCountInStorage = (headCountData: HeadCountType) => {
+  const setHeadCountInStorage = (headCountData: HeadCountType<number>) => {
     localStorage.setItem("headCount", JSON.stringify(headCountData));
-    saveLocalStorageData("headCount", { headCount: headCountData });
   };
-
-  // const setReservationInStorage = (
-  //   id: number,
-  //   hotelName: string,
-  //   stayPeriod: StayPeriodType,
-  //   headCount: HeadCountType
-  // ) => {
-  //   const prevStorageState = localStorage.getItem("reservationData");
-  //   const newStorageState = [
-  //     {
-  //       hotel_id: id,
-  //       hotel_name: hotelName,
-  //       headCount: headCount,
-  //       reservationDetail: {
-  //         checkIn: stayPeriod.checkIn,
-  //         checkOut: stayPeriod.checkOut,
-  //       },
-  //     },
-  //   ];
-  //   if (prevStorageState !== null) {
-  //     const parsedPrevState: ReservationDataType[] =
-  //       JSON.parse(prevStorageState);
-  //     localStorage.setItem(
-  //       "reservationData",
-  //       JSON.stringify(parsedPrevState.concat(newStorageState))
-  //     );
-  //   } else {
-  //     localStorage.setItem("reservationData", JSON.stringify(newStorageState));
-  //   }
-  // };
 
   return {
     prevStayPeriod: previousPeriod,
@@ -80,7 +49,6 @@ const useLocalStorage = () => {
     parseLocalStorage,
     setStayPeriodInStorage,
     setHeadCountInStorage,
-    // setReservationInStorage,
   };
 };
 

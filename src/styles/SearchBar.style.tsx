@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { VscCalendar } from "react-icons/vsc";
+import { IoPersonOutline } from "react-icons/io5";
 
 export const SearchBarContainer = styled.div<{ endpoint: string }>`
   position: absolute;
@@ -26,6 +28,22 @@ export const IconContainer = styled.div`
     display: none;
   }
 `;
+
+export const CalenderIcon = () => {
+  return (
+    <IconContainer>
+      <VscCalendar />
+    </IconContainer>
+  );
+};
+
+export const PersonIcon = () => {
+  return (
+    <IconContainer>
+      <IoPersonOutline />
+    </IconContainer>
+  );
+};
 
 export const CheckInOutContainer = styled.div`
   display: flex;

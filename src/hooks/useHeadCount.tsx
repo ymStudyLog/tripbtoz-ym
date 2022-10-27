@@ -4,7 +4,7 @@ import { HeadCountType } from "../types";
 
 const useHeadCount = () => {
   const [showCountModal, setShowCountModal] = React.useState<boolean>(false);
-  const [count, setCount] = React.useState<HeadCountType>({
+  const [count, setCount] = React.useState<HeadCountType<number>>({
     adult: 2,
     child: 0,
   });

@@ -1,24 +1,24 @@
 import React from "react";
-import { HOTELDATA_PER_PAGE } from "../utils/infiniteScroll";
 import { getHotelInformation } from "../api/api";
-import { HotelDataType, GetDataResultType } from "../types";
+import { HotelDataType } from "../types";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
 
 type Props = {
-  query: string
-}
+  query: string;
+};
 
-const useInfiniteScroll = (props : Props) => {
+export const HOTELDATA_PER_PAGE = 10;
+
+const useInfiniteScroll = (props: Props) => {
   const { query } = props;
 
   const getPage = async (pageParam: number) => {
-    const finalQuery = query.length === 0 ?
-      `?_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`
-      : query.concat(
-        `&_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`
-      );
-    const hotelDatas: GetDataResultType = await getHotelInformation<
+    const finalQuery =
+      query.length === 0
+        ? `?_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`
+        : query.concat(`&_page=${pageParam}&_limit=${HOTELDATA_PER_PAGE}`);
+    const hotelDatas: HotelDataType[] | undefined = await getHotelInformation<
       HotelDataType[]
     >(finalQuery);
     const nextPage =

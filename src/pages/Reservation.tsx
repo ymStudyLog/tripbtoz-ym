@@ -1,28 +1,42 @@
-import React from "react";
 import styled from "styled-components";
 import useReactQuery from "../hooks/useReactQuery";
-import { ReservationDataType } from "../types";
-import { HotelItemContainer } from "../styles/HotelItem.style";
+import { ReservationType } from "../types";
+import {
+  HotelItemContainer,
+  MakeReservationButton,
+} from "../styles/HotelItem.style";
+import { deleteReservation } from "../api/api";
 import { v4 as uuidv4 } from "uuid";
 
 const Reservation = () => {
   const { reservations } = useReactQuery();
-//TODO 예약을 취소하는 버튼도 구현하기
+  
   return (
     <ReservationContainer>
       <Title>예약 내역</Title>
-      {reservations?.map((reservation: ReservationDataType) => {
+      {reservations?.map((reservation: ReservationType) => {
         return (
           <ReservationItemContainer key={uuidv4()}>
-            <Content>호텔명 : {reservation.hotel_name}</Content>
-            <Content>
-              투숙인원 성인 : {reservation.headCount.adult}, 아이 :{" "}
-              {reservation.headCount.child}
-            </Content>
-            <Content>
-              투숙일자 : {reservation.reservationDetail.checkIn} ~
-              {reservation.reservationDetail.checkOut}
-            </Content>
+            <ReservationItem>
+              <Content>호텔명 : {reservation.hotel_name}</Content>
+              <Content>
+                투숙인원 성인 : {reservation.headCount.adult}, 아이 :{" "}
+                {reservation.headCount.child}
+              </Content>
+              <Content>
+                투숙일자 : {reservation.reservationDetail.checkIn} ~
+                {reservation.reservationDetail.checkOut}
+              </Content>
+            </ReservationItem>
+            <div>
+              <CancelReservationButton
+                onClick={() => {
+                  deleteReservation(reservation.id);
+                }}
+              >
+                <span>예약취소</span>
+              </CancelReservationButton>
+            </div>
           </ReservationItemContainer>
         );
       })}
@@ -33,16 +47,10 @@ const Reservation = () => {
 export default Reservation;
 
 const ReservationContainer = styled.div`
-  height: auto;
   display: flex;
   flex-direction: column;
-`;
-
-const ReservationItemContainer = styled(HotelItemContainer)`
-  height: auto;
-  padding: 15px 8px;
-  font-size: 18px;
-  flex-direction: column;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
 `;
 
 const Title = styled.h1`
@@ -54,6 +62,24 @@ const Title = styled.h1`
   background-color: transparent;
 `;
 
+const ReservationItemContainer = styled(HotelItemContainer)`
+  height: auto;
+  padding: 15px 8px;
+  font-size: 18px;
+  justify-content: space-between;
+`;
+
+const ReservationItem = styled.div`
+  width: 80%;
+`;
+
 const Content = styled.p`
-  margin: 5px 0;
+  margin: 5px;
+  padding: 0 5px;
+`;
+
+const CancelReservationButton = styled(MakeReservationButton)`
+  margin: 0;
+  display: flex;
+  justify-content: center;
 `;

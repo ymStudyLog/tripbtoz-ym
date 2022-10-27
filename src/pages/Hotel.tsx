@@ -1,21 +1,31 @@
 import React from "react";
 import styled from "styled-components";
 import HotelList from "../components/hotel/HotelList";
-import useSearchCondition from "../hooks/useSearchCondition";
+import useSearchQuery from "../hooks/useSearchQuery";
 import useReactQuery from "../hooks/useReactQuery";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const Hotel = () => {
- //Searchbar 컴포넌트가 이제는 모든 페이지의 형제 컴포넌트라는 것을 잊지 말기 -> 로컬스토리지랑 db에 값을 저장하는 단계
-  const { localStorageData } = useReactQuery();
-  const { query, createTotalQuery } = useSearchCondition({
-    stayPeriod: localStorageData.stayPeriod,
-    headCount: localStorageData.headCount,
-  });
-  console.log(query);
+  const { reservations } = useReactQuery();
+  const { query, createTotalQuery } = useSearchQuery();
+
+  const { prevStayPeriod, prevHeadCount } = useLocalStorage();
 
   React.useEffect(() => {
-    createTotalQuery();
-  }, [localStorageData, createTotalQuery]);
+    createTotalQuery({
+      //하드코딩 임시 데이터 -> prevStayPeriod랑 prevHeadCount 넣어줄 예정
+      stayPeriod: {
+        checkIn: "2022-10-10",
+        checkOut: "2022-10-12",
+      },
+      headCount: {
+        adult: 2,
+        child: 0,
+      },
+      reservations,
+    });
+  }, [reservations, createTotalQuery]);
+  // }, [reservations, createTotalQuery, prevStayPeriod, prevHeadCount]);
 
   return (
     <HotelContainer>

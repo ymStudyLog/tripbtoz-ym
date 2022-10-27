@@ -14054,15 +14054,5 @@
         "checkOut": "2022. 8. 10."
       }
     }
-  ],
-  "localStorage": {
-    "stayPeriod": {
-      "checkIn": "2022-11-02",
-      "checkOut": "2022-11-06"
-    },
-    "headCount": {
-      "adult": 3,
-      "child": 1
-    }
-  }
+  ]
 }

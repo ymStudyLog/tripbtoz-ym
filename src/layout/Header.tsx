@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Main } from "./Main";
-import { emptyLocalStorageData } from "../api/api";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -9,7 +8,6 @@ const Header = () => {
   const handleLogo = () => {
     navigate("/");
     window.localStorage.clear();
-    emptyLocalStorageData();
   };
 
   const handleToReservation = () => {

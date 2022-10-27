@@ -13,26 +13,26 @@ export type HotelDataType = {
   image : string;
 };
 
-export type StayPeriodType = {
-  checkIn: string;
-  checkOut: string;
+export type StayPeriodType<G> = {
+  checkIn: G;
+  checkOut: G;
 };
 
-export type HeadCountType = {
-  adult: number;
-  child: number;
+export type HeadCountType<G> = {
+  adult: G;
+  child: G;
 };
 
-export type GetDataResultType = HotelDataType[] | undefined;
-
-export type ReservationDataType = {
+export type ReservationType = {
+  id: number;
   hotel_id: number;
   hotel_name: string;
-  headCount: HeadCountType;
-  reservationDetail: StayPeriodType;
+  headCount: HeadCountType<number>;
+  reservationDetail: StayPeriodType<string>;
 };
 
+//TODO 안쓰면 삭제
 export type LocalStorageType = {
-  stayPeriod: StayPeriodType;
-  headCount: HeadCountType;
+  stayPeriod: StayPeriodType<string|null>;
+  headCount: HeadCountType<number|null>;
 };
