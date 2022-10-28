@@ -1,15 +1,15 @@
 import React from "react";
 import { saveReservation } from "../../api/api";
-import { HotelDataType } from "../../types";
-import * as H from '../../styles/HotelItem.style';
+import { HotelDataType, LocalStorageType } from "../../types";
+import * as H from "../../styles/HotelItem.style";
 
 type Props = {
   hotelData: HotelDataType;
+  currentChoice: LocalStorageType;
 };
 
 const HotelItem = (props: Props) => {
-  const { hotelData } = props;
-//TODO 호텔 페이지에서 여기까지 로컬스토리지 값 가져다 줘야함
+  const { hotelData, currentChoice } = props;
   const [loading, setLoading] = React.useState<boolean>(false);
 
   return (
@@ -18,7 +18,7 @@ const HotelItem = (props: Props) => {
     >
       <H.HotelImage
         src={`${hotelData.image}`}
-        alt='hotel'
+        alt="hotel"
         onLoad={() => {
           setLoading(!loading);
         }}
@@ -40,14 +40,14 @@ const HotelItem = (props: Props) => {
         <H.MakeReservationButton
           type="button"
           onClick={() => {
-            // if (localStorageData !== undefined) {
-            //   saveReservation({
-            //     hotel_id: hotelData.id,
-            //     hotel_name: hotelData.hotel_name,
-            //     headCount: localStorageData.headCount,
-            //     reservationDetail: localStorageData.stayPeriod,
-            //   });
-            // }
+            if (currentChoice !== undefined) {
+              saveReservation({
+                hotel_id: hotelData.id,
+                hotel_name: hotelData.hotel_name,
+                headCount: currentChoice.headCount,
+                reservationDetail: currentChoice.stayPeriod,
+              });
+            }
           }}
         >
           예약

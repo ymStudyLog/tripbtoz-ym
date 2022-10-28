@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   addMonthDate,
-  convertDateToString,
+  dateToStringYYYYMMDD,
   addDate,
 } from "../../utils/dateUtils";
 import Body from "./Body";
 import Head from "./Head";
 
+//TODO 프로그램 돌릴때 예약은 문제없이 진행되는데 경고문구가 여기에서 발생할 때가 잇음 NaN 넘어온다고...치명적일시 오류 수정
 type Props = {
   today: Date;
   initialCheckIn: Date | undefined;
@@ -49,8 +50,8 @@ const Calendar = ({
   };
 
   const handleClickDate = (date: Date) => {
-    const todayString = convertDateToString(today);
-    const dateString = convertDateToString(date);
+    const todayString = dateToStringYYYYMMDD(today);
+    const dateString = dateToStringYYYYMMDD(date);
     //오늘날짜보다 클릭한 날짜가 작으면 아무일도 일어나지않게 return
     if (todayString > dateString) {
       return;

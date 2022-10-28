@@ -8,9 +8,8 @@ const useHeadCount = () => {
     adult: 2,
     child: 0,
   });
-  const countValueString = `성인 ${count.adult} / 아이 ${count.child}`;
 
-  const isCountModalClicked = () => {
+  const isCountModalClicked = (): JSX.Element | null => {
     return showCountModal ? (
       <CountModal
         initialChild={count.child}
@@ -31,7 +30,6 @@ const useHeadCount = () => {
     setCount,
     showCountModal,
     setShowCountModal,
-    countValueString,
     isCountModalClicked,
   };
 };

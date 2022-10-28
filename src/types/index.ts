@@ -23,16 +23,15 @@ export type HeadCountType<G> = {
   child: G;
 };
 
-export type ReservationType = {
-  id: number;
+export type ReservationType  = {
+  id?: number;
   hotel_id: number;
   hotel_name: string;
   headCount: HeadCountType<number>;
   reservationDetail: StayPeriodType<string>;
 };
 
-//TODO 안쓰면 삭제
 export type LocalStorageType = {
-  stayPeriod: StayPeriodType<string|null>;
-  headCount: HeadCountType<number|null>;
+  headCount: HeadCountType<number>;
+  stayPeriod: StayPeriodType<string>;
 };

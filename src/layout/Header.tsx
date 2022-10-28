@@ -8,6 +8,7 @@ const Header = () => {
   const handleLogo = () => {
     navigate("/");
     window.localStorage.clear();
+    //TODO 페이지 리프레시까지 하게 해줘야됨 (로컬스토리지 비우고->수동으로 리렌더링해야 비워진 로컬스토리지 데이터가 서치바에 남아있지 않음)
   };
 
   const handleToReservation = () => {

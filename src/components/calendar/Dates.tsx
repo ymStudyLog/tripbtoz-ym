@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import { convertDateToString } from "../../utils/dateUtils";
+import { dateToStringYYYYMMDD } from "../../utils/dateUtils";
 
 type Props = {
   date: number;
@@ -25,13 +25,13 @@ const Dates = ({
 }: Props) => {
   let isHighlighting = false;
   let isMiddleHighlighting = false;
-  const thisDate = convertDateToString(new Date(`${year}-${month}-${date}`));
-  const todayDate = convertDateToString(new Date(today));
+  const thisDate = dateToStringYYYYMMDD(new Date(`${year}-${month}-${date}`));
+  const todayDate = dateToStringYYYYMMDD(new Date(today));
   const thisCheckInDate = checkInDate
-    ? convertDateToString(checkInDate)
+    ? dateToStringYYYYMMDD(checkInDate)
     : undefined;
   const thisCheckOutDate = checkOutDate
-    ? convertDateToString(checkOutDate)
+    ? dateToStringYYYYMMDD(checkOutDate)
     : undefined;
 
   if (

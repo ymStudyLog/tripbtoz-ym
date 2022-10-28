@@ -8,8 +8,8 @@ type Props = {
 
 const useStayPeriod = (props: Props) => {
   const { today } = props;
-  const [initialMonthDate, setInitialMonthDate] = React.useState(today);
-  const [startDate, setStartDate] = React.useState<Date | undefined>( //클릭하면 바뀌는 값 겸 기본값
+  const [initialMonthDate, setInitialMonthDate] = React.useState<Date>(today);
+  const [startDate, setStartDate] = React.useState<Date | undefined>( 
     addDate(today, 7)
   );
   const [endDate, setEndDate] = React.useState<Date | undefined>(
@@ -18,7 +18,7 @@ const useStayPeriod = (props: Props) => {
   const [showCalendarModal, setShowCalendarModal] =
     React.useState<boolean>(false);
 
-  const isCalenderModalClicked = () => {
+  const isCalenderModalClicked = (): JSX.Element | null => {
     return showCalendarModal ? (
       <CalenderModal
         initialCheckIn={startDate}

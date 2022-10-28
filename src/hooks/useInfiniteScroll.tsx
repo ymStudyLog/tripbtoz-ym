@@ -13,6 +13,7 @@ export const HOTELDATA_PER_PAGE = 10;
 const useInfiniteScroll = (props: Props) => {
   const { query } = props;
 
+  //TODO 호텔페이지 마운트시에 지멋대로 전체 호텔 데이터 불러왔다가 *포커스 아웃*되면 쿼리대로 불러옴
   const getPage = async (pageParam: number) => {
     const finalQuery =
       query.length === 0

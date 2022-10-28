@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const Reservation = () => {
   const { reservations } = useReactQuery();
-  
+
   return (
     <ReservationContainer>
       <Title>예약 내역</Title>
@@ -31,7 +31,7 @@ const Reservation = () => {
             <div>
               <CancelReservationButton
                 onClick={() => {
-                  deleteReservation(reservation.id);
+                  reservation.id !== undefined && deleteReservation(reservation.id);
                 }}
               >
                 <span>예약취소</span>

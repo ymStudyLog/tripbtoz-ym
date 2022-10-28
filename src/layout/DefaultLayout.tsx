@@ -1,12 +1,18 @@
 import styled from "styled-components";
-import { Outlet } from "react-router-dom";
 import Header from "./Header";
+import { Main } from "./Main";
 
-const DefaultLayout = () => {
+type Props = {
+  children: JSX.Element | JSX.Element[];
+};
+
+const DefaultLayout = (props: Props) => {
+  const { children } = props;
+
   return (
     <Background>
       <Header />
-      <Outlet />
+      <Main>{children}</Main>
     </Background>
   );
 };

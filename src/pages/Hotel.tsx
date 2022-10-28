@@ -1,35 +1,31 @@
 import React from "react";
+import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import HotelList from "../components/hotel/HotelList";
 import useSearchQuery from "../hooks/useSearchQuery";
 import useReactQuery from "../hooks/useReactQuery";
-import useLocalStorage from "../hooks/useLocalStorage";
+import { LocalStorageType } from "../types";
+
+type OutletPropsType = {
+  currentChoice: LocalStorageType;
+};
 
 const Hotel = () => {
-  const { reservations } = useReactQuery();
+  const { currentChoice } = useOutletContext<OutletPropsType>();
+  const { reservations } = useReactQuery(); //TODO 여기에서 예약정보를 불러와서 오류?
   const { query, createTotalQuery } = useSearchQuery();
-
-  const { prevStayPeriod, prevHeadCount } = useLocalStorage();
 
   React.useEffect(() => {
     createTotalQuery({
-      //하드코딩 임시 데이터 -> prevStayPeriod랑 prevHeadCount 넣어줄 예정
-      stayPeriod: {
-        checkIn: "2022-10-10",
-        checkOut: "2022-10-12",
-      },
-      headCount: {
-        adult: 2,
-        child: 0,
-      },
+      stayPeriod: currentChoice.stayPeriod,
+      headCount: currentChoice.headCount,
       reservations,
     });
-  }, [reservations, createTotalQuery]);
-  // }, [reservations, createTotalQuery, prevStayPeriod, prevHeadCount]);
+  }, [reservations, createTotalQuery, currentChoice]);
 
   return (
     <HotelContainer>
-      <HotelList query={query} />
+      <HotelList query={query} currentChoice={currentChoice}/>
     </HotelContainer>
   );
 };
