@@ -9,7 +9,11 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-const myQueryClient = new QueryClient();
+const myQueryClient = new QueryClient({
+  defaultOptions:{
+    queries: { refetchOnWindowFocus: false},
+  },
+});
 
 root.render(
   <React.StrictMode>
