@@ -1,7 +1,9 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
-import DefaultLayout from "../layout/DefaultLayout";
+import Header from "../layout/Header";
+import Background from "../layout/Background";
+import { Main } from "../layout/Main"; //TODO Header,Main,Background 하나의 파일에 모아서 export -> 한번에 가져오게 수정하기 
 import SearchBar from "../components/common/SearchBar";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { LocalStorageType } from "../types";
@@ -55,15 +57,20 @@ const LayoutPage = () => {
   }, [headCountOrNull]);
 
   return (
-    <DefaultLayout>
-      <SearchBarPositioner>
-        <SearchBar
-          setCurrentChoice={setCurrentChoice}
-          currentChoice={currentChoice}
-        />
-      </SearchBarPositioner>
-      <Outlet context={{ currentChoice }} />
-    </DefaultLayout>
+    <Background>
+      <Header />
+      
+      <Main>
+        <SearchBarPositioner>
+          <SearchBar
+            setCurrentChoice={setCurrentChoice}
+            currentChoice={currentChoice}
+          />
+        </SearchBarPositioner>
+        <Outlet context={{ currentChoice }} />
+      </Main>
+      
+    </Background>
   );
 };
 
