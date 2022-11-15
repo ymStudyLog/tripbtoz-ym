@@ -27,9 +27,9 @@ const useReactQuery = () => {
     };
     
   //3번 기능
-  const updateReservations = useQuery(["getReservation"], () =>
-    getReservationData<ReservationType[]>("")
-  ); -> HotelItem onClick시 불러와서 setReservations로 다시 상태 저장 -> 전역 상태 자동 업데이트 -> 전역상태가 바뀌면 useEffect로 감지해서 searchQuery를 다시 만들게 하기,,?
+  //const updateReservations = useQuery(["getReservation"], () =>
+  //  getReservationData<ReservationType[]>("")
+  //); -> HotelItem onClick시 불러와서 setReservations로 다시 상태 저장 -> 근데 이렇게 하면 react-query를 안쓰고 그냥 다시 불러오는 거랑 다를게 없음...아예 react-query를 걷어내고 문제 없이 돌아가는지 확인해보기 
   
   //return {
     //reservations: reservations.data === undefined ? [] : reservations.data,
